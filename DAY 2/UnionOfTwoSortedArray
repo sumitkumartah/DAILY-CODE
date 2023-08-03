@@ -1,0 +1,91 @@
+//Union of two sorted arrays
+
+
+BRUTE FORCE::
+
+class Solution {
+    public static int doUnion(int a[], int n, int b[], int m) {
+        LinkedHashSet<Integer> set=new LinkedHashSet<>();  //create a set for store the elements of two array
+        for(int i=0;i<n;i++)
+        {
+            set.add(a[i]);
+        }
+        for(int i=0;i<m;i++)
+        {
+            set.add(b[i]);
+        }
+        ArrayList<Integer> ans=new ArrayList<Integer>();
+        ans.addAll(set);
+        int k=ans.size();
+        return k;
+    }
+}
+
+Time Compleixty : O( (m+n)log(m+n) ) . Inserting an element in a set takes logN time, where N is no of elements in the set. At max set can store m+n elements {when there are no common elements and elements in arr,arr2 are distntict}. So Inserting m+n th element takes log(m+n) time. Upon approximation across inserting all elements in worst, it would take O((m+n)log(m+n) time.
+
+Using HashSet also takes the same time, On average insertion in unordered_set takes O(1) time but sorting the union vector takes O((m+n)log(m+n))  time. Because at max union vector can have m+n elements.
+
+Space Complexity : O(m+n) {If Space of Union ArrayList is considered} 
+
+O(1) {If Space of union ArrayList is not considered}
+
+
+
+
+
+OPTIMAL::
+
+import java.util.*;
+public class Solution {
+    public static List< Integer > sortedArray(int []a, int []b) {
+        // Write your code here
+        int i=0,j=0;
+        int m=a.length;
+        int n=b.length;
+     ArrayList<Integer> union=new ArrayList<>();
+     while(i<m && j<n)
+     {
+       if(a[i]<b[j]){
+       if(union.size()==0  || union.get(union.size()-1)!=a[i])
+       {
+         union.add(a[i]);
+       }
+       i++;
+       }
+     else
+     {
+       if(union.size()==0  || union.get(union.size()-1)!=b[j])
+       {
+         union.add(b[j]);
+       }
+       j++;
+      }
+     }
+     while(i<m)
+     {
+       if(union.get(union.size()-1)!=a[i])
+       {
+         union.add(a[i]);
+       }
+       i++;
+     }
+      while(j<n)
+     {
+       if(union.get(union.size()-1)!=b[j])
+       {
+         union.add(b[j]);
+       }
+       j++;
+     }
+   return union;
+    }
+}
+
+
+Time Complexity: O(m+n), Because at max i runs for n times and j runs for m times. When there are no common elements in arr1 and arr2 and all elements in arr1, arr2 are distinct. 
+
+Space Complexity : O(m+n) {If Space of Union ArrayList is considered} 
+
+O(1) {If Space of union ArrayList is not considered}
+
+
