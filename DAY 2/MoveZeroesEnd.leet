@@ -1,27 +1,75 @@
-
+//Move Zeros to end
+BRUTE FORCE::
 
 class Solution {
     public void moveZeroes(int[] nums) {
-     ArrayList<Integer> list = new ArrayList<>();
+     ArrayList<Integer> list = new ArrayList<>();  //create a arraylist for store the non zero numbers
         int n=nums.length;
        for(int i=0;i<n;i++)
        {
-           if(nums[i]!=0)
+           if(nums[i]!=0)    //check if the number is non zero
            {
-               list.add(nums[i]);
+               list.add(nums[i]);   //move to the arraylist
                
            }
        }
-       int nz=list.size();
+       int nz=list.size();  
        for(int i=0;i<nz;i++)
        {
-           nums[i]=list.get(i);
+           nums[i]=list.get(i);   //move the Arraylist element to the orginal array
        }
        for(int i=nz;i<n;i++)
        {
-           nums[i]=0;
+           nums[i]=0;    //rest of the array fill with 0
        }
        //System.out.println(Arrays.toString(nums));
     }
     }
+
+
+Time Complexity: O(N) + O(X) + O(N-X) ~ O(2*N), where N = total no. of elements,
+X = no. of non-zero elements, and N-X = total no. of zeros.
+Reason: O(N) for copying non-zero elements from the original to the temporary array. O(X) for again copying it back from the temporary to the original array. O(N-X) for filling zeros in the original array. So, the total time complexity will be O(2*N).
+
+Space Complexity: O(N), as we are using a temporary array to solve this problem and the maximum size of the array can be N in the worst case.
+Reason: The temporary array stores the non-zero elements. In the worst case, all the given array elements will be non-zero
+
+
+OPTIMAL::
+
+class Solution {
+    void pushZerosToEnd(int[] arr, int n) {
+     int j=-1;  //set j at -1
+     for(int i=0;i<n;i++)
+     {
+         if(arr[i]==0)  //if arr[i] is 0 then j will move
+         {
+             j=i;
+             break;
+         }
+     }
+     if(j==-1)  //if there is no NON zero element in the array
+     {
+         System.out.println(arr);
+     }
+     for(int i=j+1;i<n;i++)
+     {
+         if(arr[i]!=0)
+         {
+             arr[i]=arr[i]^arr[j];
+             arr[j]=arr[i]^arr[j];
+             arr[i]=arr[i]^arr[j];
+             j++;
+         }
+     }
+        
+    }
+}
+
+Time Complexity: O(N), N = size of the array.
+Reason: We have used 2 loops and using those loops, we are basically traversing the array once.
+
+Space Complexity: O(1) as we are not using any extra space to solve this problem.
+
+
 
