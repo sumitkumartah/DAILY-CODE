@@ -1,0 +1,93 @@
+ // Find the number that appears once, and the other numbers twice
+
+BRUTE FORCE::
+
+
+class Solution {
+    public int singleNumber(int[] nums) {
+        int n=nums.length;
+        
+       for(int i=0;i<n;i++)
+       {
+           int count=0;
+           int num=nums[i];
+           for(int j=0;j<n;j++)
+           {
+               if(nums[j]==num)
+               {
+                   count++;
+               }
+
+           }
+           if(count==1) return num;
+       }
+       return -1;
+    }
+}
+
+
+ime Complexity: O(N2), where N = size of the given array.
+Reason: For every element, we are performing a linear search to count its occurrence. The linear search takes O(N) time complexity. And there are N elements in the array. So, the total time complexity will be O(N2).
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
+
+BETTER::
+
+class Solution {
+    public int singleNumber(int[] nums) {
+        int n=nums.length;
+        int maxi=nums[0];
+        for(int i=0;i<n;i++)
+        {
+            maxi=Math.max(maxi,nums[i]);  //calculate the maximum element of the array
+        }
+        int hash[]=new int[maxi+1];  //create a hash array with size maximum eleemt +1
+        for(int i=0;i<n;i++)
+        {
+            hash[nums[i]]++;   //check frequency
+        }
+        for(int i=0;i<n;i++)
+        {
+            if(hash[nums[i]]==1)
+            {
+                return nums[i];
+            }
+        }
+        return -1;
+
+    }
+}
+
+
+
+Time Complexity: O(N)+O(N)+O(N), where N = size of the array
+Reason: One O(N) is for finding the maximum, the second one is to hash the elements and the third one is to search the single element in the array.
+
+Space Complexity: O(maxElement+1) where maxElement = the maximum element of the array.
+
+
+OPTIMAL::
+
+class Solution {
+    public int singleNumber(int[] nums) {
+       int xor=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            xor=xor^nums[i];
+        }
+        return xor;
+
+    }
+}
+
+
+Time Complexity: O(N), where N = size of the array.
+Reason: We are iterating the array only once.
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
+
+
