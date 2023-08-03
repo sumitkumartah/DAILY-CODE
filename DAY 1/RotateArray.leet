@@ -1,0 +1,58 @@
+//  Left rotate an array by D places
+
+BRUTE FORCE::
+
+class Solution
+{
+    static void rotateArr(int arr[], int d, int n)
+    {
+        int[] temp = new int[d];  // create a temporary array
+        d=d%n;
+        for(int i=0;i<d;i++)     // Store d-1 element in temp array
+        {
+            temp[i]=arr[i];
+        }
+        for(int i=d;i<n;i++) //move d to n-1 element to left
+        {
+            arr[i-d]=arr[i];
+        }
+        for(int i=n-d;i<n;i++)  //store the temp array elemnent in the main array
+        {
+            arr[i]=temp[i-n+d];
+        }
+        // add your code here
+    }
+}
+
+//Time Complexity: O(n)
+//Space Complexity: O(k) since k array element needs to be stored in temp array
+
+
+
+OPTIMAL::
+
+
+class Solution {
+    public void reverse(int nums[],int start,int end)
+    {
+       while(start<end)
+       {
+           nums[start]=nums[start]^nums[end];
+           nums[end]=nums[start]^nums[end];
+           nums[start]=nums[start]^nums[end];
+           start++;
+           end--;
+       }
+    }
+    public void rotate(int[] nums, int k) {
+        int n = nums.length;
+        k = k % n;
+        reverse(nums, n - k, n - 1);
+        reverse(nums, 0, n - k - 1);
+        reverse(nums, 0, n - 1);
+        
+    }
+}
+
+//Time Complexity – O(N) where N is the number of elements in an array
+//Space Complexity – O(1) since no extra space is required
