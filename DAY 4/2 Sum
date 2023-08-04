@@ -1,0 +1,117 @@
+//2Sum Problem
+
+BRUTE FORCE::
+  
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] ans = new int[2];
+         ans[0]=ans[1]=1;
+        for(int i=0;i<nums.length;i++)
+        {
+            for(int j=i+1;j<nums.length;j++)
+            {
+                if(nums[i]+nums[j]==target)
+                {
+                    ans[0]=i;
+                    ans[1]=j;
+                }
+            }
+        }
+        return ans;
+    }
+}
+
+
+Time Complexity: O(N2), where N = size of the array.
+Reason: There are two loops(i.e. nested) each running for approximately N times.
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
+
+BETTER::
+
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+         int[] ans = new int[2];  //create a ans array for store answer
+         ans[0]=ans[1]=0;
+         HashMap<Integer,Integer> mpp=new HashMap<>();  //define hashmap
+         for(int i=0;i<nums.length;i++)
+         {
+             int num = nums[i];
+             int moreneed=target - num;  //find the more need element
+             if(mpp.containsKey(moreneed))
+             {
+                 ans[0]=mpp.get(moreneed); 
+                 ans[1]=i;
+             }
+              mpp.put(nums[i], i);
+         }
+         return ans;
+        
+    }
+}
+
+
+Time Complexity: O(N), where N = size of the array.
+Reason: The loop runs N times in the worst case and searching in a hashmap takes O(1) generally. So the time complexity is O(N).
+
+Space Complexity: O(N) as we use the map data structure.
+
+
+
+
+OPTIMAL::
+
+
+string twoSum(int n, vector<int> &arr, int target) {
+    sort(arr.begin(), arr.end());
+    int left = 0, right = n - 1;
+    while (left < right) {
+        int sum = arr[left] + arr[right];
+        if (sum == target) {
+            return "YES";
+        }
+        else if (sum < target) left++;
+        else right--;
+    }
+    return "NO";
+}
+
+
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+         //Arrays.sort(nums);
+        int[] ans = new int[2];
+        ans[0]=ans[1]=0;
+        int left = 0;
+        int right = nums.length - 1;
+        
+        while (left < right) {
+            int sum = nums[left] + nums[right];
+            if (sum == target) {
+                ans[0] = left;
+                ans[1] = right;
+               
+            } else if (sum > target) {
+                right--;
+            } else {
+                left++;
+            }
+        }
+        return ans;
+    }
+}
+
+
+Time Complexity: O(N) + O(N*logN), where N = size of the array.
+Reason: The loop will run at most N times. And sorting the array will take N*logN time complexity.
+
+Space Complexity: O(1) as we are not using any extra space
+
+
+
+
