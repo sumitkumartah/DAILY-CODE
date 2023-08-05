@@ -1,0 +1,103 @@
+//Majority Element (n2 times)
+
+BRUTE FORCE::
+  
+
+class Solution {
+    public int majorityElement(int[] nums) {
+        int n=nums.length;
+        for(int i=0;i<n;i++)    //run a loop
+        {
+            int cnt=0;    //set cnt=0
+            for(int j=0;j<n;j++)  //run a j loop
+            {
+                if(nums[i]==nums[j])   //compare one number in array with all the number
+                {
+                    cnt++;
+                }
+            }
+            if(cnt>n/2) return nums[i];   //if count value is greater than n/2 then return the number
+        }
+        return -1;
+        
+    }
+}
+
+
+Time Complexity: O(N2), where N = size of the given array. 
+Space complexity: O(1)
+
+
+
+
+
+BETTER::
+
+class Solution {
+    public int majorityElement(int[] nums) {
+        int n=nums.length;
+
+        HashMap<Integer,Integer> mpp=new HashMap<>();   //Define Map
+        for(int i=0; i<n;i++)
+        {
+            int value=mpp.getOrDefault(nums[i],0);     //Store value in map
+            mpp.put(nums[i],value+1);                  //increment the value of map when duplicate element come
+        }
+        for(Map.Entry<Integer,Integer>it: mpp.entrySet())   //Iterate the map
+        {
+            if(it.getValue()>n/2) return it.getKey();       //if the map value is greater than the n/2 then return array element
+        }
+        return -1;
+    }
+}
+
+
+Time Complexity: O(N*logN) + O(N), where N = size of the given array.
+Reason: We are using a map data structure. Insertion in the map takes logN time. And we are doing it for N elements. So, it results in the first term O(N*logN). The second O(N) is for checking which element occurs more than floor(N/2) times. If we use unordered_map instead, the first term will be O(N) for the best and average case and for the worst case, it will be O(N2).
+
+Space Complexity: O(N) as we are using a map data structure.
+
+
+
+
+
+OPTIMAL::
+
+
+class Solution {
+    public int majorityElement(int[] nums) {   
+        int n=nums.length;
+        int cnt=0;
+        int el=1;
+        for(int i=0;i<n;i++)  //Applying the most voting algorithm
+        {
+            if(cnt==0)  //if cnt is 0 
+            {
+                cnt=1;     //then set cnt is 1
+                el=nums[i]; //then the number will be element
+
+            }
+            else if(el==nums[i])  //if the array elemet found then just                              
+            {                     //increment the count otherwise decrease
+                cnt++;
+            }
+            else
+            {
+                cnt--;
+
+            }
+        }
+        int cnt1=0;
+        for(int i=0;i<n;i++)  //search the element 
+        {
+            if(el==nums[i])cnt1++;  //if found increase the count
+        }
+        if(cnt1>n/2)
+        {
+          return el;
+        }
+        return -1;
+    }
+}
+
+
