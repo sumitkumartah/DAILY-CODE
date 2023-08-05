@@ -1,0 +1,54 @@
+//	Stock Buy and Sell
+
+BRUTE FORCE::
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n=prices.length;
+        int maxprofit=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=i+1;j<n;j++)
+            {
+                if(prices[j]>prices[i])
+                {
+                   maxprofit=Math.max(prices[j]-prices[i],maxprofit);
+                }
+            }
+        }
+        return maxprofit;
+    }
+}
+
+
+Time complexity: O(n^2)
+
+Space Complexity: O(1)
+
+
+
+
+
+
+OPTIMAL::
+
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n=prices.length;   
+        int min=Integer.MAX_VALUE;  
+        int maxprofit=0;
+        for(int i=0;i<=n-1;i++)
+        {
+           min=Math.min(min,prices[i]);   //calculate the minimum 
+           maxprofit=Math.max(maxprofit,prices[i]-min);   //calculate the max profit
+        }
+        return maxprofit;  
+    }
+}
+
+
+Time complexity: O(n)
+
+Space Complexity: O(1)
+
