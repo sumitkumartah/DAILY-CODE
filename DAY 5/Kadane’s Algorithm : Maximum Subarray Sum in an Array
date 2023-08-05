@@ -1,0 +1,68 @@
+//Kadane’s Algorithm : Maximum Subarray Sum in an Array
+
+VARIETY 1:::::
+Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+Output: 6
+Explanation: The subarray [4,-1,2,1] has the largest sum 6.
+
+
+
+
+BRUTE FORCE::
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int maxi=Integer.MIN_VALUE;
+        for(int i=0;i<nums.length;i++)
+        {
+            int sum=0;
+            for(int j=i;j<nums.length;j++)
+            {
+                sum+=nums[j];
+                if(sum>maxi)
+                {
+                    maxi=sum;
+                }
+            }
+        }
+        return maxi;
+        
+    }
+}
+
+Time Complexity: O(N2), where N = size of the array.
+Reason: We are using two nested loops, each running approximately N times.
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
+
+
+OPTIMAL::(KADANE'S ALGO)
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int maxi=Integer.MIN_VALUE;
+       
+            int sum=0;
+            for(int j=0;j<nums.length;j++)
+            {
+                sum+=nums[j];
+                if(sum>maxi)
+                {
+                    maxi=sum;
+                }
+                if(sum<0) 
+                {
+                    sum=0;
+                }
+            }
+        
+        return maxi;
+        
+    }
+}
+Time Complexity: O(N2), where N = size of the array.
+Reason: We are using two nested loops, each running approximately N times.
+
+Space Complexity: O(1) as we are not using any extra space.
