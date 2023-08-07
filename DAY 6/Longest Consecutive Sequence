@@ -35,7 +35,10 @@ class Solution {
     }
 }
 
+Time Complexity: O(N2), N = size of the given array.
+Reason: We are using nested loops each running for approximately N times.
 
+Space Complexity: O(1), as we are not using any extra space to solve this problem.
 
 
 
@@ -66,6 +69,9 @@ class Solution {
         
     }
 }
+
+ Time Complexity: O(NlogN) + O(N), N = size of the given array.
+Space Complexity: O(1), as we are not using any extra space to solve this problem.
 
 
 OPTIMAL::
@@ -102,4 +108,9 @@ class Solution {
         
     }
 }  
+
+
+Time Complexity: O(N) + O(2*N) ~ O(3*N), where N = size of the array.
+
+Space Complexity: O(N), as we are using the set data structure to solve this problem.
 
