@@ -1,0 +1,69 @@
+//2149. Rearrange Array Elements by Sign
+
+
+
+
+class Solution {
+    public int[] rearrangeArray(int[] nums) {
+        ArrayList<Integer> pos=new ArrayList<>();  //take arraylist for positive numbers
+        ArrayList<Integer> neg=new ArrayList<>();//take arraylist for negative numbers
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]>0)  //check
+            {
+                pos.add(nums[i]);  
+            }
+            else
+            {
+                neg.add(nums[i]);
+            }
+        }
+        for(int i=0;i<nums.length/2;i++) //add to the array 
+        {
+            nums[2*i]=pos.get(i);
+            nums[2*i+1]=neg.get(i);
+        }
+        return nums;
+   }
+}
+
+
+
+Time Complexity: O(N+N/2) 
+
+Space Complexity:  O(N/2 + N/2) = O(N) 
+
+
+
+
+OPTIMAL::
+
+
+class Solution {
+    public int[] rearrangeArray(int[] nums) {
+    int n=nums.length;
+   int [] ans=new int[n];  //create a answer array
+   int neg=1,pos=0;     //set pos index at 0   and neg indesx at 1
+    for(int i=0;i<n;i++)
+    {
+        if(nums[i]>0)  //check number is positive or negetive
+        {
+            ans[pos]=nums[i];   //if it is positive store array element in the answer array
+            pos+=2;             //positive moves 2 forward for arranging
+        }
+        else
+        {
+            ans[neg]=nums[i];  //if it is negetive store array element in the answer array
+            neg+=2;             //negative moves 2 forward for arranging
+         }
+        
+
+    }
+    return ans;       //simle return the answer array
+        
+    }
+}
+
+Time Complexity: O(N) 
+
+Space Complexity:  O(N) 
