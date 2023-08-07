@@ -1,0 +1,48 @@
+31. Next Permutation
+
+
+OPTIMAL::
+
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int n = nums.length;
+        int ind = -1;
+        for (int i = n - 2; i >= 0; i--) {
+            if (nums[i] < nums[i + 1]) {
+                ind = i;
+                break;
+            }
+        }
+        if (ind == -1) {
+            reverse(nums, 0, n-1 );
+        } else{
+            for (int i = n - 1; i >= ind; i--) {
+                if (nums[ind] < nums[i]) {
+                    nums[ind] = nums[ind] ^ nums[i];
+                    nums[i] = nums[ind] ^ nums[i];
+                    nums[ind] = nums[ind] ^ nums[i];
+                   break;
+                }
+            }
+            reverse(nums, ind + 1, n - 1);
+        }
+        
+    }
+
+    static void reverse(int[] nums, int start, int end) {
+        while (start < end) {
+            nums[start] = nums[start] ^ nums[end];
+            nums[end] = nums[start] ^ nums[end];
+            nums[start] = nums[start] ^ nums[end];
+            start++;
+            end--;
+        }
+    }
+}
+
+
+
+Time Complexity: O(3N), where N = size of the given array
+Finding the break-point, finding the next greater element, and reversal at the end takes O(N) for each, where N is the number of elements in the input array. This sums up to 3*O(N) which is approximately O(3N).
+
+Space Complexity: Since no extra storage is required. Thus, its space complexity is O(1).
