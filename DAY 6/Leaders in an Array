@@ -1,0 +1,35 @@
+//Leaders in an Array
+
+
+
+OPTIMAL::
+
+import java.util.*;
+public class Solution {
+    public static List< Integer > superiorElements(int []a) {
+        // Write your code here.
+        ArrayList<Integer> ans = new ArrayList<>();  //take a ans list for store answer
+
+        int n= a.length;
+
+        int max=Integer.MIN_VALUE;     //I take the maximum 
+ 
+        for(int i=n-1;i>=0;i--){    //from the last index check every element
+
+            if(a[i]>max){       //check the element is max or not
+
+                ans.add(a[i]);   //store the right max element
+
+            }
+
+           max= Math.max(max,a[i]);   //caclutate the maximum element for next ...
+
+        }
+
+        return ans;
+    }
+}
+
+Time Complexity: O(N^2) { Since there are nested loops being used, at the worst case n^2 time would be consumed }.
+
+Space Complexity: O(N) { There is no extra space being used in this approach. But, a O(N) of space for ans array will be used in the worst case }.
