@@ -1,0 +1,80 @@
+
+//Rotate Matrix by 90 degrees
+
+
+BRUTE FORCE::
+
+
+class Solution {
+    public void rotate(int[][] matrix) {
+        int n= matrix.length;
+      
+        int rotated[][]=new int [n][n];  //take a new matrix
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                rotated[j][n-i-1] = matrix[i][j];    //store the roted matrix value
+
+            }
+        }
+            for (int i = 0; i < n; i++) 
+            {
+              for (int j = 0; j < n; j++) 
+              {
+                matrix[i][j] = rotated[i][j];     //rotated matrix value just store the orginal matrix
+               }
+            }
+        
+       }
+}
+
+Time Complexity: O(N*N) to linearly iterate and put it into some other matrix.
+
+Space Complexity: O(N*N) to copy it into some other matrix.
+
+
+
+
+
+
+OPTIMAL::
+
+
+class Solution {
+    public void rotate(int[][] matrix) {
+        int n= matrix.length;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=i;j<n;j++)
+            {
+              int temp = 0;                 //Transpose the matrix
+                temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i]; 
+                matrix[j][i] = temp;
+
+            }
+        }
+        for (int i = 0; i < n; i++) 
+        {
+            for (int j = 0; j < n/2; j++)         
+            {
+            int temp=0;                              //reverse the matrix
+              temp=matrix[i][j];
+              matrix[i][j]=matrix[i][n-1-j];
+              matrix[i][n-1-j]=temp;
+
+            }
+        }    
+         
+    }
+}
+
+
+
+Time Complexity: O(N*N) + O(N*N).     One O(N*N) is for transposing the matrix and the other is for reversing the matrix.
+
+Space Complexity: O(1).
+       
+       
+  
