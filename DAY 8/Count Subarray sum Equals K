@@ -1,0 +1,64 @@
+//Count Subarray sum Equals K
+
+BRUETE FORCE ::
+
+
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int n=nums.length;
+         int count=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=i;j<n;j++)
+            {
+                int sum=0;
+               for(int m=i;m<j;k++)
+               {
+                   sum+=nums[m];
+
+                   if(sum==k) count++;
+                   
+               }
+            }
+            
+        }
+        return count;
+        
+    }
+}
+
+
+Time Complexity: O(N3), where N = size of the array.
+Reason: We are using three nested loops here. Though all are not running for exactly N times, the time complexity will be approximately O(N3).
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
+
+
+BETTER::
+
+
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int n=nums.length;
+         int count=0;
+        for(int i=0;i<n;i++)     // starting index i
+        {
+            int sum=0;
+            for(int j=i;j<n;j++)    // ending index j
+            {
+                sum+=nums[j];         // calculate the sum of subarray [i...j]
+
+                 if(sum==k) count++;   
+                   
+               
+            }
+            
+        }
+        return count;    
+        
+    }
+}
+
+
