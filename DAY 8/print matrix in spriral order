@@ -1,0 +1,58 @@
+// print matrix in spiral manner
+
+
+
+
+OPTIMAL::
+
+
+
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) { 
+         ArrayList<Integer> ans=new ArrayList<>();     //create a ans arraylist
+        int left=0,right=matrix[0].length-1;
+        int top=0,bottom=matrix.length-1;
+        while(left<=right && top<=bottom)
+        {
+            for(int i=left;i<=right;i++)     //left to right print
+            {
+                ans.add(matrix[top][i]);
+            }
+            top++;
+
+            for(int i=top;i<=bottom;i++)    //top to bottom print
+            {
+                ans.add(matrix[i][right]);
+            }
+            right--;
+
+            if(top<=bottom)
+            {
+           for(int i=right;i>=left;i--)    // right to left print
+            {
+                ans.add(matrix[bottom][i]);
+            }
+            bottom--;
+            }
+
+            if(left<=right){
+            for(int i=bottom;i>=top;i--)     //bottom to to print
+            {
+                ans.add(matrix[i][left]);
+            }
+            left++;
+            }
+
+        }
+        return ans;    //return ans arraylist
+        
+      
+        
+    }
+}
+
+
+
+Time Complexity: O(m x n) { Since all the elements are being traversed once and there are total n x m elements ( m elements in each row and total n rows) so the time complexity will be O(n x m)}.
+
+Space Complexity: O(n) { Extra Space used for storing traversal in the ans array }.
