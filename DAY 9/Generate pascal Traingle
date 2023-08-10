@@ -1,0 +1,78 @@
+ Pascal's Triangle
+
+
+
+BRUTE FORCE::
+
+
+
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> ans=new ArrayList<>();
+        for(int row=1;row<=numRows;row++)
+        {
+        ArrayList<Integer> templist=new ArrayList<>();
+            for(int col=1;col<=row;col++)
+            {
+                templist.add(NCR(row-1 , col-1));
+            }
+            ans.add(templist);
+        }
+        return ans;
+        
+        
+    }
+    public static int NCR(int n,int r)
+    {
+        long res=1;
+        for(int i=0;i<r;i++)
+        {
+            res=res*(n-i);
+            res=res/(i+1);
+
+        }
+        return (int)res;
+    }
+}
+
+
+
+Time Complexity: O(n*n*r) ~ O(n3), where n = number of rows, and r = column index.
+Reason: The row loop will run for approximately n times. And generating a row using the naive approach of variation 2 takes O(n*r) time complexity.
+
+Space Complexity: In this case, we are only using space to store the answer. That is why space complexity can be still considered as O(1).
+
+
+
+
+
+OPTIMAL::
+
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int row = 0; row < numRows; row++) {
+            ans.add(generateRow(row));
+        }
+        return ans;
+    }
+   
+    public List<Integer> generateRow(int row) {
+        List<Integer> rowans = new ArrayList<>();
+        long res = 1;
+        rowans.add(1);
+        for (int col = 1; col <= row; col++) { 
+            res = res * (row - col + 1);
+            res = res / col;
+            rowans.add((int) res);
+        }
+        return rowans;
+    }
+}
+
+
+
+Time Complexity: O(n2), where n = number of rows(given).
+Reason: We are generating a row for each single row. The number of rows is n. And generating an entire row takes O(n) time complexity.
+
+Space Complexity: In this case, we are only using space to store the answer. That is why space complexity can still be considered as O(1).
