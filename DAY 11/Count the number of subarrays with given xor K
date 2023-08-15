@@ -1,0 +1,100 @@
+Count the number of subarrays with given xor K
+
+
+BRUTE::
+
+
+public class Solution {
+    public static int subarraysWithSumK(int []a, int b) {
+     
+        int n=a.length;
+        int cnt=0;
+       for(int i=0;i<n;i++)
+       {
+           for(int j=i;j<n;j++)
+           {
+                  int xorr=0;
+                  for(int k=i;k<=j;k++)
+                  {
+                      xorr=xorr^a[k];
+                  }
+                  if(xorr==b)cnt++;
+           }
+        }
+        return cnt;
+    }
+}
+
+
+Time Complexity: O(N3) approx., where N = size of the array.
+Reason: We are using three nested loops, each running approximately N times.
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
+
+BETTER::
+
+public class Solution {
+    public static int subarraysWithSumK(int []a, int b) {
+        // Write your code here
+        int n=a.length;
+        int cnt=0;
+        for(int i=0;i<n;i++)
+        {
+            int xorr=0;
+            for(int j=i;j<n;j++)
+            {
+                xorr=xorr^a[j];
+                if(xorr==b)cnt++;
+            }
+          
+        }
+        return cnt;
+    }
+}
+
+
+Time Complexity: O(N2), where N = size of the array.
+Reason: We are using two nested loops here. As each of them is running for N times, the time complexity will be approximately O(N2).
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
+
+OPTIMAL::
+
+
+import java.util.*;
+public class Solution {
+    public static int subarraysWithSumK(int []a, int b) {
+      int n=a.length;
+      int xr=0;
+      HashMap <Integer, Integer> mpp = new HashMap<>(); 
+      int cnt=0;
+      mpp.put(xr,1);
+      for(int i=0;i<n;i++)
+      {
+          xr=xr^a[i];
+          int x= xr ^ b;
+          if(mpp.containsKey(x))
+          {
+              cnt+=mpp.get(x);
+          }
+          if (mpp.containsKey(xr)) {
+                mpp.put(xr, mpp.get(xr) + 1);
+          }
+          else
+          {
+              mpp.put(xr,1);
+          }
+      }
+      return cnt;
+    }
+}
+
+
+Time Complexity: O(N) or O(N*logN) depending on which map data structure we are using, where N = size of the array.
+Reason: For example, if we are using an unordered_map data structure in C++ the time complexity will be O(N) but if we are using a map data structure, the time complexity will be O(N*logN). The least complexity will be O(N) as we are using a loop to traverse the array. Point to remember for unordered_map in the worst case, the searching time increases to O(N), and hence the overall time complexity increases to O(N2). 
+
+Space Complexity: O(N) as we are using a map data structure.
