@@ -1,0 +1,26 @@
+Richest Customer Wealth
+
+OPTIMAL::
+
+class Solution {
+    public int maximumWealth(int[][] accounts) {
+        int n=accounts.length;
+        int m=accounts[0].length;
+        int maxi=Integer.MIN_VALUE;   // Initialize a variable to keep track of the maximum wealth found so far
+        for(int i=0;i<n;i++)   // Iterate through each row (customer) in the 2D array
+        {
+            int sum=0;
+            for(int j=0;j<m;j++)  // Iterate through each element (account) in the current row (customer's wealth)
+            {
+            sum=sum+accounts[i][j];   // Calculate the sum of money in each of the customer's accounts
+            }
+             maxi=Math.max(maxi,sum);
+        }
+       
+        return maxi;  // Return the maximum wealth, which is the wealth of the richest customer
+        
+    }
+}
+
+Time Complexity: O(N2)
+Space Complexity: O(1)
