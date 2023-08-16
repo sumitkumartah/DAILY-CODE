@@ -1,0 +1,55 @@
+Number of Good Pairs
+
+BRUTE::
+
+
+class Solution {
+    public int numIdenticalPairs(int[] nums) {
+        int cnt=0;
+        int n=nums.length;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=i+1;j<n;j++)
+            {
+                if(nums[i]==nums[j] && i<j)
+                {
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+        
+    }
+}
+
+Time complexity:   o(n2)
+Space Complexity:  o(1)
+
+
+OPTIMAL::
+
+
+class Solution {
+    public int numIdenticalPairs(int[] nums) {
+        int cnt=0;
+        int n=nums.length;
+        HashMap<Integer,Integer> mpp=new HashMap<>();
+        for(int i=0;i<n;i++)
+        {
+            if(mpp.containsKey(nums[i]))
+            {
+                cnt+=mpp.get(nums[i]);
+                mpp.put(nums[i],mpp.get(nums[i])+1);
+            }
+            else
+            {
+                mpp.put(nums[i],1);
+            }
+        }
+        return cnt;
+        
+    }
+}
+
+Time Complexity: O(n)
+Space Complexity: O(1)
