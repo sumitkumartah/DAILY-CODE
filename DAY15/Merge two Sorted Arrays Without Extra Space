@@ -1,0 +1,99 @@
+Merge two Sorted Arrays Without Extra Space
+
+
+BRUTE::
+
+
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+         int nums3[] = new int[m + n];
+        int right = 0;
+        int left = 0;
+        int index = 0;
+
+        while (left < m && right < n) {
+            if (nums1[left] <= nums2[right]) {
+                nums3[index] = nums1[left];
+                left++;
+            } else {
+                nums3[index] = nums2[right];
+                right++;
+            }
+            index++;
+        }
+
+        while (left < m) {
+            nums3[index++] = nums1[left++];
+        }
+        while (right < n) {
+            nums3[index++] = nums2[right++];
+        }
+
+        // Copy merged values back into nums1
+        for (int i = 0; i < m + n; i++) {
+            nums1[i] = nums3[i];
+        }
+    }
+}
+
+
+Time Complexity: O(n+m) + O(n+m), where n and m are the sizes of the given arrays.
+Reason: O(n+m) is for copying the elements from arr1[] and arr2[] to arr3[]. And another O(n+m) is for filling back the two given arrays from arr3[].
+
+Space Complexity: O(n+m) as we use an extra array of size n+m.
+
+
+
+
+
+BETTER::
+
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int k=m;
+  for(int i=0;i<n;i++){
+    nums1[k]=nums2[i];
+    k++;
+  }
+  Arrays.sort(nums1);
+    }
+}
+
+Time Complexity: O((m+n) log(m+n)) 
+Space Complexity: O(1)
+
+
+
+OpTIMAL::
+
+
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i = m - 1; // Pointer for nums1
+        int j = n - 1; // Pointer for nums2
+        int k = m + n - 1; // Pointer for merged array
+
+        while (i >= 0 && j >= 0) {
+            if (nums1[i] > nums2[j]) {
+                nums1[k] = nums1[i];
+                i--;
+            } else {
+                nums1[k] = nums2[j];
+                j--;
+            }
+            k--;
+        }
+
+        // If there are remaining elements in nums2, copy them to nums1
+        while (j >= 0) {
+            nums1[k] = nums2[j];
+            k--;
+            j--;
+        }
+    }
+}
+
+
+
+Time Complexity: O(m+n) 
+Space Complexity: O(1)
