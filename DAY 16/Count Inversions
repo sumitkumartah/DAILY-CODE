@@ -1,0 +1,83 @@
+	Count Inversions
+
+
+BRUTE::
+
+public class Solution {
+    public static int numberOfInversions(int []a, int n) {
+       int cnt=0;
+       for(int i=0;i<n;i++)
+       {
+           for(int j=i+1;j<n;j++)
+           {
+               if(a[i]>a[j])
+               {
+                   cnt++;
+               }
+           }
+       }
+       return cnt;
+    }
+}
+
+Time Complexity: O(N2), where N = size of the given array.
+Reason: We are using nested loops here and those two loops roughly run for N times.
+
+Space Complexity: O(1) as we are not using any extra space to solve this problem.
+
+
+
+OPTIMAL::
+
+import java.util.*;
+public class Solution {
+      public static int merge(int[] arr, int low, int mid, int high) {
+          ArrayList<Integer> temp=new ArrayList<>();
+          int left=low;
+          int right=mid+1;
+          int cnt=0;
+          while (left <= mid && right <= high) {
+            if (arr[left] <= arr[right]) {
+                temp.add(arr[left]);
+                left++;
+            } else {
+                temp.add(arr[right]);
+                cnt += (mid - left + 1); 
+                right++;
+            }
+        }
+           while (left <= mid) {
+            temp.add(arr[left]);
+            left++;
+        }
+
+        while (right <= high) {
+            temp.add(arr[right]);
+            right++;
+        }
+
+        for (int i = low; i <= high; i++) {
+            arr[i] = temp.get(i-low );
+        }
+        return cnt;
+      }
+      
+       public static int mergeSort(int[] arr, int low, int high) 
+      { int cnt = 0;
+        if (low >= high) return cnt;
+        int mid = (low + high) / 2 ;
+        cnt += mergeSort(arr, low, mid);  
+        cnt += mergeSort(arr, mid + 1, high);
+        cnt += merge(arr, low, mid, high); 
+        return cnt;
+      }
+    public static int numberOfInversions(int []a, int n) {
+       return mergeSort(a,0,n-1);
+    }
+}
+
+
+Time Complexity: O(N*logN), where N = size of the given array.
+Reason: We are not changing the merge sort algorithm except by adding a variable to it. So, the time complexity is as same as the merge sort.
+
+Space Complexity: O(N), as in the merge sort We use a temporary array to store elements in sorted order.
