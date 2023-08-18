@@ -1,0 +1,130 @@
+Merge two Sorted Arrays Without Extra Space
+
+
+BRUTE FORCE::
+
+
+public class Solution {
+    public static void mergeTwoSortedArraysWithoutExtraSpace(long[] a, long[] b) {
+        int m = a.length;
+        int n = b.length;
+        long[] c = new long[m + n];
+        int right = 0;
+        int left = 0;
+        int index = 0;
+        
+        while (left < m && right < n) {
+            if (a[left] <= b[right]) {
+                c[index++] = a[left++];
+            } else {
+                c[index++] = b[right++];
+            }
+        }
+        
+        while (left < m) {
+            c[index++] = a[left++];
+        }
+        
+        while (right < n) {
+            c[index++] = b[right++];
+        }
+        
+        for (int i = 0; i < m + n; i++) {
+            if (i < m) {
+                a[i] = c[i];
+            } else {
+                b[i - m] = c[i];
+            }
+        }
+    }
+}
+
+
+Time Complexity: O(n+m) + O(n+m), where n and m are the sizes of the given arrays.
+Reason: O(n+m) is for copying the elements from arr1[] and arr2[] to arr3[]. And another O(n+m) is for filling back the two given arrays from arr3[].
+
+Space Complexity: O(n+m) as we use an extra array of size n+m.
+
+
+
+OPTIMAL::
+
+
+import java.util.*;
+
+public class Solution {
+    public static void mergeTwoSortedArraysWithoutExtraSpace(long[] a, long[] b) {
+        int m = a.length;
+        int n = b.length;
+        int left = m - 1; 
+        int right = 0;
+        
+        while (left >= 0 && right < n) {
+            if (a[left] > b[right]) {
+                long temp = a[left];
+                a[left] = b[right];
+                b[right] = temp;
+                left--;
+                right++;
+            } else {
+                break;
+            }
+        }
+        
+        Arrays.sort(a);
+        Arrays.sort(b);
+    }
+}
+
+
+Time Complexity: O(min(n, m)) + O(n*logn) + O(m*logm), where n and m are the sizes of the given arrays.
+Reason: O(min(n, m)) is for swapping the array elements. And O(n*logn) and O(m*logm) are for sorting the two arrays.
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
+
+OPTIMAL2::  (GAP METHOD)  (don'run it)
+
+
+public class Solution {
+    public static void mergeTwoSortedArraysWithoutExtraSpace(long []a, long []b){
+        int n = a.length;
+        int m = b.length;
+        int len = m + n;
+        int gap = (len / 2) + (len % 2);
+
+        while (gap > 0) {
+            int left = 0;
+            int right = left + gap;
+            while (right < len) {
+                if (left < n && right >= n) {
+                    swapIfGreater(a, b, left, right - n);
+                } else if (left >= n) {
+                    swapIfGreater(a, b, left - n, right - n);
+                } else {
+                    swapIfGreater(a, b, left, right);
+                }
+                left++;
+                right++;
+            }
+            if (gap == 1) break;
+            gap = (gap / 2) + (gap % 2);
+        }
+    }
+
+    public static void swapIfGreater(long []a, long []b, int left, int right) {
+        if (a[left] > b[right]) {
+            long temp = a[left];
+            a[left] = b[right];
+            b[right] = temp;
+        }
+    }
+}
+
+
+
+Time Complexity: O((n+m)*log(n+m)), where n and m are the sizes of the given arrays.
+Reason: The gap is ranging from n+m to 1 and every time the gap gets divided by 2. So, the time complexity of the outer loop will be O(log(n+m)). Now, for each value of the gap, the inner loop can at most run for (n+m) times. So, the time complexity of the inner loop will be O(n+m). So, the overall time complexity will be O((n+m)*log(n+m)).
+
+Space Complexity: O(1) as we are not using any extra space.
