@@ -1,0 +1,40 @@
+Missing And Repeating Numbers
+
+
+
+import java.util.*;
+public class Solution {
+    public static int[] findMissingRepeatingNumbers(int []a) {
+       int n=a.length;
+       int missing=-1;
+       int repeating=-1;
+       for(int i=1;i<=n;i++)
+       {
+           int cnt=0;
+           for(int j=0;j<n;j++)
+           {
+               if(a[j]==i)
+               {
+                   cnt++;
+               }
+           }
+           if(cnt==0) missing=i;
+           if(cnt==2) repeating=i;
+
+           if(missing!=-1 && repeating!=-1)
+           {
+               break;
+           }
+       }
+       int ans[]={repeating,missing};
+       return ans;
+    }
+}
+
+
+Time Complexity: O(N2), where N = size of the given array.
+Reason: Here, we are using nested loops to count occurrences of every element between 1 to N.
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
