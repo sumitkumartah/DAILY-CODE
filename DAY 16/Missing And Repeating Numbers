@@ -38,3 +38,40 @@ Reason: Here, we are using nested loops to count occurrences of every element be
 Space Complexity: O(1) as we are not using any extra space.
 
 
+
+BETTER::
+
+
+public class Solution {
+    public static int[] findMissingRepeatingNumbers(int []a) {
+       int n=a.length;
+       int hash[]=new int[n+1];
+       int repeating=-1;
+       int missing=-1;
+       for(int i=0;i<n;i++)
+       {
+           hash[a[i]]++;
+       }
+       for(int i=1;i<=n;i++)
+       {
+          if (hash[i] == 2) repeating = i;
+          else if (hash[i] == 0) missing = i;
+            
+            if(missing!=-1 && repeating!=-1)
+            {
+                break;
+            }
+       }
+       int ans[]={repeating,missing};
+       return ans;
+    
+    }
+}
+
+
+Time Complexity: O(2N), where N = the size of the given array.
+Reason: We are using two loops each running for N times. So, the time complexity will be O(2N).
+
+Space Complexity: O(N) as we are using a hash array to solve this problem.
+
+
