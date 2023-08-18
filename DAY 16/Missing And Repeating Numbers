@@ -75,3 +75,36 @@ Reason: We are using two loops each running for N times. So, the time complexity
 Space Complexity: O(N) as we are using a hash array to solve this problem.
 
 
+OPTIMAL::
+
+public class Solution {
+    public static int[] findMissingRepeatingNumbers(int []a) {
+       long n=a.length;
+       long s=(n*(n+1))/2;
+        long s2 = (n * (n + 1) * (2 * n + 1)) / 6; 
+       long sn=0;
+       long s2n=0;
+       for(int i=0;i<n;i++)
+       {
+           sn+=a[i];
+           s2n+=((long)a[i]*(long)a[i]);
+       }
+       long val1=s-sn;
+       long val2=s2-s2n;
+       
+       val2=val2/val1;
+       long x=(val1+val2)/2;
+       long y=x-val1;
+       int ans[]={(int)y,(int)x};
+       return ans;
+       
+    }
+}
+
+Time Complexity: O(N), where N = the size of the given array.
+Reason: We are using only one loop running for N times. So, the time complexity will be O(N).
+
+Space Complexity: O(1) as we are not using any extra space to solve this problem.
+
+
+
