@@ -1,0 +1,103 @@
+493. Reverse Pairs
+
+
+BRUTE::
+
+class Solution {
+    public int reversePairs(int[] nums) {
+        int n=nums.length;
+    int cnt = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (nums[i] > 2 * nums[j])
+                    cnt++;
+            }
+        }
+        return cnt;
+
+    }
+}
+
+
+Time Complexity: O(N2), where N = size of the given array.
+Reason: We are using nested loops here and those two loops roughly run for N times.
+
+Space Complexity: O(1) as we are not using any extra space to solve this problem.
+
+
+
+OPTIMAL::
+
+
+import java.util.*;
+class Solution {
+    public void merge(int []arr,int low,int mid,int end)
+    {
+        int n=arr.length;
+        ArrayList<Integer> temp=new ArrayList<>();
+        int left=low;
+        int right=mid+1;
+        while(left<=mid && right<=end)
+        {
+            if(arr[left]<=arr[right])
+            {
+                temp.add(arr[left]);
+                left++;
+            }
+            else
+            {
+                temp.add(arr[right]);
+                right++;
+            }
+        }
+        while(left<=mid)
+        {
+            temp.add(arr[left]);
+            left++;
+        }
+        while(right<=end)
+        {
+            temp.add(arr[right]);
+            right++;
+        }
+        for(int i=low;i<=end;i++)
+        {
+            arr[i]=temp.get(i-low);
+        }
+    }
+    public int mergesort(int []arr,int low,int end)
+    {
+        int cnt=0;
+        if(low>=end)return cnt;
+        int mid=(low+end)/2;
+        cnt+=mergesort(arr,low,mid);
+        cnt+=mergesort(arr,mid+1,end);
+        cnt+=countpairs(arr,low,mid,end);
+         merge(arr,low,mid,end);
+        return cnt;
+
+    }
+    public int countpairs(int arr[],int low,int mid,int end)
+    {
+        int cnt = 0;
+        int right = mid + 1;
+        for (int i = low; i <= mid; i++) {
+            while (right <= end && arr[i] > 2L * arr[right]) {
+                right++;
+            }
+            cnt += (right - (mid + 1));
+        }
+        return cnt;
+
+
+    }
+    public int reversePairs(int[] nums) {
+        return mergesort(nums, 0, nums.length - 1);
+    }
+}
+
+
+Time Complexity: O(2N*logN), where N = size of the given array.
+Reason: Inside the mergeSort() we call merge() and countPairs() except mergeSort() itself. Now, inside the function countPairs(), though we are running a nested loop, we are actually iterating the left half once and the right half once in total. That is why, the time complexity is O(N). And the merge() function also takes O(N). The mergeSort() takes O(logN) time complexity. Therefore, the overall time complexity will be O(logN * (N+N)) = O(2N*logN).
+
+Space Complexity: O(N), as in the merge sort We use a temporary array to store elements in sorted order.
