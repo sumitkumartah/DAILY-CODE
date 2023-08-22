@@ -1,0 +1,31 @@
+2535. Difference Between Element Sum and Digit Sum of an Array
+
+
+OPTIMAL::
+
+class Solution {
+    public int differenceOfSum(int[] nums) {
+        int n=nums.length;
+        int sum=0;
+        int sum1=0;
+        for(int i=0;i<n;i++)
+        {
+            sum+=nums[i];
+            int val=nums[i];
+            while(val>0)
+            {
+                sum1=sum1+val%10;
+                val=val/10;
+            }
+        }
+        return Math.abs(sum-sum1);
+        
+        
+    }
+}
+
+Time complexity: O(N * D)
+The time complexity of this code is O(N * D), where N is the length of the input array and D is the maximum number of digits in any element of the array. The outer loop runs N times, and the inner loop that extracts the digits of each element runs D times for each element. Therefore, the overall time complexity is O(N * D).
+
+Space complexity: O(1)
+The space complexity of this code is O(1) because it uses a constant amount of extra space regardless of the input size.
