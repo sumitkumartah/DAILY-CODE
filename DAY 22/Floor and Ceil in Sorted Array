@@ -1,0 +1,57 @@
+Floor and Ceil in Sorted Array
+
+
+OPTIMAL::
+
+
+import java.util.*;
+import java.io.*;
+
+public class Solution {
+    public static int ceilingInSortedArray(int n, int x, int[] arr) {
+        Arrays.sort(arr);
+        int fl = findfloor(arr, n, x);
+        int cl = findceil(arr, n, x);
+        System.out.print(fl + " ");
+        return cl;
+    }
+
+    static int findfloor(int[] arr, int n, int x) {
+        int low = 0;
+        int high = n - 1;
+        int floor = -1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] <= x) {
+                floor = arr[mid];
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return floor;
+    }
+
+    static int findceil(int[] arr, int n, int x) {
+        int low = 0;
+        int high = n - 1;
+        int ceil = -1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] >= x) {
+                ceil = arr[mid];
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return ceil;
+    }
+}
+
+
+
+Time Complexity: O(logN), where N = size of the given array.
+Reason: We are basically using the Binary Search algorithm.
+
+Space Complexity: O(1) as we are using no extra space.
