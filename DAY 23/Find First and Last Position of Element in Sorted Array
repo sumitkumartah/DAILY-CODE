@@ -1,0 +1,85 @@
+34. Find First and Last Position of Element in Sorted Array
+
+
+
+BRUTE::
+
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int n=nums.length;
+        int start=-1;
+        int last=-1;
+        for(int i=0;i<n;i++)
+        {
+            if(nums[i]==target)
+            {
+                if(start==-1) start=i;
+                last=i;
+            }
+        }
+        return new int[]{start,last};
+    }
+}
+
+Time Complexity: O(n) 
+
+Space Complexity: O(1) not considering the given array
+
+
+
+
+
+OPTIMAL::
+
+class Solution {
+
+    // Find the upper bound of target in the sorted array.
+    public static int upperbound(int[] arr, int n, int target) {
+        int low = 0;
+        int high = n - 1;
+        int ans = n; // Initialize to n to handle cases where the target is greater than all elements.
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (arr[mid] > target) {
+                high = mid - 1; // Adjust the high pointer to search in the left half.
+                ans = mid;     // Update the answer to the current mid.
+            } else {
+                low = mid + 1;  // Search in the right half.
+            }
+        }
+        return ans;
+    }
+
+    // Find the lower bound of target in the sorted array.
+    public static int lowerbound(int[] arr, int n, int target) {
+        int low = 0;
+        int high = n - 1;
+        int ans = n; // Initialize to n to handle cases where the target is not found.
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (target <= arr[mid]) {
+                high = mid - 1; // Adjust the high pointer to search in the left half.
+                ans = mid;     // Update the answer to the current mid.
+            } else {
+                low = mid + 1;  // Search in the right half.
+            }
+        }
+        return ans;
+    }
+
+    public int[] searchRange(int[] nums, int target) {
+        int lb = lowerbound(nums, nums.length, target);
+
+        // Check if the target is not found.
+        if (lb == nums.length || nums[lb] != target)
+            return new int[]{-1, -1};
+
+        // Find the upper bound and return the result.
+        return new int[]{lb, upperbound(nums, nums.length, target) - 1};
+    }
+}
+
+
+Time Complexity: O(log n)
+
+Space Complexity: O(1)
