@@ -1,0 +1,104 @@
+540. Single Element in a Sorted Array
+
+
+BRUTE 1::
+
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int n=nums.length;
+        if(n==1) return nums[0];
+        for(int i=0;i<n;i++)
+        {
+            //if first element is the unique element
+            if(i==0  && nums[i]!=nums[i+1])
+            {
+              return nums[i];
+            }
+            
+            //if last element is the unique element
+           else if(i==n-1 && nums[i]!=nums[i-1])
+            {
+                return nums[i];
+            }
+            else  //if element is not in the first and last
+            {
+                //check element is unique
+                if(nums[i]!=nums[i+1] && nums[i]!=nums[i-1])
+                {
+                    return nums[i];
+                }
+            }
+        }
+        return -1;
+    }
+}
+
+
+Time Complexity: O(N)
+Space Complexity: O(1)
+
+
+
+BRUTE 2::
+
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int n=nums.length;
+        int cnt=0;
+        for(int i=0;i<n;i++)
+        {
+            cnt=cnt^nums[i];  //perform xor operation to find the unique element
+        }
+        return cnt;
+    }
+}
+
+Time Complexity: O(N)
+Space Complexity: O(1)
+
+
+
+OPTIMAL::
+
+
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int n=nums.length;
+        //if array has 1 element
+        if(n==1)return nums[0];  
+        //if 1st element is unique element
+        if(nums[0]!=nums[1]) return nums[0];
+        //if last element is the unique element
+        if(nums[n-1]!=nums[n-2]) return nums[n-1];
+
+        int low=1,high=n-2;  //start checking from 1th index to n-2 index
+        while(low<=high)
+        {
+            int mid=low+(high-low)/2;
+
+            if(nums[mid]!=nums[mid-1] && nums[mid]!=nums[mid+1])
+            {
+                return nums[mid];
+            }
+            
+            //check we are in the left part
+            if((mid %2==1 && nums[mid]==nums[mid-1]) //check mid is in odd index and mid -1 element is equal to mid
+            || (mid%2==0 && nums[mid]==nums[mid+1]))  //check mid is in even index and mid +1 element is equal to mid
+            {
+                low=mid+1;   //eleminate the left part
+            }
+            else
+            {
+                high=mid-1;  //eleminate the right part
+            }
+
+        } 
+        return -1;
+    }
+}
+
+
+Time Complexity: O(logN), N = size of the given array.
+Reason: We are basically using the Binary Search algorithm.
+
+Space Complexity: O(1) as we are not using any extra space.
