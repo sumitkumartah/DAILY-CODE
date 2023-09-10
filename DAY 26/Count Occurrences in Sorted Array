@@ -1,0 +1,75 @@
+Count Occurrences in Sorted Array
+
+BRUTE FORCE:: (Linear search)
+
+public class Solution {
+    public static int count(int arr[], int n, int x) {
+       int cnt=0;
+       for(int i=0;i<n;i++)
+       {
+           if(arr[i]==x) cnt++;
+       }
+       return cnt;
+    }
+}
+
+
+Time Complexity: O(N), N = size of the given array
+Reason: We are traversing the whole array.
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
+
+OPTIMAL::
+
+
+public class Solution {
+   
+    // Find the upper bound of target in the sorted array.
+    public static int upperbound(int[] arr, int n, int target) {
+        int low = 0;
+        int high = n - 1;
+        int ans = n; // Initialize to n to handle cases where the target is greater than all elements.
+        while (low <= high) {
+            int mid = low + (high - low) / 2; // Use this formula to prevent integer overflow.
+            if (arr[mid] > target) {
+                high = mid - 1; // Adjust the high pointer to search in the left half.
+                ans = mid;     // Update the answer to the current mid.
+            } else {
+                low = mid + 1;  // Search in the right half.
+            }
+        }
+        return ans;
+    }
+
+    // Find the lower bound of target in the sorted array.
+    public static int lowerbound(int[] arr, int n, int target) {
+        int low = 0;
+        int high = n - 1;
+        int ans = n; // Initialize to n to handle cases where the target is not found.
+        while (low <= high) {
+            int mid = low + (high - low) / 2; // Use this formula to prevent integer overflow.
+            if (target <= arr[mid]) {
+                high = mid - 1; // Adjust the high pointer to search in the left half.
+                ans = mid;     // Update the answer to the current mid.
+            } else {
+                low = mid + 1;  // Search in the right half.
+            }
+        }
+        return ans;
+    }
+
+    
+
+    public static int count(int[] arr, int n, int x) {
+        int first = lowerbound(arr, n, x);
+      if (first == n || arr[first] != x) return 0;
+       int second = upperbound(arr, n, x);
+      return (second - first);
+    }
+}
+
+
+Time Complexity: O(logN), where N = size of the given array.
+Space Complexity: O(1) as we are using no extra space.
