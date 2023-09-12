@@ -1,0 +1,84 @@
+Finding Sqrt of a number using Binary Search
+
+
+
+BRUTE FORCE::
+
+import java.util.* ;
+import java.io.*; 
+
+public class Solution {
+
+	public static int sqrtN(long N) {
+		int ans=0;
+		for(long i=1;i<N;i++)  // i value can be grater tham the integer value so i take here long
+		{
+			long val=i*i;    //value can be so big so take long 
+			if(val<=N)
+			{
+				ans=(int)i;  // we have to return integer num so typecast
+			}
+			else break;
+		}
+		return ans;
+	}
+}
+
+
+Time Complexity: O(N)
+Space Complexity: O(1) 
+
+
+
+
+
+BRUTE 2::
+
+import java.util.* ;
+import java.io.*; 
+
+public class Solution {
+
+	public static int sqrtN(long N) {
+		 int ans = (int) Math.sqrt(N);    //by using java inbuild method
+        return ans;
+	}
+}
+
+Time Complexity: O(N)
+Space Complexity: O(1) 
+
+
+
+
+OPTIMAL::
+
+import java.util.* ;
+import java.io.*; 
+
+public class Solution {
+
+	public static int sqrtN(long N) {
+		int low=1; long high=N;
+		while(low<=high)
+		{
+			long mid=(low+high)/2;
+			
+			long val=mid*mid;  //find out square
+			if(val<=N)
+			{
+				low=(int)mid+1;  //eleminate left part
+			}
+			else
+			{
+				high=(int)mid-1;   //eleminate right part
+				
+			}
+		}
+		return (int)high;
+	}
+}
+
+
+Time Complexity: O(logN)
+Space Complexity: O(1) 
