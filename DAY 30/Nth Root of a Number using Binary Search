@@ -93,5 +93,5 @@ public class Solution {
 
 
 
-Time Complexity: O(logM) * O(logN)
-Reason: O(logM)  for We are basically using binary search to find the minimum.   (logN) for exponential and deal with overflow condition
+Time Complexity: O(logM) * O(N)
+Reason: O(logM)  for We are basically using binary search to find the minimum.   N for exponential and deal with overflow condition
