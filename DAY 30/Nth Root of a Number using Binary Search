@@ -1,0 +1,97 @@
+Nth Root of a Number using Binary Search
+
+
+BRUTE FORCE::
+
+
+public class Solution {
+    //operate exponential method
+    public static long findexponenet(int b,int exp)
+    {
+        long ans=1; //store the answer as 1 first
+        long base=b;
+        while(exp>0)
+        {
+            if(exp % 2==1)  //if exp is odd number      
+            {
+               exp--;        
+               ans=ans*base;
+            }
+            else
+            {
+                exp=exp/2;
+                base=base*base;
+            }
+        }
+        return ans;
+    }
+    public static int NthRoot(int n, int m) {
+       for(int i=1;i<m;i++)
+       {
+           long val=findexponenet(i,n);  
+           if(val==m)   //value is equal to the m
+           {
+               return i;   //return index
+           }
+           else if(val>m) break;   //value is greater than m then break
+       }
+       return -1;
+    }
+}
+
+
+Time Complexity: O(M) * O(logN)    
+Reason: O(N) we are using linear search, we traverse the entire answer space.  O(logN)  for find exponent
+
+Space Complexity:O(1)
+
+
+
+
+
+OPTIMAL::
+
+public class Solution {
+
+    //we have to deal with overflow(mid^n) condition so we have to return small value
+    //return 1 if ==m
+    //return 0 if >m
+    //return anything except 0 and 1  if <m
+    public static int dealoverflow(int mid,int n,int m)
+    {
+        long ans=1;
+        for(int i=0;i<n;i++)
+        {
+            ans=ans*mid;      //calculate ans
+            if(ans>m) return 2;   //ans crosses m 
+        }
+        if(ans==m) return 1;  //ans is equal to m
+        else return 0;  //ans is less than m
+    }
+    public static int NthRoot(int n, int m) {
+       int low=1;
+       int high=m;
+       while(low<=high)
+       {
+           int mid=(low+high)/2;
+           int val=dealoverflow(mid,n,m);  //call method
+           
+           if(val==1) return mid;  //when ans is equal to m
+           
+           if(val==0)   //ans is less than m  eleminate left
+           {
+               low=mid+1;
+           }
+           else
+           {
+               high=mid-1;   //ans is greater than m then eleminate right
+           }
+       }
+       return -1;
+    }
+}
+
+
+
+Time Complexity: O(logM) * O(logN)
+Reason: O(logM)  for We are basically using binary search to find the minimum.   (logN) for exponential and deal with overflow condition
