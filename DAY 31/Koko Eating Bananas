@@ -1,0 +1,112 @@
+875. Koko Eating Bananas
+
+
+BRUTE ::  (TLE)
+
+
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+        int n=piles.length;
+        int max = maximum(piles);
+    //applying linear search
+        for(int i=0;i<=max;i++)
+        {
+            int totalh=totalhour(piles,i);
+            if(totalh<=h)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+ //find the maximum element of the array
+    public static int maximum(int arr[])
+    {
+        int n=arr.length;
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<n;i++)
+        {
+            max=Math.max(max,arr[i]);
+        }
+        return max;
+    }
+   //calculate the total hours
+    public static int totalhour(int arr[],int n)
+    {
+        int totalh=0;
+        for(int i=0;i<arr.length;i++)
+        {
+            totalh+=Math.ceil((double)arr[i]/(double)n);  //take ceil value 
+        }
+        return totalh;
+    }
+
+}
+
+
+Time Complexity: O(max(a[]) * N), where max(a[]) is the maximum element in the array and N = size of the array.
+Reason: We are running nested loops. The outer loop runs for max(a[]) times in the worst case and the inner loop runs for N times.
+
+Space Complexity: O(1) 
+
+
+
+
+
+OPTIMAL::
+
+
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+        int n=piles.length;
+        int high = maximum(piles);
+        int low=0;
+
+        //apply binary search
+        while(low<=high)
+        {
+            int mid=low+(high-low)/2;
+            int totalh=totalhour(piles,mid);
+
+            if(totalh<=h)  
+            {
+                high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+        }
+        return low;
+    }
+
+ //find the maximum element of the array
+    public static int maximum(int arr[])
+    {
+        int n=arr.length;
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<n;i++)
+        {
+            max=Math.max(max,arr[i]);
+        }
+        return max;
+    }
+    
+   //calculate the total hours
+    public static int totalhour(int arr[],int hour)
+    {
+        int totalh=0;
+        for(int i=0;i<arr.length;i++)
+        {
+            totalh+=Math.ceil((double)arr[i]/(double)hour);  //take ceil value 
+        }
+        return totalh;
+    }
+
+}
+
+
+
+Time Complexity: O(N * log(max(a[]))), where max(a[]) is the maximum element in the array and N = size of the array.
+Space Complexity: O(1)
