@@ -1,7 +1,7 @@
 875. Koko Eating Bananas
 
 
-BRUTE ::  (TLE)
+BRUTE ::  (TLE  )
 
 
 class Solution {
