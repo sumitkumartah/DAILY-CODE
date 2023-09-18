@@ -1,0 +1,80 @@
+1283. Find the Smallest Divisor Given a Threshold
+
+
+BRUTE::
+
+class Solution {
+    public int smallestDivisor(int[] nums, int threshold) {
+        int n=nums.length;
+        if(n > threshold)return -1;  /// Impossible case.
+        int max=Integer.MAX_VALUE;  //find the maximum element of array
+        for(int i=0;i<n;i++)
+        {
+            max=Math.max(max,nums[i]);
+        }
+       
+        for(int d=0;d<max;d++)
+        {
+              int sum=0;
+           for (int i = 0; i < n; i++) {
+                sum += Math.ceil((double)(nums[i]) / (double)(d));   //find the ceil value
+            }
+          if(sum<=threshold)
+          {
+              return d;
+          }
+        }
+        return -1;
+    }
+}
+
+
+Time Complexity: O(max(arr[])*N), where max(arr[]) = maximum element in the array, N = size of the array.
+
+Space Complexity: O(1) as we are not using any extra space to solve this problem.
+
+
+
+
+OPTIMAL::
+
+lass Solution {
+    public int smallestDivisor(int[] nums, int threshold) {
+        int n=nums.length;
+        if(n > threshold)return -1;  /// Impossible case.
+        int max=Integer.MAX_VALUE;  //find the maximum element of array
+        for(int i=0;i<n;i++)
+        {
+            max=Math.max(max,nums[i]);
+        }
+       int low=0, high=max;
+       while(low<=high)
+       {
+           int mid=(low+high)/2;
+           int sum=sumofdiv(nums,mid);
+           if(sum<=threshold)
+           {
+               high=mid-1;
+           }
+           else
+           {
+               low=mid+1;
+           }
+       }
+       
+        return low;
+    }
+
+    public static int sumofdiv(int arr[],int mid)
+    {
+        int n=arr.length;
+         int sum=0;
+           for (int i = 0; i < n; i++) {
+                sum += Math.ceil((double)(arr[i]) / (double)(mid));   //find the ceil value
+            }
+            return sum;
+    }
+}
+
+Time Complexity: O(log(max(arr[]))*N), where max(arr[]) = maximum element in the array, N = size of the array.
+Space Complexity: O(1) as we are not using any extra space to solve this problem.
