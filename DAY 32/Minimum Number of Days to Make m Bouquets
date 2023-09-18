@@ -1,0 +1,129 @@
+1482. Minimum Number of Days to Make m Bouquets
+
+
+
+
+BRUTE::
+
+
+class Solution {
+    public int minDays(int[] bloomDay, int m, int k) {
+       int n=bloomDay.length;
+       if(m*k>n) return -1;  //no of bouquets * adjacent flowers > size of the garden
+
+       int min=Integer.MAX_VALUE;
+       int maxi=Integer.MIN_VALUE;
+       for(int i=0;i<n;i++)
+       {
+           min=Math.min(min,bloomDay[i]);
+           maxi=Math.max(maxi,bloomDay[i]);
+       }
+       for(int i=min;i<=maxi;i++)
+       {
+           if(possibledays(bloomDay,i,m,k)==true)
+           {
+               return i;
+           }
+       }
+       return -1;
+
+    }
+
+    //find the min possible days
+    public static boolean possibledays(int arr[],int day,int m,int k)
+    {
+        int n=arr.length;
+        int cnt=0;
+        int noBoq=0;
+        for(int i=0;i<n;i++)
+        {
+            if(arr[i]<=day)
+            {
+                cnt++;
+            }
+            else
+            {
+                noBoq+=(cnt/k);
+                cnt=0;
+            }
+        }
+        noBoq+=(cnt/k);
+        if(noBoq>=m)
+        {
+            return true;
+        }
+        return false;
+    }
+}
+
+
+Time Complexity: O((max(arr[])-min(arr[])+1) * N), where {max(arr[]) -> maximum element of the array, min(arr[]) -> minimum element of the array, N = size of the array}.
+
+Space Complexity: O(1)
+
+
+
+
+
+OPTIMAL::
+
+
+
+class Solution {
+    public int minDays(int[] bloomDay, int m, int k) {
+        int n=bloomDay.length;
+        long val = (long) m * k;
+         if (val > n) return -1;
+        int low=Integer.MAX_VALUE;
+        int high=Integer.MIN_VALUE;
+        for(int i=0;i<n;i++)  //caclulate min and maximum element of array
+        {
+            low=Math.min(low,bloomDay[i]);
+            high=Math.max(high,bloomDay[i]);
+        }
+      //apply binary search
+      while(low<=high)
+      {
+          int mid=(low+high)/2;
+          if(possibleDays(bloomDay,mid,m,k))
+          {
+             high=mid-1;
+          }
+          else
+          {
+              low=mid+1;
+          }
+      }
+       return low;
+     
+    }
+    
+    public static boolean possibleDays(int arr[],int days,int m,int k)
+    {
+        int n=arr.length;
+        int cnt=0;
+        int NoBoq=0;
+        for(int i=0;i<n;i++)
+        {
+            if(arr[i]<=days)
+            {
+                cnt++;
+            }
+            else
+            {
+                NoBoq+=(cnt/k);
+                cnt=0;
+            }
+        }
+        NoBoq+=(cnt/k);
+        
+        return (NoBoq>=m);
+    }
+}
+
+
+Time Complexity: O(log(max(arr[])-min(arr[])+1) * N), where {max(arr[]) -> maximum element of the array, min(arr[]) -> minimum element of the array, N = size of the array}.
+
+Space Complexity: O(1) as we are not using any extra space to solve this problem.
+
+
