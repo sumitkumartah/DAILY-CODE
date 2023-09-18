@@ -1,0 +1,108 @@
+1011. Capacity To Ship Packages Within D Days
+
+
+
+BRUTE::
+
+
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+        int n = weights.length;
+        int maxi = Integer.MIN_VALUE; 
+        int sum = 0; 
+
+        // Loop through the weights array to calculate the total weight and find the maximum weight.
+        for (int i = 0; i < n; i++) {
+            sum += weights[i]; 
+            maxi = Math.max(maxi, weights[i]); 
+        }
+
+        // Start iterating from maxi (minimum possible capacity) up to the sum of all weights.
+        for (int i = maxi; i <= sum; i++) {
+            // Check if it's possible to ship all packages with the current capacity (i)
+            if (noDays(weights, i) <= days) {
+                return i; 
+            }
+        }
+
+        return -1; 
+    }
+
+    // calculates the number of days required to ship all packages with a given capacity (cap).
+    public static int noDays(int arr[], int cap) {
+        int n = arr.length;
+        int load = 0; 
+        int days = 1; 
+        for (int i = 0; i < n; i++) {
+            if (load + arr[i] > cap) { // If adding the current package exceeds the capacity.
+                days += 1; // Increment the number of days.
+                load = arr[i]; // Reset the load to the weight of the current package.
+            } else {
+                load += arr[i]; // Add the current package to the load.
+            }
+        }
+        return days; // Return the total number of days required to ship all packages.
+    }
+}
+
+
+
+Time Complexity: O(N * (sum(weights[]) – max(weights[]) + 1)), where sum(weights[]) = summation of all the weights, max(weights[]) = maximum of all the weights, N = size of the weights array.
+
+Space Complexity: O(1) as we are not using any extra space to solve this problem.
+
+
+
+
+
+OPTIMAL::
+
+
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+        int n = weights.length;
+        int maxi = Integer.MIN_VALUE; 
+        int sum = 0; 
+
+        // Loop through the weights array to calculate the total weight and find the maximum weight.
+        for (int i = 0; i < n; i++) {
+            sum += weights[i]; 
+            maxi = Math.max(maxi, weights[i]); 
+        }
+
+       int low=maxi,high=sum;
+       while(low<=high)
+       {
+           int mid=(low+high)/2;
+           if(noDays(weights,mid)<=days)
+           {
+               high=mid-1;   //eliminate right half
+           }
+           else
+           {
+               low=mid+1;   //eliminate left half
+           }
+       }
+       return low;
+    }
+
+    // calculates the number of days required to ship all packages with a given capacity (cap).
+    public static int noDays(int arr[], int cap) {
+        int n = arr.length;
+        int load = 0; 
+        int days = 1; 
+        for (int i = 0; i < n; i++) {
+            if (load + arr[i] > cap) { // If adding the current package exceeds the capacity.
+                days += 1; // Increment the number of days.
+                load = arr[i]; // Reset the load to the weight of the current package.
+            } else {
+                load += arr[i]; // Add the current package to the load.
+            }
+        }
+        return days; // Return the total number of days required to ship all packages.
+    }
+}
+
+Time Complexity: O(N * log(sum(weights[]) – max(weights[]) + 1)), where sum(weights[]) = summation of all the weights, max(weights[]) = maximum of all the weights, N = size of the weights array.
+
+Space Complexity: O(1) as we are not using any extra space to solve this problem.
