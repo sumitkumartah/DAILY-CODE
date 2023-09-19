@@ -1,0 +1,178 @@
+Painter's Partition Problem
+
+
+BRUTE :: (just like book allocation problem so i just call the method of book alloaction here)
+
+import java.util.ArrayList;
+
+public class Solution 
+{
+    public static int findPages(ArrayList<Integer> arr,int n ,int m) {
+        int max = Integer.MIN_VALUE;  // Initialize minimum possible answer
+        int sum = 0;   // Initialize maximum possible answer
+
+        
+        for (int i = 0; i < n; i++) {
+            max = Math.max(arr.get(i), max);
+            sum += arr.get(i);
+        }
+
+        if (m > n) return -1;
+
+        // Iterate through possible page numbers from max to sum
+        for (int page = max; page <= sum; page++) {
+            // Check if it's possible to distribute books with the given number of pages (page)
+            if (NoStudents(arr, page, m)) {
+                return page; // Return the minimum number of pages that satisfies the condition
+            }
+        }
+        
+        // If no valid distribution is found, return the maximum possible sum (sum)
+        return sum;
+    }
+
+    
+    public static boolean NoStudents(ArrayList<Integer> arr, int maxpage, int stud) {
+        int n = arr.size();
+        int cntst = 1; // Initialize the number of students to 1
+        int page = 0; // Initialize the current page count to 0
+
+        // Iterate through the books and try to distribute them to students
+        for (int i = 0; i < n; i++) {
+            if (page + arr.get(i) > maxpage) {
+                cntst++; // If the current student's page limit is exceeded, increment the student count
+                page = arr.get(i); // Reset the current page count to the current book's pages
+            } else {
+                page += arr.get(i); // Otherwise, add the current book's pages to the current student
+            }
+        }
+        
+        // Check if the number of students required is less than or equal to the given number of students (stud)
+        if (cntst <= stud) return true; // Return true if it's possible
+        return false; // Return false if it's not possible
+    }
+
+    
+
+    
+    
+    // it is just like book allocation problem 
+    // so i just call the method
+    public static int findLargestMinDistance(ArrayList<Integer> boards, int k)
+    {
+        int n=boards.size();
+       return findPages(boards,n,k);
+    }
+}
+
+
+
+
+Time Complexity: O(N * (sum(arr[])-max(arr[])+1)), where N = size of the array, sum(arr[]) = sum of all array elements, max(arr[]) = maximum of all array elements.
+
+Space Complexity:  O(1) as we are not using any extra space to solve this problem.
+
+
+
+
+OPTIMAL::
+
+
+
+import java.util.ArrayList;
+import java.util.*;
+public class Solution 
+{// Function to determine how many students are needed for a given maximum page limit
+    public static int possibleStudent(ArrayList<Integer> arr, int mid){
+
+        int student = 1; // Initialize with 1 student
+        int pages = 0;   // Initialize with 0 pages assigned
+
+        // Iterate through the books in the arr ArrayList
+        for(int i = 0; i < arr.size(); i++){
+
+            // Check if adding the current book's pages to the current student's assignment
+            // would still be within the maximum page limit (mid)
+            if(pages + arr.get(i) <= mid){
+
+                // If it's within the limit, add the current book's pages to the current student's assignment
+                pages += arr.get(i);
+
+            } else {
+
+                // If adding the current book's pages would exceed the limit, a new student is needed
+                student++;    // Increment the student count to indicate a new student
+                pages = arr.get(i); // Assign the current book's pages to the new student
+
+            }
+
+        }
+
+        // Return the total number of students required to distribute the books with the given maximum page limit
+        return student;
+    }
+
+    // Function to find the minimum number of pages required to distribute books among students
+    public static int findPages(ArrayList<Integer> arr, int n, int m) {
+
+        // Check if there are fewer books than students, which makes distribution impossible
+        if(n < m){
+            return -1;
+        }
+
+        // Initialize 'low' to the maximum page count among the books
+        int low = Collections.max(arr);
+
+        int sum = 0;
+
+        // Calculate the total number of pages by iterating through the arr ArrayList
+        for (int number : arr){
+            sum += number;
+        }
+
+        // Initialize 'high' to the sum of all pages in the books
+        int high = sum;
+
+        // Binary search loop to find the minimum number of pages required
+        while(low <= high){
+
+            // Calculate the middle value
+            int mid = (low + high) / 2;
+
+            // Determine how many students are needed for the current maximum page limit (mid)
+            int student = possibleStudent(arr, mid);
+
+            // If the number of students required is less than or equal to the given number of students (m),
+            // it means it's possible to distribute the books with a maximum page limit of 'mid'
+            if(student <= m){
+
+                // Adjust 'high' to 'mid - 1' to search for smaller values
+                high = mid - 1;
+
+            } else {
+
+                // If the number of students required is greater than 'm', it's not possible to distribute
+                // the books with the current maximum page limit, so adjust 'low' to 'mid + 1' to search for larger values
+                low = mid + 1;
+            }
+        }
+
+        // Return 'low' as the minimum number of pages required
+        return low;
+    }
+    
+
+    
+    
+    // it is just like book allocation problem 
+    // so i just call the method
+    public static int findLargestMinDistance(ArrayList<Integer> boards, int k)
+    {
+        int n=boards.size();
+       return findPages(boards,n,k);
+    }
+}
+
+Time Complexity: O(N * log(sum(arr[])-max(arr[])+1)), where N = size of the array, sum(arr[]) = sum of all array elements, max(arr[]) = maximum of all array elements.
+
+Space Complexity:  O(1) as we are not using any extra space to solve this problem.
