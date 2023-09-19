@@ -1,0 +1,124 @@
+410. Split Array Largest Sum
+
+
+BRUTE::
+
+
+class Solution {
+    public int splitArray(int[] nums, int k) {
+        int n=nums.length;
+        int max=Integer.MIN_VALUE;
+        int sum=0;
+        for(int i=0;i<n;i++)
+        {
+            max=Math.max(max,nums[i]);
+            sum+=nums[i];
+        }
+         if(n < k)
+         {
+           return -1;   //impossible case
+         }
+        for(int i=max;i<=sum;i++)
+        {
+            if(largertSum(nums,i)==k)
+            {
+                return i;
+            }
+            
+        }
+        return max;
+    }
+
+    public static int largertSum(int []nums,int maximum)
+    {
+        int n=nums.length;
+        int cnt=1;
+        int last=0;
+        for(int i=0;i<n;i++)
+        {
+            if(last+nums[i]>maximum)
+            {
+                cnt++;
+                last=nums[i];
+            }
+            else
+            {
+                last+=nums[i];
+            }
+        }
+        return cnt;
+    }
+}
+
+
+Time Complexity: O(N * (sum(arr[])-max(arr[])+1)), where N = size of the array, sum(arr[]) = sum of all array elements, max(arr[]) = maximum of all array elements.
+
+Space Complexity:  O(1) as we are not using any extra space to solve this problem.
+
+
+
+
+OPTIMAL::
+
+
+
+lass Solution {
+    public int splitArray(int[] nums, int k) {
+        int n=nums.length;
+        int max=Integer.MIN_VALUE;
+        int sum=0;
+        for(int i=0;i<n;i++)
+        {
+            max=Math.max(max,nums[i]);
+            sum+=nums[i];
+        }
+         if(n < k)
+         {
+           return -1;   //impossible case
+         }
+       int low=max,high=sum;
+
+       //apply binary search 
+       while(low<=high)
+       {
+           int mid =(low+high)/2;
+           if(largertSum(nums,mid)>k)
+           {
+               low=mid+1;
+           }
+           else
+           {
+               high=mid-1;
+           }
+       }
+       return low;
+    }
+
+    public static int largertSum(int []nums,int maximum)
+    {
+        int n=nums.length;
+        int cnt=1;
+        int last=0;
+        for(int i=0;i<n;i++)
+        {
+            if(last+nums[i]>maximum)
+            {
+                cnt++;
+                last=nums[i];
+            }
+            else
+            {
+                last+=nums[i];
+            }
+        }
+        return cnt;
+    }
+}
+
+
+
+Time Complexity: O(N * log(sum(arr[])-max(arr[])+1)), where N = size of the array, sum(arr[]) = sum of all array elements, max(arr[]) = maximum of all array elements.
+
+Space Complexity:  O(1) as we are not using any extra space to solve this problem.
+
+
