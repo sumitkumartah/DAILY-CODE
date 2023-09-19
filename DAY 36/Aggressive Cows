@@ -1,0 +1,100 @@
+	Aggressive Cows
+
+BRUTE::
+
+
+import java.util.*;
+public class Solution {
+    public static int aggressiveCows(int []stalls, int k) {
+        int n=stalls.length;
+        Arrays.sort(stalls);
+       int limit=stalls[n-1]-stalls[0]; //maximum limit of the distance 
+       for(int i=1;i<=limit;i++)
+       {
+           if (!cowPlace(stalls, i, k))
+           {
+               return (i-1);  //suppose distance is 4 where the cowplace method false then I have to return 3, where the cows are placed
+           }
+       }
+       return limit;
+    }
+
+    //method to find the maximum possible minimum distance
+    public static boolean cowPlace(int arr[],int dist,int cow)
+    {
+        int last=arr[0];
+        int cntcow=1;
+        int n=arr.length;
+        for(int i=0;i<n;i++)
+        {
+            if(arr[i]-last >= dist)
+            {
+                cntcow++;
+                last=arr[i];
+            }
+            if(cntcow>=cow) return true;
+        }
+        return false;
+    }
+}
+
+
+Time Complexity: O(NlogN) + O(N *(max(stalls[])-min(stalls[]))), where N = size of the array, max(stalls[]) = maximum element in stalls[] array, min(stalls[]) = minimum element in stalls[] array.
+
+Space Complexity: O(1) as we are not using any extra space to solve this problem.
+
+
+
+
+
+OPTIMAL::
+
+
+
+import java.util.*;
+public class Solution {
+    public static int aggressiveCows(int []stalls, int k) {
+        int n=stalls.length;
+        Arrays.sort(stalls);
+       int limit=stalls[n-1]-stalls[0]; //maximum limit of the distance 
+       int low=0;
+       int high=limit;
+       while(low<=high)
+       {
+           int mid=(low+high)/2;
+           if(cowPlace(stalls,mid,k))   //if condition is true
+           {
+               low=mid+1;   //eleminate left part
+           }
+           else
+           {
+               high=mid-1;    //eleminate right part
+           }
+       }
+       return high;
+    }
+
+    //method to find the maximum possible minimum distance
+    public static boolean cowPlace(int arr[],int dist,int cow)
+    {
+        int last=arr[0];
+        int cntcow=1;
+        int n=arr.length;
+        for(int i=0;i<n;i++)
+        {
+            if(arr[i]-last >= dist)
+            {
+                cntcow++;
+                last=arr[i];
+            }
+            if(cntcow>=cow) return true;
+        }
+        return false;
+    }
+}
+
+
+
+Time Complexity: O(NlogN) + O(N * log(max(stalls[])-min(stalls[]))), where N = size of the array, max(stalls[]) = maximum element in stalls[] array, min(stalls[]) = minimum element in stalls[] array.
+
+Space Complexity: O(1) as we are not using any extra space to solve this problem.
