@@ -1,0 +1,52 @@
+Minimise Maximum Distance between Gas Stations     (most hard problem on BS)
+
+
+BRUTE FORCE::  (it will give TLE) 
+
+
+public class Solution {
+    public static double MinimiseMaxDistance(int []arr, int K){
+      int n=arr.length;
+      int howmany[]=new int[n-1];
+      for(int gasstation=1;gasstation<=K;gasstation++)
+      {
+         int maxind = -1;
+          double maxsection=-1;
+          for(int i=0;i<n;i++)
+          {
+              double diff=arr[i+1]-arr[i];
+              double sectionlength=diff/(double)howmany[i]+1;
+              if(sectionlength>maxsection)
+             {
+              maxsection=sectionlength;
+              maxind=i;
+             }
+          }
+          howmany[maxind]++;
+       }
+
+      //find the maximum distance
+      double maxans=-1;
+      for(int i=0;i<n;i++)
+      {
+      double diff=arr[i+1]-arr[i];
+      double sectionlength=diff/(double)howmany[i]+1;
+      maxans=Math.max(maxans,sectionlength);
+      }
+      return maxans;
+    }
+}
+
+Time Complexity: O(k*n) + O(n), n = size of the given array, k = no. of gas stations to be placed.
+
+Space Complexity: O(n-1) as we are using an array to keep track of placed gas stations.
+
+
+
+
+OPTIMAL::
+
+
+
+
+
