@@ -1,0 +1,57 @@
+1539. Kth Missing Positive Number
+
+
+BRUTE FORCWE::
+
+class Solution {
+    public int findKthPositive(int[] arr, int k) {
+        int n=arr.length;
+        for(int i=0;i<n;i++)
+        {
+            if(arr[i]<=k)k++;
+            else break;
+        }
+        return k;
+    }
+}
+
+
+Time Complexity: O(N), N = size of the given array.
+
+Space Complexity: O(1)
+
+
+
+
+
+OPTIMAL::
+
+class Solution {
+    public int findKthPositive(int[] arr, int k) {
+        int n=arr.length;
+        int low=0;
+        int high=n-1;  //we know ans will be within low and high
+        //apply binary search 
+        while(low<=high)
+        {
+            int mid=(low+high)/2;
+            int missing=arr[mid]-(mid+1);
+            if(missing<k)  //check missing number is less than k or not
+            {
+                low=mid+1;  //eleminate left
+            }
+            else
+            {
+                high=mid-1;  //eleminate right
+            }
+        }
+        return  k+high+1;  // it can be return (k+low);
+    }
+}
+
+
+Time Complexity: O(logN)
+Space Complexity: O(1) 
+
+
+
