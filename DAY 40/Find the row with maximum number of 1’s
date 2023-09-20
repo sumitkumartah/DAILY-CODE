@@ -1,0 +1,89 @@
+Find the row with maximum number of 1’s
+
+
+BRUTE FORCE::
+
+
+import java.util.ArrayList;
+public class Solution
+{
+    public static int maximumOnesRow(ArrayList<ArrayList<Integer>> matrix, int n, int m)
+    {
+       int cnt_max=0;
+       int ind=-1;
+       for(int i=0;i<n;i++)
+       {
+           int cnt_one=0;
+           for(int j=0;j<m;j++)
+           {
+               cnt_one+=matrix.get(i).get(j);
+           }
+           if(cnt_one>cnt_max)
+           {
+               cnt_max=cnt_one;
+               ind=i;
+           }
+       }
+       return ind;
+
+    }
+}
+
+
+Time Complexity: O(n X m), where n = given row number, m = given column number.
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
+
+
+
+OPTIMAL::
+
+
+
+import java.util.ArrayList;
+public class Solution
+{
+    public static int maximumOnesRow(ArrayList<ArrayList<Integer>> matrix, int n, int m)
+    {
+       int cnt_max=0;
+       int ind=-1;
+       for(int i=0;i<n;i++)
+       {
+           int cnt_one=m-lowerbound(matrix.get(i),m,1);
+           if(cnt_one>cnt_max)
+           {
+               cnt_max=cnt_one;
+               ind=i;
+           }
+       }
+       return ind;
+
+    }
+
+    //find the lowerbound
+
+    public static int lowerbound(ArrayList<Integer> matrix,int n,int x)
+    {
+        int low=0;int high=n-1;
+        while(low<=high)
+        {
+            int mid=(low+high)/2;
+            if(matrix.get(mid)>=x)
+            {
+               high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+        }
+        return high;
+    }
+}
+
+
+Time Complexity: O(n X logm), where n = given row number, m = given column number.
+
+Space Complexity: O(1) as we are not using any extra space.
