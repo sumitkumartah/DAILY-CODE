@@ -1,0 +1,111 @@
+Median in a row-wise sorted Matrix
+
+
+BRUTE::
+
+
+import java.util.*;
+public final class Solution {
+    public static int findMedian(int matrix[][], int m, int n) {
+        int[] median=new int[m*n];
+        int index=0;
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                median[index]=matrix[i][j];
+                index++;
+            }
+        }
+        Arrays.sort(median);
+        return median[(m*n)/2];
+    }
+}
+
+
+Time Complexity: O(( row *col ) + (row*col) * log (row*col) )
+
+Space Complexity: O(row *col)
+
+
+
+
+
+OPTIMAL::
+
+
+public final class Solution {
+
+    public static int findMedian(int matrix[][], int m, int n) {
+       int low = Integer.MAX_VALUE;
+
+        int high = Integer.MIN_VALUE;
+       for(int i = 0; i< m; i++)
+
+        {
+
+            low = Math.min(low, matrix[i][0]);
+
+            high = Math.max(high, matrix[i][n-1]);
+
+        }
+
+        int req = (n*m)/2;
+
+        while(low <= high)
+
+        {
+         int mid = (low+high)/2;
+         int currNumbers = numElements(matrix, mid);
+         if(currNumbers <= req)
+              low = mid+1;
+         else
+            high = mid-1;
+
+        }
+      return low;
+
+    }
+
+ 
+
+    public static int numElements(int [][] arr, int num)
+
+    {
+
+        int count = 0;
+        for(int i = 0; i< arr.length; i++)
+        {
+          count+=upperBound(arr[i], num);
+        }
+        return count;
+
+    }
+
+ 
+
+    public static int upperBound (int [] arr, int num)
+
+    {
+
+        int low = 0;
+        int high = arr.length-1;
+        while(low <= high)
+
+        {
+           int mid= (low+high)/2;
+           if(arr[mid] <= num)
+              low = mid+1;
+           else
+              high = mid-1;
+        }
+
+        return low;
+
+    }
+
+}
+
+
+Time Complexity: O (log2 (10^9)  * n*log2 m )
+ Space Complexity: O(1)
