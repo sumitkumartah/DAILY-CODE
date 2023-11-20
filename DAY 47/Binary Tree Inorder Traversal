@@ -1,0 +1,70 @@
+94. Binary Tree Inorder Traversal
+
+
+
+Code:: (by using recursion)
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void inorder(TreeNode root, List<Integer>list)
+    {
+       if (root==null)return;
+       inorder(root.left,list);
+       list.add(root.val);
+       inorder(root.right,list);
+    }
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> ans=new ArrayList<>();
+        inorder(root,ans);
+        return ans;
+    }
+}
+
+
+
+Time Complexity=O(N)   Reason: We are traversing N nodes and every node is visited exactly once.
+Space Complexity=O(N)  Reason: Space is needed for the recursion stack. In the worst case (skewed tree), space complexity can be O(N).
+
+
+CODE::(By interative approach)
+
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> ans=new ArrayList<>();   //take arraylist to store the inorder answer
+        Stack<TreeNode> st=new Stack<TreeNode>();  //take a stack
+        while(true)   
+        {
+            if(root!=null)     //if root is not null push the root element and go to the left
+            {
+                st.push(root);
+                root=root.left;
+            }
+            else
+            {
+                if(st.isEmpty()) break;  //check stack is empty ...if empty then automatically break 
+                root=st.pop();   //pop out the top most element of the stack
+                ans.add(root.val);  //within arraylist store the value
+                root=root.right;  //then go to the right element
+            }
+        }
+        return ans;  //return ans arraylist
+    }
+}
+
+Time Complexity= O(N)  Reason: We are traversing N nodes and every node is visited exactly once.
+Space Complexity=O(N)  Reason: In the worst case (a tree with just left children), the space complexity will be O(N).
