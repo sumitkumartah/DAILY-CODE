@@ -1,0 +1,65 @@
+145. Binary Tree Postorder Traversal
+
+
+CODE:: (Using Recursion)
+
+
+class Solution {
+    public void postorder(TreeNode root, List<Integer> list)
+    {
+        if(root==null) return ;
+        postorder(root.left,list);
+        postorder(root.right,list);
+        list.add(root.val);
+    }
+    public List<Integer> postorderTraversal(TreeNode root) {
+        ArrayList<Integer> list=new ArrayList<>();
+        postorder(root,list);
+        return list;
+    }
+}
+
+Time Complexity: O(N).  Reason: We are traversing N nodes and every node is visited exactly once.
+Space Complexity: O(N)  Reason: Space is needed for the recursion stack. In the worst case (skewed tree), space complexity can be O(N).
+
+
+
+
+CODE::(Using Iterative approach) (Using 2 stack)
+
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        if (root == null) return ans;
+        Stack<TreeNode> st1 = new Stack<TreeNode>();
+        Stack<TreeNode> st2 = new Stack<TreeNode>();
+        st1.push(root);
+        
+        while (!st1.isEmpty()) {
+            TreeNode current = st1.pop();
+            st2.push(current);
+
+            if (current.left != null) st1.push(current.left);
+            if (current.right != null) st1.push(current.right);
+        }
+
+        while (!st2.isEmpty()) {
+            ans.add(st2.pop().val);
+        }
+
+        return ans;
+    }
+}
+
+
+Time Complexity: O(N).  Reason: We are traversing N nodes and every node is visited exactly once.
+Space Complexity: O(N+N)  
+
+
+
+
+
+
+CODE::(Using Iterative approach) (Using 1 stack)
+
+
