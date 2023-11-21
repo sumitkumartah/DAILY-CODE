@@ -62,4 +62,43 @@ Space Complexity: O(N+N)
 
 CODE::(Using Iterative approach) (Using 1 stack)
 
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        ArrayList<Integer> ans=new ArrayList<>();
+        if(root==null)return ans;
+        Stack<TreeNode> st=new Stack<TreeNode>();
+        while(root!=null || !st.isEmpty())
+        {
+            if(root!=null)
+            {
+                st.push(root);
+                root=root.left;
+            }
+            else
+            {
+                TreeNode temp=st.peek().right;
+                if(temp==null)
+                {
+                    temp=st.peek();
+                    st.pop();
+                    ans.add(temp.val);
+                  while(! st.isEmpty() && temp==st.peek().right)
+                  {
+                      temp=st.peek();
+                      st.pop();
+                      ans.add(temp.val);
+                  }
+                }
+                else
+                {
+                    root=temp;
+                }
+            }
+        }
+        return ans;
+    }
+}
 
+
+Time Complexity= O(2N)
+Space Complexity=O(N)
