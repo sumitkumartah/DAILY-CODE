@@ -1,0 +1,38 @@
+102. Binary Tree Level Order Traversal
+
+
+
+CODE::
+
+lass Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        Queue<TreeNode> qu = new LinkedList<TreeNode>();
+        List<List<Integer>> ls = new ArrayList<>();
+        if (root == null) return ls;
+        qu.add(root);
+        while (!qu.isEmpty()) {
+            int levelSize = qu.size();
+            List<Integer> currentLevel = new ArrayList<>();
+            
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode node = qu.poll();
+                currentLevel.add(node.val);
+
+                if (node.left != null) {
+                    qu.add(node.left);
+                }
+                if (node.right != null) {
+                    qu.add(node.right);
+                }
+            }
+            
+            ls.add(currentLevel);
+        }
+        return ls;
+    }
+}
+
+
+
+Time Complexity: O(N)
+Space Complexity: O(N)
