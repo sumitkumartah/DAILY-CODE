@@ -1,0 +1,19 @@
+104. Maximum Depth of Binary Tree
+
+code::  
+
+
+
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root==null)return 0;
+        int lh=maxDepth(root.left);  //findout the left height
+        int rh=maxDepth(root.right);  //findout the right height
+        return 1 + Math.max(lh,rh);    
+    }
+}
+
+
+
+Time Complexity= O(N)
+Space Complexity=O(N)
