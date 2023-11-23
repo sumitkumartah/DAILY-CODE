@@ -1,0 +1,49 @@
+103. Binary Tree Zigzag Level Order Traversal
+
+
+CODE:: (by using levelorder traversal)
+
+
+
+
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> ans=new ArrayList<>();  //take ans list to store the final answer
+        if(root==null) return ans;
+        Queue<TreeNode> q=new LinkedList<TreeNode>();  // take a queue
+        q.add(root);  //at first add the root in the queue
+        boolean flag=true; //take a boolean variable flag ..
+        while(!q.isEmpty())
+        {
+            int levelsize=q.size();       //levelsize is the queue size
+            List<Integer>curr=new ArrayList<Integer>();  //take a sublist
+            for(int i=0;i<levelsize;i++)
+            {
+                if(q.peek().left!=null)  //check peek left
+                {
+                    q.add(q.peek().left);
+                }
+                if(q.peek().right!=null)
+                {
+                    q.add(q.peek().right);
+                }
+                if(flag==true)    // if flag true queue element will insert the list as same order
+                {
+                    curr.add(q.poll().val);   
+                }
+                else   // if flag false queue element will insert the list as different order
+                {
+                    curr.add(0,q.poll().val);
+                }
+
+            }
+            flag=!flag;  //flag value is changed after 1 level
+            ans.add(curr);
+        }
+        return ans;
+    }
+}
+
+
+Time Complexity=O(N)   
+Space Complexity= O(N)
