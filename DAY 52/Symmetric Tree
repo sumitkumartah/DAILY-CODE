@@ -1,0 +1,27 @@
+
+101. Symmetric Tree
+
+
+
+CODE::(By using recursion)
+
+
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        return root == null || check(root.left, root.right);
+    }
+
+    boolean check(TreeNode left, TreeNode right) {
+        // If either left or right is null, they should be equal for symmetry.
+        if (left == null || right == null) {
+            return left == right;
+        }
+
+        // Check values of the current nodes and the mirrored comparison.
+        return (left.val == right.val) && check(left.left, right.right) && check(left.right, right.left);
+    }
+}
+
+
+Time Complexity: O(N)   Reason: We are doing simple tree traversal and changing both root1 and root2 simultaneously.
+Space Complexity: O(N)  Reason: In the worst case (skewed tree), space complexity can be O(N).
