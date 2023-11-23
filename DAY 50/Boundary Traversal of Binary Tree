@@ -1,0 +1,61 @@
+
+Boundary Traversal of Binary Tree
+
+CODE::
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Solution {
+    public static List<Integer> traverseBoundary(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        if (!isLeaf(root)) {
+            ans.add(root.data);
+        }
+        leftBoundary(root, ans);
+        leafes(root, ans);
+        rightBoundary(root, ans);
+        return ans;
+    }
+
+    static void leftBoundary(TreeNode root, List<Integer> ls) {
+        TreeNode curr = root.left;
+        while (curr != null) {
+            if (!isLeaf(curr)) ls.add(curr.data);
+            if (curr.left != null) curr = curr.left;
+            else curr = curr.right;
+        }
+    }
+
+    static void rightBoundary(TreeNode root, List<Integer> ls) {
+        TreeNode curr = root.right;
+        ArrayList<Integer> tmp = new ArrayList<>();
+        while (curr != null) {
+            if (!isLeaf(curr)) tmp.add(curr.data);
+            if (curr.right != null) curr = curr.right;
+            else curr = curr.left;
+        }
+        for (int i = tmp.size() - 1; i >= 0; i--) {
+            ls.add(tmp.get(i));
+        }
+    }
+
+    static void leafes(TreeNode root, List<Integer> ls) {
+        if (isLeaf(root)) {
+            ls.add(root.data);
+            return;
+        }
+        if (root.left != null) leafes(root.left, ls);
+        if (root.right != null) leafes(root.right, ls);
+    }
+
+    static boolean isLeaf(TreeNode node) {
+        return (node.left == null && node.right == null);
+    }
+}
+
+
+
+ime Complexity: O(N). Reason: The time complexity will be O(H) + O(H) + O(N) which is ≈ O(N)
+
+Space Complexity: O(N) Reason: Space is needed for the recursion stack while adding leaves. In the worst case (skewed tree), space complexity can be O(N).
