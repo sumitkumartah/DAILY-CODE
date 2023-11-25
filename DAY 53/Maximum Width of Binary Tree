@@ -1,0 +1,51 @@
+
+662. Maximum Width of Binary Tree
+
+
+
+Code:: (By the level order traversal)
+
+
+class Solution {
+    class pair{
+        TreeNode node;
+        int ind;
+        pair(TreeNode node, int ind)
+        {
+            this.node=node;
+            this.ind=ind;
+        }
+    }
+    public int widthOfBinaryTree(TreeNode root) {
+        if(root==null)return 0;  // if there are no element in the tree
+        int width=0;
+        Queue<pair> q=new LinkedList<pair>();   // take queue for level order traversal
+        q.add(new pair(root,0));    // at first add root node 
+        while(!q.isEmpty()){
+            int qsize=q.size();   // find out the queue size
+            int min=q.peek().ind;  //minimum index of a level
+            int first=0; // ind of the first element of a level
+            int last=0;  // ind of the last element of a level
+            for(int i=0;i<qsize;i++)
+            {
+                int curind=q.peek().ind-min;  // find the current index = queue peek element substract  minimum element index of a level
+                TreeNode node=q.peek().node;  // queue peek node 
+                q.poll();  //pop out all element of queue
+                if(i==0)first=curind;  // In a level top left elemet ind
+                if(i==qsize-1) last=curind;  // In a level top right elemet ind
+                if(node.left!=null) q.add(new pair(node.left, curind*2+1));
+                if(node.right!=null) q.add(new pair(node.right, curind*2+2));
+            }
+            width=Math.max(width,last-first+1);  // find out the maximum width
+        }
+        return width;
+
+    }
+}
+
+
+
+
+
+Time Complexity: O(N)    Reason: We are doing a simple level order traversal. The inner loop simply traverses the nodes level-wise and doesn’t add to the complexity.
+Space Complexity: O(N)
