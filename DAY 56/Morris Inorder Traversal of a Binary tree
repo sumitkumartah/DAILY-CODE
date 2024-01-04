@@ -1,0 +1,48 @@
+Morris Inorder Traversal of a Binary tree
+
+
+
+
+CODEEEE
+
+
+
+
+//MORRIS TRAVERSAL INORDER (use the concept of threaded binary tree)
+
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> inorder=new ArrayList<>();  // here I take a arraylist to store the ans
+        TreeNode cur=root; // take root as curr
+        while(cur!=null)
+        {
+            if(cur.left==null){     // if there is no left node
+                inorder.add(cur.val);
+                cur=cur.right;
+            }
+            else{
+                TreeNode prev =cur.left;   // take a prev variable to move right
+                while(prev.right!=null && prev.right!=cur)
+                {
+                    prev=prev.right;
+                }
+                if(prev.right==null)  // create a thread between right node and root node
+                {
+                  prev.right=cur;
+                  cur=cur.left;     // then cur can move to left
+                }
+                else{
+                    prev.right=null;     // disconnect the thread
+                    inorder.add(cur.val);  // store the root node val
+                    cur=cur.right;   // cur will move to right now
+                }
+            }
+        }
+        return inorder;
+    }
+}
+
+
+
+Time complexity= O(N)
+Space Complexity =O(1)
