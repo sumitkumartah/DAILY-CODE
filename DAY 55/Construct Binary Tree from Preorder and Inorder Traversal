@@ -1,0 +1,33 @@
+105. Construct Binary Tree from Preorder and Inorder Traversal
+
+
+OPTIMAL CODE:
+
+
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        Map<Integer,Integer> mpp=new HashMap<>();  // create a hashmap
+        for(int i=0;i<inorder.length;i++)
+        {
+            mpp.put(inorder[i],i);   // push the inorder into the map
+        } 
+        return Treee(preorder, 0,preorder.length-1, inorder, 0,inorder.length-1, mpp);  // recursive call
+    }
+
+    public  TreeNode Treee(int []preorder, int ps, int pe,int [] inorder,int is, int ie, Map<Integer, Integer> mpp )
+    {
+        if(ps>pe || is>ie) return null;   // if no preorder and inorder
+        TreeNode root =new TreeNode(preorder[ps]);  // tree root will be first element of preorder
+        int inroot=mpp.get(root.val);   //find out the root element in the map which store the inorder
+        int numsleft = inroot - is;  // take the new inorder
+
+        root.left=Treee(preorder, ps+1, ps+numsleft, inorder, is, inroot-1, mpp); // figre out the next left inorder and preorder
+        root.right=Treee(preorder,ps+numsleft+1,pe, inorder,inroot+1, ie, mpp);  // figre out the next right inorder and preorder
+        return root;
+    }
+}
+
+
+
+Time Complexity: O(N)
+Space Complexity: O(N) (for map)
