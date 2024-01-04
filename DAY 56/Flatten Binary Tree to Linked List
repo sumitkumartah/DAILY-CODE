@@ -1,0 +1,22 @@
+114. Flatten Binary Tree to Linked List
+
+
+
+code:
+
+class Solution {
+    TreeNode prev=null;
+    public void flatten(TreeNode root) {
+         if(root==null)
+            return;
+        flatten(root.right);//traverse till right most.
+        flatten(root.left);//got to left of right most
+        root.right=prev;//set right to previously traversed node
+        root.left=null;//set left as null
+        prev=root;  //set prev to current node.
+    }
+}
+
+
+Time Complexity= O(N)    We are doing a simple  reverse preorder traversal.
+Space Compexity=O(N)  Worst case time complexity will be O(N) (in case of skewed tree).
