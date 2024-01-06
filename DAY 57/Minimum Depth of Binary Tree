@@ -1,0 +1,23 @@
+111. Minimum Depth of Binary Tree
+
+Code: 
+
+class Solution {
+    public int minDepth(TreeNode root) {
+        if(root==null)return 0;
+        int lh=0;
+        int rh=0;
+        
+        lh=minDepth(root.left);
+        rh=minDepth(root.right);
+        
+        if(lh==0|| rh==0)return 1+Math.max(lh,rh); //left height or right height is zero then just calculate the max depthin the right or in the left
+        return 1+Math.min(lh,rh);
+
+    }
+}
+
+
+Time Complexity: O(N) 
+
+Space Complexity: O(1) Extra Space + O(H) Recursion Stack space, where “H”  is the height of the binary tree.
