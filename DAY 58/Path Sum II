@@ -34,3 +34,7 @@ class Solution {
         ls.remove(ls.size() - 1);
     }
 }
+
+
+Time Complexity=O(N)
+Space Complexity=O(N)
