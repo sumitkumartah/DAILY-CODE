@@ -1,0 +1,27 @@
+700. Search in a Binary Search Tree
+
+
+
+CODE::
+
+
+class Solution {
+    public TreeNode searchBST(TreeNode root, int val) {
+        if (root == null) {
+            return null; // If the tree is empty or the value is not found, return null
+        }
+
+        if (root.val == val) {
+            return root; // If the current node's value matches the target value, return the node
+        } else if (val < root.val) {
+            return searchBST(root.left, val); // If the target value is less than the current node's value, search in the left subtree
+        } else {
+            return searchBST(root.right, val); // If the target value is greater than the current node's value, search in the right subtree
+        }
+    }
+}
+
+
+
+Time Complexity=O(log N)
+Space Complexity=O(log N)
