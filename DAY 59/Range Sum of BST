@@ -1,0 +1,39 @@
+938. Range Sum of BST
+
+
+
+CODE::
+
+
+class Solution {
+    public int rangeSumBST(TreeNode root, int low, int high) {
+        if (root == null) {
+            return 0;
+        }
+
+        int sum = 0;
+
+        if (root.val >= low && root.val <= high) {
+            sum += root.val;
+        }
+
+        // Traverse left subtree if there can be values in the range
+        if (root.val > low || root.val > high) {
+            sum += rangeSumBST(root.left, low, high);
+        }
+
+        // Traverse right subtree if there can be values in the range
+        if (root.val < high || root.val< low) {
+            sum += rangeSumBST(root.right, low, high);
+        }
+
+        return sum;
+    }
+}
+
+
+Time complexity:
+O(n)O(n)O(n), where n is the number of nodes in the tree. In the worst case, we may need to visit all nodes in the tree.
+Space complexity:
+O(h)O(h)O(h), where h is the height of the tree. This represents the maximum depth of the recursive call stack. 
+In the worst case, for an unbalanced tree, the space complexity can be O(n)O(n)O(n), but for a balanced tree, it is O(logn)O(log n)O(logn).
