@@ -2,9 +2,6 @@
 
 
 
-CODE::
-
-
 class Solution {
     public TreeNode searchBST(TreeNode root, int val) {
         if (root == null) {
@@ -23,5 +20,5 @@ class Solution {
 
 
 
-Time Complexity=O(log N)
-Space Complexity=O(log N)
+Time Complexity=O(log N)   worst case complexity=O(n) 
+Space Complexity=O(log N)  worst case Complexity=O(N)
