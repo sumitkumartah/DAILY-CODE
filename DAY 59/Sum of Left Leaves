@@ -1,0 +1,29 @@
+404. Sum of Left Leaves
+
+
+
+
+CODE::
+
+
+class Solution {
+    public int sumOfLeftLeaves(TreeNode root) {
+        int sum=0;
+        if(root!=null){
+            if(isLeaf(root.left)){
+                sum+=root.left.val;
+            }
+          sum+=sumOfLeftLeaves(root.left);  // Fix: Traverse the left subtree
+          sum+=sumOfLeftLeaves(root.right); // Fix: Traverse the right subtree
+        }
+        return sum;
+    }
+    public boolean isLeaf(TreeNode root)
+    {
+        return (root!=null && root.left==null && root.right==null);
+    }
+}
+
+
+Time Complexity= O(N)
+Space Complexity=O(1)
