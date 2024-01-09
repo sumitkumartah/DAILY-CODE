@@ -1,0 +1,23 @@
+563. Binary Tree Tilt
+
+
+import java.util.*;
+class Solution {
+    public int findTilt(TreeNode root) {
+        if (root == null) return 0; 
+        int leftsum=sum(root.left);
+        int rightsum=sum(root.right);
+        int sub=Math.abs(leftsum-rightsum);
+        root.val=sub;
+        findTilt( root.left);
+        findTilt( root.right);
+
+        return sub + sum(root.left)+sum(root.right);
+        
+    }
+    public int sum(TreeNode root){
+       if(root==null) return 0;
+        return root.val +sum(root.left) +sum(root.right);
+       
+    }
+}
