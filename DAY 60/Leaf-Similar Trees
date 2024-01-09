@@ -1,0 +1,29 @@
+
+872. Leaf-Similar Trees
+
+
+
+class Solution {
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        List<Integer> ans1= new ArrayList<>();
+        List<Integer> ans2= new ArrayList<>();
+        leafnode(root1, ans1);
+        leafnode(root2, ans2);
+        if(ans1.equals(ans2)){
+            return true;
+        }
+        return false;
+        
+    }
+
+    public void leafnode(TreeNode node, List<Integer> ans){
+        if(node==null) return ;
+        if(node!=null && node.left==null && node.right==null){
+            ans.add(node.val);
+        }
+        leafnode(node.left, ans);
+        leafnode(node.right, ans);
+
+    }
+
+}
