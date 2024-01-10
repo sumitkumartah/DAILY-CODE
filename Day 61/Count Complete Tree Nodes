@@ -1,0 +1,57 @@
+222. Count Complete Tree Nodes (Below O(N) complexity)
+
+
+Code::
+class Solution {
+    public int countNodes(TreeNode root) {
+        if(root==null)return 0;
+       return 1+countNodes(root.left)+countNodes(root.right) ;
+    }
+}
+
+Time Complexity=O(N)
+
+
+Optimize::
+
+class Solution {
+    public int countNodes(TreeNode root) {
+    if(root==null)
+    {
+        return 0;
+    }
+    int lh=getlefth(root);
+    int rh=getrighth(root);
+    
+    if(lh==rh)
+    {
+        return (int)Math.pow(2,lh)-1; // return (2<<lh)+1;
+    }
+    return 1+countNodes(root.left)+countNodes(root.right);
+}
+public int getlefth(TreeNode root)
+{
+    int c=0;
+    while(root!=null)
+    {
+        c++;
+        root=root.left;
+    }
+    return c;
+}
+public int getrighth(TreeNode root)
+{
+    int c=0;
+    while(root!=null)
+    {
+        c++;
+        root=root.right;
+    }
+    return c;
+}
+}
+
+Time Complexity=O(LogN)^2
+Space Complexity: O(logN)
+
+Reason: Space is needed for the recursion stack when calculating height. As it is a complete tree, the height will always be logN
