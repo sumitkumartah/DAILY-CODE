@@ -1,0 +1,91 @@
+2385. Amount of Time for Binary Tree to Be Infected
+
+Code:
+
+
+
+class Solution {
+    public int amountOfTime(TreeNode root, int start) {
+        Map<TreeNode, TreeNode> mpp=new HashMap<>();  // intilise the map
+        TreeNode initial=findparent(root, mpp,start); 
+
+        return maxTime(mpp,initial);
+    }
+
+
+
+    // find the parentnode of every node and find out the initial node from where I stART
+    public TreeNode findparent(TreeNode root, Map<TreeNode, TreeNode> mpp, int start)
+    {
+        Queue<TreeNode> q=new LinkedList<>();  //initialise a list
+        q.add(root);   // at first ad dthe root node in the queue
+        TreeNode res=new TreeNode(-1);  // take a res node to store the starting node
+        while(!q.isEmpty()){
+             TreeNode node=q.poll(); // pop up  queue node add in the TreeNode node
+            if(node.val==start)res=node;  // start is equal to the rootvalue then add start in the res node
+
+           
+            if(node.left!=null){  
+                mpp.put(node.left,node);  // add left child and their parent in the map 
+                q.add(node.left);
+            }
+
+             if(node.right!=null){  
+                mpp.put(node.right,node);  // add  right child and their parent in the map 
+                q.add(node.right);
+            }
+        }
+        return res;
+
+    }
+
+
+// function to find out maximum time taken 
+    public static int maxTime(Map<TreeNode,TreeNode> mpp, TreeNode start){
+        Queue<TreeNode> q=new LinkedList<>();  // take a queue
+        Map<TreeNode, Boolean> visit=new HashMap<>();  // take a visited map to store which node is visited
+
+        int maxtime=0;// take initial time as 0
+        q.add(start);   // in queue add the where we start
+        visit.put(start, true);   /// in map add the where we start iterating
+        while(!q.isEmpty()){
+            int fl=0;
+             int size = q.size();
+            for(int i=0;i<size;i++){  // run a loop upto queue size
+              
+               TreeNode node=q.poll();
+               if(node.left!=null && visit.get(node.left)==null){ // if the left node is not null ansd it is not exist in the visited map
+                  visit.put(node.left,true);
+                  q.add(node.left);
+                  fl=1;
+               }
+
+               if(node.right!=null && visit.get(node.right)==null){ // if the right node is not null ansd it is not exist in the visited map
+                  visit.put(node.right,true);
+                  q.add(node.right);
+                  fl=1;
+               }
+            
+            // if there is a element in the map and this element is not in the visited map
+               if(mpp.get(node)!=null && visit.get(mpp.get(node))==null){
+                   visit.put(mpp.get(node),true);
+                    q.add(mpp.get(node));
+                   fl=1;
+               }
+
+            }
+
+            if(fl==1)maxtime++;
+        }
+        return maxtime;
+
+    }
+
+}
+
+
+
+
+Time complexity: O(N), where N is the number of nodes in the tree.The traversal visits each node once, and the height function calls also take linear time in total.
+Space complexity:O(H), where H is the height of the tree.        The recursion stack uses space proportional to the height of the tree in the worst case.The additional variables used for tracking heights and distances contribute constant space.
+
