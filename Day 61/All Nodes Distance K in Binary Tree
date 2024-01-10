@@ -1,0 +1,89 @@
+863. All Nodes Distance K in Binary Tree
+
+
+
+CODE::
+
+
+class Solution {
+    // The method to find nodes at distance K from the target in a binary tree
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        // Map to store parent nodes for each node in the tree
+        Map<TreeNode, TreeNode> parent = new HashMap<>();
+        // Helper method to populate the parent map
+        markParents(root, parent);
+
+        // Map to keep track of visited nodes during BFS traversal
+        Map<TreeNode, Boolean> visit = new HashMap<>();
+        // Queue for BFS traversal
+        Queue<TreeNode> q = new LinkedList<>();
+
+        // Initialize current level to 0 and add the target node to the queue
+        int curLevel = 0;
+        q.add(target);
+        visit.put(target, true);
+
+        // BFS traversal to find nodes at distance K
+        while (!q.isEmpty()) {
+            // Break the loop if the desired level (k) is reached
+            if (curLevel == k)
+                break;
+            curLevel++;
+
+            int qSize = q.size();
+            // Process nodes at the current level
+            for (int i = 0; i < qSize; i++) {
+                TreeNode node = q.poll();
+
+                // Add left child to the queue if it exists and has not been visited
+                if (node.left != null && visit.get(node.left) == null) {
+                    visit.put(node.left, true);
+                    q.add(node.left);
+                }
+
+                // Add right child to the queue if it exists and has not been visited
+                if (node.right != null && visit.get(node.right) == null) {
+                    visit.put(node.right, true);
+                    q.add(node.right);
+                }
+
+                // Add parent node to the queue if it exists and has not been visited
+                if (parent.get(node) != null && visit.get(parent.get(node)) == null) {
+                    visit.put(parent.get(node), true);
+                    q.add(parent.get(node));
+                }
+            }
+        }
+
+        // Collect the nodes at distance K in a list
+        List<Integer> ans = new ArrayList<>();
+        while (!q.isEmpty()) {
+            ans.add(q.poll().val);
+        }
+
+        // Return the list of nodes at distance K from the target
+        return ans;
+    }
+
+    // Helper method to mark parent nodes for each node in the binary tree
+    public void markParents(TreeNode root, Map<TreeNode, TreeNode> parent) {
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()) {
+            TreeNode node = q.poll();
+            // Populate the parent map for the left child if it exists
+            if (node.left != null) {
+                parent.put(node.left, node);
+                q.add(node.left);
+            }
+            // Populate the parent map for the right child if it exists
+            if (node.right != null) {
+                parent.put(node.right, node);
+                q.add(node.right);
+            }
+        }
+    }
+}
+
+
+Time Complexity=O(N)
