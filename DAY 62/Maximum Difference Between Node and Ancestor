@@ -1,0 +1,26 @@
+1026. Maximum Difference Between Node and Ancestor
+
+
+CODE::
+
+
+class Solution {
+    public int maxAncestorDiff(TreeNode root) {
+        return findMaxMinAnc(root, root.val, root.val);
+        
+    }
+    public int findMaxMinAnc(TreeNode root, int max, int min){
+        //base condition
+        if(root==null) return max-min;
+        max=Math.max(max,root.val);  // find maximum between max and nodevalue
+        min=Math.min(min,root.val);  // find minimum between min and  this nodevalue
+        int leftdiff= findMaxMinAnc(root.left, max, min);  // find left difference by using recurtion
+       int rightdiff= findMaxMinAnc(root.right, max, min); // find right difference by using recurtion
+       
+        return  Math.max(leftdiff, rightdiff);
+    }
+} 
+
+
+Time Complexity=O(N)
+Space Complexity=O(N)
