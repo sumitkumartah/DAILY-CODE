@@ -1,0 +1,35 @@
+Print Subsequences  
+
+CODE::
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Solution {
+    public static List<String> generateSubsequences(String s) {
+        List<String> ans = new ArrayList<>();
+        StringBuilder temp = new StringBuilder();
+        recursion(s, ans, temp, 0);
+        return ans;
+    }
+
+    public static void recursion(String s, List<String> ans, StringBuilder temp, int index) {
+        if (index == s.length()) {
+            ans.add(temp.toString());
+            return;
+        }
+
+        // exclude
+        recursion(s, ans, temp, index + 1);
+
+        // include
+        temp.append(s.charAt(index));
+        recursion(s, ans, temp, index + 1);
+
+        // for backtracking
+        temp.deleteCharAt(temp.length() - 1);
+    }
+}
+
+TC = O(2^N)
+sc=O(N)
