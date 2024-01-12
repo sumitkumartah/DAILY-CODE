@@ -1,0 +1,27 @@
+1704. Determine if String Halves Are Alike
+
+
+class Solution {
+    public boolean halvesAreAlike(String s) {
+        String firstPart = s.substring(0, s.length() / 2);
+        String secondPart = s.substring(s.length() / 2);
+        
+        return check(firstPart) == check(secondPart);
+    }
+
+    public int check(String str) {
+        int cnt = 0;
+
+        for (char ch : str.toCharArray()) {
+            if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U' || ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
+                cnt++;
+            }
+        }
+
+        return cnt;
+    }
+}
+
+
+TC O(N)
+Sc O(1)
