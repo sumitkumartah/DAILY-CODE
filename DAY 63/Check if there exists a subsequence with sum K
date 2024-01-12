@@ -1,0 +1,33 @@
+Check if there exists a subsequence with sum K
+
+code::
+
+class Solution {
+  public static boolean checkSubsequenceSum(int N, int[] arr, int K) {
+      
+      return count(arr, N, 0, K, 0);
+  }
+
+  public static boolean count(int arr[], int n, int ind, int k, int sum) {
+      if (ind == n) {
+          return sum == k;
+      }
+       if(sum > k)   // checking if sum is greater then it will add to more sum which will be negative
+        return false;
+
+      // exclude
+      if (count(arr, n, ind + 1, k, sum)) {
+          return true;
+      }
+
+      // include
+      sum+= arr[ind];
+      if (count(arr, n, ind + 1, k, sum)) {
+          return true;
+      }
+      //for backtracking
+     // sum-=arr[ind];
+
+      return false;
+  }
+}
