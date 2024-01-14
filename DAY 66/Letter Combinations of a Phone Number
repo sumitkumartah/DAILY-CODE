@@ -1,0 +1,49 @@
+17. Letter Combinations of a Phone Number
+
+
+
+CODE::
+
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> ans=new ArrayList<>();
+        if(digits.length()==0)
+        {
+            return ans;
+        }
+        Map<Character,String> mpp=new HashMap<>();
+         mpp.put('2',"abc");
+         mpp.put('3',"def");
+         mpp.put('4',"ghi");
+         mpp.put('5',"jkl");
+         mpp.put('6',"mno");
+         mpp.put('7',"pqrs");
+         mpp.put('8',"tuv");
+         mpp.put('9',"wxyz");
+
+         output(digits, mpp, 0,ans, new StringBuilder() );
+         return ans;
+    }
+
+
+    private void output(String str, Map<Character,String> mpp, int ind,List<String> ans,StringBuilder sb )
+    {
+        if(str.length()==ind)  
+        {
+            ans.add(sb.toString());
+            return;
+        }
+
+        String curr = mpp.get(str.charAt(ind));// add 2 -> abc add here
+        for (int i = 0; i < curr.length(); i++)
+        {
+            //insert in the string buffer at first a then b....
+            sb.append(curr.charAt(i));
+
+            // recurtion call
+            output(str, mpp, ind+1, ans, sb);
+            //backtrack
+            sb.deleteCharAt(sb.length()-1);
+        }
+    }
+}
