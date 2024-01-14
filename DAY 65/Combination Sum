@@ -1,0 +1,31 @@
+
+39. Combination Sum
+
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> ans=new ArrayList<>();
+        Combinations(candidates, 0, target, ans, new ArrayList<>());
+        return ans; 
+    }
+
+    private void Combinations(int arr[], int ind, int tar,  List<List<Integer>> ans,List<Integer> ls)
+    {
+        if(ind==arr.length)
+        {
+            if(tar==0)
+            {
+                ans.add(new ArrayList<>(ls));
+            }
+            return;
+        }
+        // include
+        if(arr[ind]<=tar)
+        {
+            ls.add(arr[ind]);
+             Combinations(arr, ind, tar-arr[ind], ans, ls);  // target-arr[ind] for reduce the target 
+            ls.remove(ls.size()-1); // for backtracking
+        }
+        //exclude
+         Combinations(arr,ind+1, tar,ans, ls );
+    }
+}
