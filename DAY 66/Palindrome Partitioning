@@ -1,0 +1,43 @@
+131. Palindrome Partitioning
+
+
+CODE::
+
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> ans = new ArrayList<>();
+        List<String> temp = new ArrayList<>();
+        backtrack(s, 0, ans, temp);
+        return ans;
+    }
+
+    private void backtrack(String s, int start, List<List<String>> ans, List<String> temp) {
+        if (start == s.length()) {
+            ans.add(new ArrayList<>(temp));
+            return;
+        }
+
+        for (int i = start; i < s.length(); i++) {
+            String str = s.substring(start, i + 1);
+            if (isPalindrome(str)) {
+                temp.add(str);
+                backtrack(s, i + 1, ans, temp);
+                temp.remove(temp.size() - 1);
+            }
+        }
+    }
+
+    private boolean isPalindrome(String str) {
+        int left = 0;
+        int right = str.length() - 1;
+
+        while (left < right) {
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+}
