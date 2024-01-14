@@ -1,0 +1,45 @@
+79. Word Search
+
+
+CODE::
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        int m=board.length;
+        int n=board[0].length;
+        int ind=0;
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(board[i][j]==word.charAt(ind) && SearchWord(board, word, ind, i, j, m, n))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean SearchWord(char [][] board, String word, int ind, int row, int col, int m, int n)
+    {
+        if(ind==word.length())
+        {
+            return true;
+        }
+        if(row<0 || row==m || col<0 || col==n || board[row][col]!=word.charAt(ind))
+           return false;
+
+        char c= board[row][col];
+        board[row][col]='&';
+
+        boolean top=SearchWord(board, word, ind+1, row-1,col, m, n);
+        boolean bottom =SearchWord(board, word, ind+1, row+1,col, m, n);
+        boolean right=SearchWord(board, word, ind+1, row,col-1, m, n);
+        boolean left=SearchWord(board, word, ind+1, row,col+1, m, n);
+
+        board[row][col]=c;
+
+        return top|| bottom || right|| left;
+
+    }
+}
