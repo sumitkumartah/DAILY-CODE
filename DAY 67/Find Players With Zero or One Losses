@@ -1,0 +1,70 @@
+2225. Find Players With Zero or One Losses
+
+
+
+code::
+class Solution {
+    public List<List<Integer>> findWinners(int[][] matches) {
+        int row = matches.length;
+        int col = matches[0].length;
+        Map<Integer, Integer> mp = new HashMap<>();
+
+        // Count the occurrences of each player in the last column
+        for (int i = 0; i < row; i++) {
+           int key=matches[i][col-1];
+            if(mp.containsKey(key))
+            {
+                mp.put(key, mp.get(key)+1);
+            }
+            else
+            {
+                mp.put(key, 1);
+            }
+        }
+
+        Set<Integer> winners = new HashSet<>();
+        Set<Integer> losers = new HashSet<>();
+
+       // Identify winners and losers based on the first column
+        for (int i = 0; i < row; i++) {
+            int key = matches[i][0];
+
+            if (!mp.containsKey(key)) {
+                winners.add(key);
+            }
+        }
+        for (Map.Entry<Integer, Integer> it : mp.entrySet())
+        {
+            if(it.getValue()==1)
+            {
+                losers.add(it.getKey());
+            }
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> wilist = new ArrayList<>(winners);
+         List<Integer> lolist = new ArrayList<>(losers);
+        Collections.sort(wilist);
+        Collections.sort(lolist);
+        result.add(wilist);
+        result.add(lolist);
+        return result;
+    }
+}
+
+
+
+Time Complexity:
+
+The first loop iterates through each row of the matches array, and it takes O(row) time.
+The second loop also iterates through each row of the matches array, and it takes O(row) time.
+The loop that iterates through the entries of the mp map takes O(mp.size()) time, where mp.size() is the number of unique players in the last column.
+Sorting the wilist and lolist lists takes O(wilist.size() * log(wilist.size())) + O(lolist.size() * log(lolist.size())) time.
+The dominant factor here is the sorting step, and the overall time complexity can be approximated as O(row * log(row) + mp.size()). Note that in the worst case, mp.size() can be at most row (if all players in the last column are unique).
+
+Space Complexity:
+
+The mp map is used to store the count of occurrences of each player in the last column. In the worst case, where all players are unique, the space complexity for mp is O(row).
+The winners and losers sets can contain at most row unique players, so the space complexity for these sets is O(row).
+The wilist and lolist lists store the unique winners and losers, respectively. In the worst case, both lists can have row elements. Therefore, the space complexity for these lists is O(row).
+The result list contains wilist and lolist, so the space complexity for result is O(row).
+The dominant factor here is the space used by the mp map, and the overall space complexity is O(row).
