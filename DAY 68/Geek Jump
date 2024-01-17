@@ -1,0 +1,102 @@
+Geek Jump
+
+
+Memoization::
+
+class Solution{
+    public int minimumEnergy(int arr[],int N){
+        int dp[]=new int[N];
+        Arrays.fill(dp,-1);
+        return minimumEnergy(arr,N-1,dp);
+    }
+    private static int minimumEnergy(int arr[], int n, int dp[])
+    {
+        if(n==0) return 0;
+        if(dp[n]!=-1) return dp[n];
+        int jumpone= minimumEnergy(arr, n-1,dp)+Math.abs(arr[n]-arr[n-1]);
+        int jumptwo=Integer.MAX_VALUE;
+        if(n>1)
+        {
+            jumptwo= minimumEnergy(arr, n-2,dp)+Math.abs(arr[n]-arr[n-2]);
+        }
+        return dp[n]=Math.min(jumpone,jumptwo);
+    }
+}
+
+Tc=O(N)
+Sc=O(N) +O(N)
+
+
+
+
+
+Tabulization::
+
+
+
+class Solution{
+    public int minimumEnergy(int arr[],int N){
+        int dp[]=new int[N];
+        Arrays.fill(dp,-1);
+        return minimumEnergy(arr,N,dp);
+    }
+    private static int minimumEnergy(int arr[], int n, int dp[])
+    {
+        dp[0]=0;
+    
+        for(int i=1;i<n;i++)
+        {
+            
+        int jumpone=dp[i-1]+Math.abs(arr[i]-arr[i-1]);
+        int jumptwo=Integer.MAX_VALUE;
+        if(i>1)
+        {
+            jumptwo= dp[i-2]+Math.abs(arr[i]-arr[i-2]);
+        }
+        dp[i]=Math.min(jumpone,jumptwo);
+        }
+        return dp[n-1];
+    }
+    
+}
+
+
+Time Complexity=O(N)
+Space Complexity=O(N) 
+
+
+Space Optimization::
+
+class Solution {
+    public int minimumEnergy(int arr[], int N) {
+        return minEnergy(arr, N );
+    }
+
+    private int minEnergy(int arr[], int n) {
+         int prev1=0;
+        int prev2=0;
+        
+        for(int i=1;i<n;i++){
+            int left=prev1+Math.abs(arr[i]-arr[i-1]);
+            int right=Integer.MAX_VALUE;
+            if(i>1){
+                right=prev2+Math.abs(arr[i]-arr[i-2]);
+            }
+            
+            int curr=Math.min(left,right);
+            
+            prev2=prev1;
+            prev1=curr;
+        }
+          
+        return prev1;
+    }
+}
+
+
+TC=O(N)
+SC=O(1)
+
+
+
+
