@@ -1,0 +1,55 @@
+
+Memoization::
+
+
+import java.util.*;
+public class Solution {
+    public static int minimizeCost(int n, int k, int []height){
+       int dp[] = new int[n];
+        Arrays.fill(dp, -1);
+        return kMin(height, n - 1, k, dp);
+    }
+
+    private static int kMin(int arr[], int n, int k, int dp[]) {
+        if (n == 0)
+            return 0;
+        if (dp[n] != -1)
+            return dp[n];
+        int minSteps = Integer.MAX_VALUE;
+
+        for (int i = 1; i <= k; i++) {
+            if (n - i >= 0) {
+                int jump = kMin(arr, n - i, k, dp) + Math.abs(arr[n] - arr[n - i]);
+                minSteps = Math.min(minSteps, jump);
+            }
+        }
+        return dp[n] = minSteps;
+    }
+}
+
+
+
+Tabulization::
+
+import java.util.Arrays;
+
+public class Solution {
+    public static int minimizeCost(int n, int k, int[] height) {
+        int[] dp = new int[n];
+        Arrays.fill(dp, -1);
+        dp[0] = 0;
+
+        for (int j = 1; j < n; j++) {
+            int minSteps = Integer.MAX_VALUE;
+
+            for (int i = 1; i <= k; i++) {
+                if (j - i >= 0) {
+                    int jump = dp[j - i] + Math.abs(height[j] - height[j - i]);
+                    minSteps = Math.min(minSteps, jump);
+                }
+            }
+            dp[j] = minSteps;
+        }
+        return dp[n - 1];
+    }
+}
