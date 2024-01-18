@@ -1,0 +1,80 @@
+198. House Robber
+
+
+Memoization::
+
+
+class Solution {
+    public int rob(int[] nums) {
+        int N=nums.length;
+     int dp[]=new int[N];
+        Arrays.fill(dp,-1);
+        return maxrobber(nums,N-1,dp);
+    }
+    private static int maxrobber(int arr[], int n, int dp[])
+    {
+        if(n==0) return arr[0];
+        if(n<0)return 0;
+        if(dp[n]!=-1) return dp[n];
+        int robber1= arr[n];
+        if(n>1)
+          robber1+=maxrobber(arr,n-2,dp);
+       int robber2= 0+maxrobber(arr,n-1,dp);
+        return dp[n]=Math.max(robber1,robber2);
+    }
+}
+
+
+Tabulization
+
+class Solution {
+    public int rob(int[] nums) {
+        int N=nums.length;
+     int dp[]=new int[N];
+        Arrays.fill(dp,-1);
+        return maxrobber(nums,N,dp);
+    }
+    private static int maxrobber(int arr[], int n, int dp[])
+    {
+       dp[0]=arr[0];
+       for(int i=1;i<n;i++)
+       {
+        int robber1= arr[i];
+        if(i>1)
+          robber1+=dp[i-2];
+       int robber2= 0+dp[i-1];
+        dp[i]=Math.max(robber1,robber2);
+       }
+       return dp[n-1];
+    }
+}
+
+
+Space Optimization::
+
+
+class Solution {
+    public int rob(int[] nums) {
+        int N = nums.length;
+        return maxrobber(nums, N);
+    }
+
+    private static int maxrobber(int arr[], int n) {
+        int prev = arr[0];
+        int prev2 = 0;
+
+        for (int i = 1; i < n; i++) {
+            int robber1 = arr[i];
+            if (i > 1)
+                robber1 += prev2;
+
+            int robber2 = 0 + prev;
+            int cur = Math.max(robber1, robber2);
+            
+            prev2 = prev; 
+            prev = cur;
+        }
+
+        return prev;
+    }
+}
