@@ -1,0 +1,115 @@
+62. Unique Paths
+
+
+
+MEMOIZATION::
+
+
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int dp[][]=new int[m][n];
+        for(int row[]: dp)
+        {
+            Arrays.fill(row,-1);
+        }
+        return totalpath(m-1,n-1,dp);
+    }
+
+    private static int totalpath(int i,int j, int dp[][])
+    {
+        //base case
+        if(i==0 && j==0) return 1;
+        if(i<0 || j<0) return 0;
+
+         //if already solve the particular cell
+        if(dp[i][j]!=-1)return dp[i][j];
+
+        //for the resty of the row 
+        int left=totalpath(i,j-1,dp);
+        int up=totalpath(i-1,j,dp);
+
+        //return statement
+        return dp[i][j]=(left +up);
+    }
+}
+
+TC=O(N*M)
+SC=O((m-1)+(n-1)) +  O(N*M)
+
+
+TABUKLATION::
+
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int dp[][]=new int[m][n];
+        for(int row[]: dp)
+        {
+            Arrays.fill(row,-1);
+        }
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++){
+                    //base case
+                    if(i==0 && j==0) 
+                    {
+                        dp[i][j]=1;
+                        continue;
+                    }
+                    int left=0;int up=0;
+                   if(j>0 )
+                      left=dp[i][j-1];
+                    if(i>0) 
+                       up=dp[i-1][j];
+
+                 dp[i][j]=(left +up);
+            }
+        }
+        return dp[m-1][n-1];
+       
+    }
+}
+
+
+
+TC=O(N*M)
+
+SC=O(N*M)
+
+
+
+SPACE OPTIMIZATION::
+
+
+class Solution {
+    public int uniquePaths(int m, int n) {
+
+        int prev[]=new int [n];
+        int cur[]=new int [n];
+
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++){
+                    //base case
+                    if(i==0 && j==0) 
+                    {
+                        cur[j]=1;
+                        continue;
+                    }
+                    int left=0;int up=0;
+                   if(j>0 )
+                      left=cur[j-1];
+                    if(i>0) 
+                       up=prev[j];
+
+                 cur[j]=(left +up);
+            }
+            prev=cur;
+        }
+        return prev[n-1];
+       
+    }
+}
+
+
+TIME COMPLEXITY=O(M*N)
+SPACE COMPLEXITY=O(N)
