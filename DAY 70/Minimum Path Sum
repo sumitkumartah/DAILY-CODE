@@ -1,0 +1,131 @@
+64. Minimum Path Sum
+
+
+
+MEMOIZATION::
+
+class Solution {
+    public int minPathSum(int[][] grid) {
+        int m=grid.length;
+        int n=grid[0].length;
+
+        int dp[][]=new int [m][n];
+        for(int row[]: dp)
+        {
+            Arrays.fill(row,-1);
+        }
+
+        return pathsum(m-1,n-1,grid,dp);
+    }
+
+
+    private static int pathsum(int i, int j, int grid[][], int dp[][])
+    {
+        //base case
+        if(i==0 && j==0) return grid[0][0];
+        if (i < 0 || j < 0) return (int)1e9;
+        //if there are overlapping subproblems
+        if(dp[i][j]!=-1) return dp[i][j];
+        
+        int right = grid[i][j] + pathsum(i, j - 1, grid, dp);
+        int up = grid[i][j] + pathsum(i - 1, j, grid, dp);
+        
+        return dp[i][j]=Math.min(right,up);
+    }
+}
+
+
+Time Complexity: O(N*M)  Reason: At max, there will be N*M calls of recursion.
+
+Space Complexity: O((M-1)+(N-1)) + O(N*M)   Reason: We are using a recursion stack space: O((M-1)+(N-1)), here (M-1)+(N-1) is the path length and an external DP Array of size ‘N*M’.
+
+
+
+
+
+TOBULATION::
+
+class Solution {
+    public int minPathSum(int[][] grid) {
+         int n = grid.length;
+        int m = grid[0].length;
+       int dp[][] = new int[n][m];
+
+        // Iterate through the matrix
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (i == 0 && j == 0)
+                    dp[i][j] = grid[i][j]; // If we're at the top-left cell, the minimum sum is its value
+                else {
+                    int up = grid[i][j];
+                    if (i > 0)
+                        up += dp[i - 1][j]; // Add the value from above if it's not out of bounds
+                    else
+                        up += (int) Math.pow(10, 9); // Add a large value if out of bounds in the up direction
+
+                    int left =grid[i][j];
+                    if (j > 0)
+                        left += dp[i][j - 1]; // Add the value from the left if it's not out of bounds
+                    else
+                        left += (int) Math.pow(10, 9); // Add a large value if out of bounds in the left direction
+
+                    // Store the minimum of the two possible paths
+                    dp[i][j] = Math.min(up, left);
+                }
+            }
+        }
+
+        // The final result is stored in the bottom-right cell of the DP matrix
+        return dp[n - 1][m - 1];
+    }
+}
+
+
+Time Complexity: O(N*M)  Reason: There are two nested loops
+
+Space Complexity: O(N*M)  Reason: We are using an external array of size ‘N*M’’.
+
+
+
+
+
+SPACE OPTIMIZATION::
+
+class Solution {
+    public int minPathSum(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+
+        int cur[] = new int[n];
+        int prev[] = new int[n];
+        
+        for(int i=0; i<m; i++) {
+            for(int j=0; j<n; j++) {
+               if(i==0 && j==0) {
+                  cur[j] = grid[0][0];
+                  continue;
+               }
+                int right = grid[i][j];
+                if(j > 0)
+                    right += cur[j-1];
+                else
+                    right += 1e9;
+                
+                int up = grid[i][j];
+                if(i > 0)
+                    up += prev[j];
+                else
+                    up += 1e9;
+                
+                cur[j] = Math.min(right, up);
+            }
+            prev = cur;
+        }
+        return prev[n-1];
+    }
+}
+
+
+Time Complexity: O(M*N)   Reason: There are two nested loops
+
+Space Complexity: O(N)  Reason: We are using an external array of size ‘N’ to store only one row.
