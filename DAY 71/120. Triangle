@@ -1,0 +1,96 @@
+120. Triangle
+
+MEMOIZATION::
+
+
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int n=triangle.size();
+        int dp[][]=new int [n][n];
+        for(int row[]:dp)
+        {
+            Arrays.fill(row,-1);
+        }
+        return mintot(0,0,triangle,dp,n);
+    }
+
+    private int mintot(int i,int j,List<List<Integer>> triangle, int dp[][], int n )
+    {
+        //base case
+        if(i==n-1) return triangle.get(n-1).get(j);
+
+        //if there is ovelapping subpbroblem
+        if(dp[i][j]!=-1)return dp[i][j];
+        
+        int down=triangle.get(i).get(j)+ mintot(i+1,j, triangle, dp, n);
+        int diag=triangle.get(i).get(j)+ mintot(i+1,j+1, triangle, dp, n);
+        return dp[i][j]=Math.min(down,diag);
+    }
+}
+
+
+
+Time Complexity=Time Complexity is 0(NxN)
+Space Complexity is O(N)+0(NxN)
+
+
+TABULIZATION::
+
+
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int n=triangle.size();
+        int dp[][]=new int [n][n];
+        for(int row[]:dp)
+        {
+            Arrays.fill(row,-1);
+        }
+        for(int j=0;j<n;j++){
+         dp[n-1][j]= triangle.get(n-1).get(j);
+        }
+
+       for(int i=n-2;i>=0;i--){
+           for(int j=i;j>=0;j-- ){
+               int down=triangle.get(i).get(j)+dp[i+1][j];
+               int diag=triangle.get(i).get(j)+dp[i+1][j+1];
+                dp[i][j]=Math.min(down,diag);
+           }
+       }        
+      return dp[0][0];
+    }
+}
+
+Time Complexity: O(N * N)
+Space Complexity: O(N * N)(Array Space)(We saved recursion stack space here)
+
+
+
+
+SPACE OPTIMIZATION::
+
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int n = triangle.size();
+        int[] cur = new int[n];
+        int[] prev = new int[n];
+
+        for (int j = 0; j < n; j++) {
+            prev[j] = triangle.get(n - 1).get(j);
+        }
+
+        for (int i = n - 2; i >= 0; i--) {
+            for (int j = i; j >= 0; j--) {
+                int down = triangle.get(i).get(j) + prev[j];
+                int diag = triangle.get(i).get(j) + prev[j + 1];
+                cur[j] = Math.min(down, diag);
+            }
+           prev=cur.clone();
+        }
+
+        return prev[0];
+    }
+}
+
+
+Time Complexity: O(N * N)
+Space Complexity: O(N )
