@@ -22,4 +22,96 @@ TC=O(n)
 Sc=O(1)
 
 
+BY USING HASHARRAY:>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+import java.util.*;
+ 
+public class Main {
+    public static void main(String[] args) {
+        int n = 9;
+        int[] a = {1, 3, 3, 4, 1, 4, 4, 4, 4};
+        int[] b = new int[10];
+        int i = 0;
+        while (i < n) {
+            int x = a[i];
+            b[x]++;
+            i++;
+        }
+        // Above for loop took O(n) time.
+        // All frequencies have been calculated in advance by now.. :-) :-)
+ 
+        int[] queries = {3, 4, 1};
+        int q = 3;
+        int j = 0;
+        while (j < q) {
+            int x = queries[j];
+            System.out.print(b[x]); // takes O(1) time..
+            System.out.print(' ');
+            j++;
+        }
+        // Above for loop took O(q) time.
+ 
+        // Hence total time: O(n+q).
+    }
+}
+
+
+
+
+
+BY using hashmap>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+
+
+import java.io.*;
+import java.util.*;
+ 
+class GFG {
+ 
+static HashMap <Integer, Integer> hm = new HashMap<Integer, Integer>();
+ 
+static void countFreq(int a[], int n)
+{
+		// Insert elements and their
+		// frequencies in hash map.
+		for (int i=0; i<n; i++)
+			if (hm.containsKey(a[i]) )
+				hm.put(a[i], hm.get(a[i]) + 1);
+			else hm.put(a[i] , 1);
+	}
+ 
+	// Return frequency of x (Assumes that
+	// countFreq() is called before)
+	static int query(int x)
+	{
+		if (hm.containsKey(x))
+			return hm.get(x);
+		return 0;
+	}
+ 
+	// Driver program
+	public static void main (String[] args) {
+		int a[] = {1, 3, 2, 4, 2, 1};
+		int n = a.length;
+		countFreq(a, n);
+		System.out.println(query(2));
+		System.out.println(query(3));
+		System.out.println(query(5));
+	}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
