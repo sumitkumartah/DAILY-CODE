@@ -1,0 +1,43 @@
+1002. Find Common Characters
+
+
+CODE::
+
+
+class Solution {
+    public List<String> commonChars(String[] words) {
+        Map<Character, Integer> minfreq = new HashMap<>();
+        for (char ch = 'a'; ch <= 'z'; ch++) {
+            minfreq.put(ch, 1000); // set maxfreq for all the characters
+        }
+
+        for (String word : words) {
+            Map<Character, Integer> freq = new HashMap<>();
+            for (char ch : word.toCharArray()) {
+                freq.put(ch, freq.getOrDefault(ch, 0) + 1); // insert every character into the map
+            }
+
+            // update the minfreq value with min frequency
+            for (char ch = 'a'; ch <= 'z'; ch++) {
+                minfreq.put(ch, Math.min(minfreq.get(ch), freq.getOrDefault(ch, 0)));
+            }
+        }
+
+        // store in the list which characters are common
+        List<String> ans = new ArrayList<>();
+        for (char ch = 'a'; ch <= 'z'; ch++) {
+            int count = minfreq.get(ch);
+            if (count > 0) {
+                for (int i = 0; i < count; i++) {
+                    ans.add(ch+"");
+                }
+            }
+        }
+        return ans;
+    }
+}
+
+
+
+Time Complexity: O(N * K)   //k is the avg length of the words array
+Space Complexity: O(26 + 26 * max_freq)
