@@ -1,0 +1,30 @@
+Count pairs with given sum
+
+
+https://www.geeksforgeeks.org/problems/count-pairs-with-given-sum5022/1
+
+
+
+CODE::
+
+class Solution {
+    int getPairsCount(int[] arr, int n, int k) {
+        Map<Integer, Integer> mpp=new HashMap<>();
+        
+        int maxcnt =0;
+        for(int i=0;i<n;i++)
+        {
+            int require= k-arr[i];  //requirement of element present in the map
+            if(mpp.containsKey(require)){
+                maxcnt +=  mpp.get(require);  // return  freq of the require element
+            }
+            mpp.put(arr[i], mpp.getOrDefault(arr[i], 0)+1);    // we have to insert the arr[i] in the map thats why no else here
+            
+        }
+        return maxcnt;
+    }
+}
+
+
+TC=O(N) 
+SC=O(N)
