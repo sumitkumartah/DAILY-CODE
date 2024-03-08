@@ -1,0 +1,35 @@
+Max distance between same elements
+
+
+https://www.geeksforgeeks.org/problems/max-distance-between-same-elements/1
+
+
+
+code::
+
+class Solution
+{
+    int maxDistance(int arr[], int n)
+    {
+      Map<Integer, Integer> mpp=new HashMap<>();
+      int maxdis=0;
+      
+      for(int i=0;i<n;i++)
+      {
+          int dis=0;
+          if(mpp.containsKey(arr[i]))
+          {
+              dis= i-mpp.get(arr[i]);
+              maxdis=Math.max(dis, maxdis);
+          }
+          else{
+              mpp.put(arr[i], i);
+          }
+      }
+      return maxdis;
+    }
+}
+
+
+TC=O(N) // for 1 iteration of each element 
+SC=O(N) // for hashmap
