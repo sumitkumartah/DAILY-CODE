@@ -1,0 +1,25 @@
+Find the Frequency
+
+https://www.geeksforgeeks.org/problems/find-the-frequency/1
+
+GFG:-
+class Solution{
+    int findFrequency(int Arr[], int X){
+        int cnt=0;
+        for(int i=0;i< Arr.length;i++)
+        {
+            if(Arr[i]==X)
+            {
+                cnt++;
+            }
+        }
+        
+        return cnt;
+    }
+}
+
+TC=O(n)
+Sc=O(1)
+
+
+
