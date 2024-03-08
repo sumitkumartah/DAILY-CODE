@@ -33,3 +33,26 @@ class Solution {
 
 Time Complexity: O(n)
 Space Complexity: O(n)
+
+
+OPYIMAL::>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  TWO pointer
+
+class Solution {
+    public String removeDuplicates(String s) {
+        StringBuilder sb=new StringBuilder();
+        for(char c: s.toCharArray())
+        {
+            int size=sb.length();
+            if(size>0 && sb.charAt(size-1)==c)  // c at the first ind
+            {
+                sb.deleteCharAt(size-1);
+            }else{
+            sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+}
+
+TC=O(N)
+SC=O(1)
