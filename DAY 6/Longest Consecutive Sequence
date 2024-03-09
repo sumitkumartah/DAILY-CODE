@@ -109,8 +109,47 @@ class Solution {
     }
 }  
 
-
 Time Complexity: O(N) + O(2*N) ~ O(3*N), where N = size of the array.
 
 Space Complexity: O(N), as we are using the set data structure to solve this problem.
+
+
+
+
+BY using MAP>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        int n = nums.length;
+        if (n == 0)
+            return 0;
+        Map<Integer, Boolean> mpp = new HashMap<>();
+        int longest = Integer.MIN_VALUE;
+
+        for (int num : nums) {
+            mpp.put(num, true);
+        }
+
+        for (int num : mpp.keySet()) {
+            if (!mpp.containsKey(num - 1)) {
+                int cnt = 1;
+                int x = num;
+
+                while (mpp.containsKey(x + 1)) {
+                    cnt++;
+                    x++;
+                }
+                longest = Math.max(longest, cnt);
+            }
+        }
+        return longest;
+    }
+}
+Time Complexity: O(n^2)
+Space Complexity: O(n)
+
+
+
 
