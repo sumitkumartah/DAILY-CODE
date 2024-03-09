@@ -1,0 +1,51 @@
+34. Find First and Last Position of Element in Sorted Array
+
+CODE::
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int lb = lowerbound(nums, 0, nums.length - 1, target);
+       if (lb == nums.length || nums[lb] != target)
+            return new int[]{-1, -1};
+        int ub= upperbound(nums, lb, nums.length - 1, target);
+        return new int[] {lb,ub };
+    }
+
+    // searching the lowerbound
+    public int lowerbound(int arr[], int low, int high, int target) {
+        int ans = high+1;  // take maximum lowerbound = arr.length+1 (maximum possible ans);
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            if (arr[mid] == target) {   // if we got the target then I go left to find the more min lb
+                ans = mid;
+                high = mid - 1;
+            } else if (arr[mid] > target) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+    // searching for the higherbound
+    public int upperbound(int arr[], int low, int high, int target) {
+        int ans = -1;  //take upperbound inially at -1 (min possible ans)
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            if (arr[mid] == target) {     // if we got the target then I go right to find the more max up
+                ans = mid;
+                low = mid + 1;
+            } else if (arr[mid] > target) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return ans ;
+    }
+}
+
+TC=O(logN) + O(logN)
+Sc=O(1)
