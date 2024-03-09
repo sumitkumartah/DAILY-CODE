@@ -1,0 +1,28 @@
+Zero Sum Subarrays
+https://www.geeksforgeeks.org/problems/zero-sum-subarrays1825/1
+
+
+class Solution{
+    //Function to count subarrays with sum equal to 0.
+    public static long findSubarray(long[] arr ,int n) 
+    {
+        //Your code here
+        long count = 0;
+        HashMap<Integer, Integer> presum = new HashMap<>();
+        int currsum = 0;
+        for(int i =0; i<n; i++){
+            currsum += arr[i];
+            if(currsum == 0){
+                count += 1;
+            }
+            if(presum.containsKey(currsum)){
+                count += presum.get(currsum);
+                presum.put(currsum, presum.get(currsum) + 1);
+            }
+            else{
+                presum.put(currsum, 1);
+            }
+        }
+        return count;
+    }
+}
