@@ -1,0 +1,48 @@
+
+Longest Sub-Array with Sum K
+
+
+https://www.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1
+
+
+CODE::
+
+
+
+class Solution{
+    
+   
+    // Function for finding maximum and value pair
+    public static int lenOfLongSubarr (int A[], int N, int K) {
+          int sum = 0;
+        int longest_length = 0;
+        HashMap<Integer, Integer> mpp = new HashMap<>();
+
+        for (int i = 0; i < N; i++) {
+            sum += A[i];
+
+            // If the sum is equal to K from the beginning to index i
+            if (sum == K) {  
+                longest_length = Math.max(longest_length, i + 1);
+            }
+
+            // Check if there is a subarray with sum (sum - K) which makes the sum equals to K
+            int req = sum - K;
+            if (mpp.containsKey(req)) {
+                longest_length = Math.max(longest_length, i - mpp.get(req));
+            }
+
+            // If the sum is not encountered before, store it along with its index
+            if (!mpp.containsKey(sum)) {
+                mpp.put(sum, i);
+            }
+        }
+        return longest_length;
+    
+    }
+    
+}
+
+
+TC=O(n)
+SC=O(N)
