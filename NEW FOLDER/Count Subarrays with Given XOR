@@ -1,0 +1,32 @@
+Count Subarrays with Given XOR
+
+
+https://www.codingninjas.com/studio/problems/count-subarrays-with-given-xor_1115652?leftPanelTabValue=PROBLEM
+
+CODE:
+
+
+public class Solution {
+	public static int subarraysXor(ArrayList<Integer> arr, int x) {
+		int cnt=0;
+		int xor=0;
+		Map<Integer, Integer> mpp=new HashMap<>();
+		for(int i=0;i< arr.size();i++)
+		{
+			xor=(xor ^ arr.get(i)) ;  //calculate the xor in every iteration
+			if(xor==x) cnt++; // if xor itself thek then cnt will increase
+
+			int req=xor^x;  //prefxor upto l-1 element 
+			if(mpp.containsKey(req))//if previously req is there in the map
+			{
+				cnt+=mpp.get(req);  //cnt will increase how many time it occurs
+			}
+			mpp.put(xor, mpp.getOrDefault(xor, 0)+1);
+		}
+		return cnt;
+	}
+}
+
+
+TC=O(N)
+SC=O(N)
