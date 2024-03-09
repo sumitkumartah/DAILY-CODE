@@ -1,0 +1,32 @@
+560. Subarray Sum Equals K
+
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int count = 0;
+        HashMap<Integer, Integer> presum = new HashMap<>();
+        int currsum = 0;
+
+        // presum.put(0, 1); // Initialize presum with 0 to handle cases where
+        // currsum-k=0
+
+        for (int i = 0; i < nums.length; i++) {
+            currsum += nums[i];
+            if (currsum == k) {
+                count += 1;
+            }
+            int req = currsum - k;
+
+            if (presum.containsKey(req)) {
+                count += presum.get(req);
+            }
+
+            presum.put(currsum, presum.getOrDefault(currsum, 0) + 1);
+        }
+
+        return count;
+    }
+}
+
+
+TC=O(N)
+SC=O(N)
