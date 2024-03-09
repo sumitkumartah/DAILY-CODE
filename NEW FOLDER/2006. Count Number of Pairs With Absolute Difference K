@@ -1,0 +1,77 @@
+2006. Count Number of Pairs With Absolute Difference K
+
+
+BRUTE FORCE::
+
+class Solution {
+    public int countKDifference(int[] nums, int k) {
+        int cnt=0;
+        for(int i=0;i<nums.length; i++){
+            for(int j=i+1; j<nums.length;j++)
+            {
+                
+                if(Math.abs(nums[i]-nums[j]) ==k) cnt++;
+
+            }
+        }
+        return cnt;
+    }
+}
+
+TC=O(N^2)
+Sc=O(1)
+
+
+BETTER::>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ussing hashmap
+     |nums[i] + nums[j]|=k
+->  +(nums[i] +nums[j] =k)   or -(nums[i] +nums[j]) = k
+->  nums[j]=nums[i] -k         -> nums[j]=nums[i] +k
+
+
+class Solution {
+    public int countKDifference(int[] nums, int k) {
+        Map<Integer, Integer> mpp = new HashMap<>();
+        int cnt = 0;
+        for (int i = 0; i < nums.length; i++) {
+
+            if (mpp.containsKey(nums[i] - k)) {
+                cnt += mpp.get(nums[i] - k);
+            }
+            if (mpp.containsKey(nums[i] + k)) {
+                cnt += mpp.get(nums[i] + k);
+            }
+            mpp.put(nums[i], mpp.getOrDefault(nums[i], 0) + 1);
+        }
+        return cnt;
+    }
+}
+
+
+TC=O(N) 
+Sc=O(N)
+
+
+OPTIMAL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Count sort
+
+class Solution {
+    public int countKDifference(int[] nums, int k) {
+        
+        int count=0;
+        int n = nums.length;
+        int arr[] = new int[101];  //just taking advantage of leetcode space constarint: (1 <= nums.length <= 200)
+        
+        for(int i=0; i<n;i++){
+            arr[nums[i]]++;
+        }
+        
+        for(int i=k+1; i<101; i++){
+            count += arr[i]*arr[i-k];   // main step - pay attention!
+        }
+        
+        return count;
+    }
+}
+
+TC=O(N)
+Sc=O(1)
+
