@@ -31,41 +31,40 @@ OPTIMAL::
 
 class Solution {
     public int search(int[] nums, int target) {
-        int n=nums.length;
-        int low=0;
-        int high=n-1;
-        while(low<=high)
-        {
-            int mid=low+(high-low)/2;
-            if(nums[mid]==target) return mid;
+        int n = nums.length;
+        int l = 0;
+        int h = n - 1;
+        
+        while (l <= h) {
+            int mid = (l + h) / 2;
 
-            //if left part is sorted
-            if(nums[low]<=nums[mid])
-            {
-                if(nums[low]<=target && target <=nums[mid])    //element within the left portion
-                {
-                    high=mid-1;
-                }
-                else      //element is not in the left portion then eleminate the left portion
-                {
-                    low=mid+1;
+            if (nums[mid] == target)
+                return mid;
+
+            // Check if the first half is sorted
+            if (nums[l] <= nums[mid]) {
+                // Check if the target is in the left half
+                if (nums[l] > target || target > nums[mid]) {  //if target is less than nums[low] or
+                                                              // target is greater than nums[mid]
+                    l = mid + 1;
+                   
+                } else {
+                     h = mid - 1;
                 }
             }
-
-            //if right part is sorted
-
-            if(nums[mid]<=nums[high])
-            {
-                if(nums[mid]<=target && target <=nums[high])    //element within the left portion
-                {
-                    low=mid+1;
-                } 
-                else         //element is not in the right portion then eleminate the right portion
-                {
-                    high=mid-1;
+            // If the second half is sorted
+            else {
+                // Check if the target is in the right half
+                if (nums[mid] > target || target> nums[h]) {  //if target is less than nums[mid] or
+                                                              // target is greater than nums[high] 
+                    h = mid - 1;
+                    
+                } else {
+                    l = mid + 1;
                 }
             }
         }
+        
         return -1;
     }
 }
@@ -76,8 +75,4 @@ Reason: We are using binary search to search the target.
 
 Space Complexity: O(1)
 Reason: We have not used any extra data structures, this makes space complexity, even in the worst case as O(1).
-Time Complexity: O(logN), N = size of the given array.
-Reason: We are using binary search to search the target.
 
-Space Complexity: O(1)
-Reason: We have not used any extra data structures, this makes space complexity, even in the worst case as O(1).
