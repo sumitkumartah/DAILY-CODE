@@ -23,8 +23,8 @@ Sc=O(1)
 
 
 BETTER::>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ussing hashmap
-     |nums[i] + nums[j]|=k
-->  +(nums[i] +nums[j] =k)   or -(nums[i] +nums[j]) = k
+     |nums[i] - nums[j]|=k
+->  +(nums[i] - nums[j] =k)   or -(nums[i] - nums[j]) = k
 ->  nums[j]=nums[i] -k         -> nums[j]=nums[i] +k
 
 
