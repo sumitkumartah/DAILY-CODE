@@ -102,3 +102,51 @@ Time Complexity: O(logN), N = size of the given array.
 Reason: We are basically using the Binary Search algorithm.
 
 Space Complexity: O(1) as we are not using any extra space.
+
+
+
+
+
+
+ANOTHER APPROACH>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+suppose mid=7     
+mid^1=   0 1 1 1
+         0 0 0 1
+     --------------
+         0 1 1 0   => 6       so if i write nums[mid] == nums[mid^ 1]  it will automatically check previous ind if mid is odd    so then go (lo=mid+1)
+
+suppose mid=8
+mid^1=   1 0 0 0
+         0 0 0 1
+     -------------
+         1 0 0 1  =>9     so if i write nums[mid] == nums[mid^ 1]  it will automatically check the next ind if mid is even   
+
+
+
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int lo = 0, hi = nums.length - 1;
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+            
+            if (nums[mid] != nums[mid + 1] && nums[mid] != nums[mid - 1])
+                return nums[mid];
+            
+            else if (nums[mid] == nums[mid ^ 1])
+                lo = mid + 1;
+            else
+                hi = mid - 1;
+        }
+
+        return nums[lo];
+    }
+}
+
+
+Time Complexity: O(logN), N = size of the given array.
+Reason: We are basically using the Binary Search algorithm.
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
