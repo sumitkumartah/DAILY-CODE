@@ -1,0 +1,51 @@
+791. Custom Sort String
+
+APPROACH>>>>>>>>>>>
+
+1) At first store all the character of s string into map with frquency
+2)  Then take a stringBuilder
+3) check in the order strng is  if map is already contains the character 
+          if there is common character then add the  ch into stringbuffer base on the freq and remove this char from map
+4) Then check is there any character in the map then enter the char into stringbuffer 
+
+
+CODE::
+
+
+import java.util.*;
+
+class Solution {
+    public String customSortString(String order, String s) {
+        Map<Character, Integer> mpp = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            mpp.put(s.charAt(i), mpp.getOrDefault(s.charAt(i), 0) + 1);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < order.length(); i++) {
+            char ch = order.charAt(i);
+           
+            if (mpp.containsKey(ch)) {
+                int cnt = mpp.get(ch);
+                for (int j = 0; j < cnt; j++) {
+                    sb.append(ch);
+                    mpp.remove(ch);
+                }
+            }
+
+        }
+
+        for (Character key : mpp.keySet()) {
+            int cnt = mpp.get(key);
+            for (int j = 0; j < cnt; j++) {
+                sb.append(key);
+            }
+        }
+
+        return sb.toString();
+    }
+}
+
+
+TC= O(N) +O(M)
+Sc= O(N)
