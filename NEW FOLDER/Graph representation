@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of nodes: ");
+        int n = scanner.nextInt();
+
+        System.out.print("Enter the number of edges: ");
+        int m = scanner.nextInt();
+
+        int[][] b = new int[n][n]; // Using int to represent connections
+
+        System.out.println("Enter the edges (each edge as two space-separated integers):");
+        for (int i = 0; i < m; i++) {
+            int x = scanner.nextInt();
+            int y = scanner.nextInt();
+            // Setting connections for undirected graph
+            b[x][y] = 1;
+            b[y][x] = 1;
+        }
+
+        // Printing the undirected graph
+        System.out.println("Adjacency Matrix Representation of the Undirected Graph:");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(b[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
