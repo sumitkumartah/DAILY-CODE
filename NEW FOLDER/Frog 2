@@ -1,0 +1,49 @@
+
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+       Scanner sc=new Scanner(System.in);
+       System.out.print("Enter the size  of the array: ");
+       int n=sc.nextInt();
+         System.out.println("Enter the  the array: ");
+       int b[]=new int[n+1];
+       for(int i=1;i<=n;i++){
+           b[i]=sc.nextInt();
+       }
+       
+       System.out.println("Enter the  the K for the maximum jump: ");
+        int k=sc.nextInt();
+       int dp[]=new int[n+1];   //initialise a dp of size n+1
+       findans(b, dp, n, k);  //call the function
+       
+    }
+  
+public static void findans(int b[], int dp[], int n, int k) {
+    if (k >= n) {
+        System.out.println("K is greater than or equal to n, so it's not possible to jump.");
+        return;
+    }
+    
+    dp[1] = 0; // when the array size is 1
+    dp[2] = Math.abs(b[2] - b[1]); // when the array size is 2
+
+    for (int i = 3; i <= n; i++) {
+        int minCost = Integer.MAX_VALUE;
+        int j=1;
+        while( j <= k && i - j >= 1){
+            int cost = Math.abs(b[i] - b[i - j]) + dp[i - j];
+            minCost = Math.min(minCost, cost);
+            j++;
+        }
+        dp[i] = minCost;
+    }
+
+    System.out.println("Min cost : " + dp[n]);
+}
+}
+
+
+Time Complexity: 
+O(n⋅k)
+Space Complexity: 
+O(n)
