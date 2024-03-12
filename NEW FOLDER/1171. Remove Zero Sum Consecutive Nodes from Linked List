@@ -1,0 +1,43 @@
+
+1171. Remove Zero Sum Consecutive Nodes from Linked List
+
+
+
+
+
+class Solution {
+    public ListNode removeZeroSumSublists(ListNode head) {
+        Map<Integer, ListNode> mpp = new HashMap<>();
+        ListNode dummyNode = new ListNode(0); // create the dummy node
+        dummyNode.next = head; // join the head with dummy node
+        mpp.put(0, dummyNode); // within map insert(0, dummy node) initially
+
+        int prefsum = 0; // initialize the prefix sum
+
+        while (head != null) {
+            prefsum += head.val; // calculating the sum of every node
+
+            if (mpp.containsKey(prefsum)) { // if there is already <prefsum, node> in map
+                ListNode start = mpp.get(prefsum); // find the node where prefsum was same
+                ListNode cur = start.next;
+                int sum = prefsum; // store the prefsum at sum
+
+                // remove those elements which sum is zero from the map
+                while (cur != head) {
+                    sum += cur.val; // calculate the sum of the cur node for removing the node
+                    mpp.remove(sum); // remove those nodes which are no longer needed in the map
+                    cur = cur.next;
+                }
+                start.next = head.next; // join the node where prefsum previously occurred with the current head.next
+
+            } else {
+                mpp.put(prefsum, head);
+            }
+            head = head.next;
+        }
+        return dummyNode.next;
+    }
+}
+
+Time Complexity: O(n)
+Space Complexity: O(n)
