@@ -1,0 +1,39 @@
+Frog 1
+
+
+
+CODE::
+
+
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+       Scanner sc=new Scanner(System.in);
+       System.out.print("Enter the size  of the array: ");
+       int n=sc.nextInt();
+         System.out.println("Enter the  the array: ");
+       int b[]=new int[n+1];
+       for(int i=1;i<=n;i++){
+           b[i]=sc.nextInt();
+       }
+       int dp[]=new int[n+1];   //initialise a dp of size n+1
+       findans(b, dp, n);  //call the function
+       
+    }
+    
+    public static void findans(int b[], int dp[], int n)
+    {
+        dp[1]=0;    // when the array size is 1 
+       dp[2]=Math.abs(b[2]-b[1]); //when the array size is 2
+       
+       for(int i=3;i<=n;i++){
+           int x=Math.abs(b[i-1]-b[i]) +dp[i-1];
+           int y=Math.abs(b[i-2]-b[i])+dp[i-2];
+           dp[i]=Math.min(x,y);
+       }
+        System.out.println("Min cost : "+dp[n]);
+    }
+}
+
+TC=O(N)
+SC=O(N)
