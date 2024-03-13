@@ -4,54 +4,59 @@ BFS ON GRAPH
 
 CODE::
 
-import java.util.*; // importing java.util package
+import java.util.*; // Importing java.util package
+
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in); // declaring Scanner object to take input
-        int n = sc.nextInt(); // taking input of size of graph
-        int m = sc.nextInt(); // taking input of number of edges in the graph
-        ArrayList<ArrayList<Integer>> G = new ArrayList<>(); // constructing graph using adjacency list
+        Scanner sc = new Scanner(System.in); // Declaring Scanner object to take input
+         System.out.print("Enter the no of nodes: ");
+        int n = sc.nextInt(); // Taking input of size of graph
+        System.out.print("Enter the no of edges: ");
+        int m = sc.nextInt(); // Taking input of number of edges in the graph
 
-        // creating n number of vertices in graph
-        for (int i = 0; i <= n; i++) {
-            G.add(new ArrayList<Integer>());
+        List<Integer>[] G = new ArrayList[n + 5]; // Constructing graph using adjacency list
+
+        // Creating n number of vertices in the graph
+        for (int i = 0; i < n + 5; i++) {
+            G[i] = new ArrayList<>();
         }
 
-        // reading edges of graph
+       
+        // Reading edges of the graph
         for (int i = 1; i <= m; i++) {
-            int u = sc.nextInt();
-            int v = sc.nextInt();
-            G.get(u).add(v);
-            G.get(v).add(u);
-            // making un-directed graph
+            int x = sc.nextInt();
+            int y = sc.nextInt();
+            G[x].add(y);
+            G[y].add(x);
+            // Making the graph undirected
         }
 
-        Queue<Integer> q = new LinkedList<>(); // declaring a queue
+        int source = 1; // Setting the source node
 
-        q.add(1); // pushing the source node = 1 in the queue
+        int[] used = new int[n + 5]; // Declaring an empty used array where used[i] = 0 means this node has not yet been visited in our algorithm
+        int[] level = new int[n + 5]; // Declaring level array which lets us know the level of each node
 
-        int[] used = new int[n + 5]; // declaring an empty used array where in used[i] = 0 means this node has not yet been visited in our algorithm
-        used[1] = 1; // 1st node has been visited hence setting it as 1 and it is inserted in the queue as well
+        Queue<Integer> q = new LinkedList<>(); // Declaring a queue
 
-        int[] lvl = new int[n + 5]; // declaring level array which lets us know level of each node      
-           /*the arrays used and lvl is declared as n + 5. This is likely done to ensure that these arrays have enough capacity to accommodate the indices 1 through n, with some extra buffer space.*/
-           lvl[1] = 0; // lvl of 1st node, which is the source node, is 0 as we start from here
-
+        q.add(source); // Pushing the source node into the queue
+        used[source] = 1; // Marking the source node as visited
+        level[source] = 0; // Setting the level of the source node to 0
+         System.out.println("node  level");
         while (!q.isEmpty()) {
-            // BFS Algo
+            // BFS Algorithm
 
-            int v = q.remove(); // top most element of queue
+            int removed = q.poll(); // Getting the top-most element of the queue
 
-            System.out.println(v + " " + lvl[v]); // printing that node with its level
+            System.out.println(removed + "      " + level[removed]); // Printing the node with its level
 
-            for (int i = 0; i < G.get(v).size(); i++) {
-                // iterating through all nodes connected to node v
-                int u = G.get(v).get(i);
-                if (used[u] == 0) {  //it is connected to node 1 and it never visited before
-                    // if the node u (node connected to v) has never been visited before then let's visit it
+            for (int i = 0; i < G[removed].size(); i++) {
+                // Iterating through all nodes connected to the removed node
+                int u = G[removed].get(i);
+                if (used[u] == 0) { // Checking if the node has never been visited before
+                    // If the node u (node connected to removed) has never been visited before, then let's visit it
                     q.add(u);
-                    used[u] = 1; // it has now been visited hence setting its value as 1
-                    lvl[u] = lvl[v] + 1; // lvl[u] will be 1 greater than lvl[1] as we move 1 step forward from u to v
+                    used[u] = 1; // Marking the node as visited
+                    level[u] = level[removed] + 1; // Setting the level of the node
                 }
             }
         }
