@@ -1,0 +1,60 @@
+930. Binary Subarrays With Sum
+
+
+
+
+
+CODE:: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>by using prefixsum
+
+class Solution {
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        Map<Integer,Integer> mpp=new HashMap<>();
+        int sum=0;
+        int cnt=0;
+       for(int i=0;i<nums.length;i++){
+        sum+=nums[i];
+
+        if(sum==goal){
+            cnt+=1;
+        }
+        int require=sum-goal;
+        if(mpp.containsKey(require)){
+            cnt+=mpp.get(require);
+        }
+
+        mpp.put(sum, mpp.getOrDefault(sum,0)+1);
+       }
+
+       return cnt;
+    }
+}
+
+
+TC=O(N)
+Sc=O(n)
+
+
+
+
+SLIDING WINDOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+class Solution {
+    public int numSubarraysWithSum(int[] nums, int goal) {
+      return atMost(nums, goal) - atMost(nums, goal - 1);
+    }
+
+    public int atMost(int[] A, int S) {
+        if (S < 0) return 0;
+        int res = 0, start = 0, n = A.length;
+        for (int end = 0; end < n; end++) {
+            S -= A[end];
+            while (S < 0)
+                S += A[start++];
+            res += end - start + 1;
+        }
+        return res;
+}
+}
+
+Tc=O(N)
+Sc=O(1)
