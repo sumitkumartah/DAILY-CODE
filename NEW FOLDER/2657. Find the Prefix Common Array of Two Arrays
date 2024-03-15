@@ -1,0 +1,30 @@
+2657. Find the Prefix Common Array of Two Arrays
+
+
+class Solution {
+    public int[] findThePrefixCommonArray(int[] A, int[] B) {
+        int n = A.length;
+        int[] arr = new int[n];
+        Set<Integer> hset = new HashSet<>();
+
+        for(int i=0; i<n; i++){
+            hset.add(A[i]);
+            int cnt = 0;
+            for(int j=0; j<=i; j++){
+                if(hset.contains(B[j])){
+                    cnt++;
+                }
+            }
+            arr[i] = cnt;
+        }
+
+        return arr;
+    }
+}
+
+ time complexity is O(n * m), and the space complexity is O(n).
+
+
+
+
+
