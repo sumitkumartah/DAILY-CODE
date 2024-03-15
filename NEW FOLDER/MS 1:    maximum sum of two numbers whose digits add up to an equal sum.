@@ -1,0 +1,158 @@
+ maximum sum of two numbers whose digits add up to an equal sum.
+
+
+
+BRUTE FORCE::
+
+import java.util.*;
+class A
+{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n=sc.nextInt();
+        System.out.print("Enter the elemnts of the array : ");
+        int arr[]=new int[n+1];
+        for(int i=1;i<=n;i++){
+            arr[i]=sc.nextInt();
+        }
+        
+        int ans=findans(arr, n);
+        System.out.println("Ans="+ans);
+    }
+    
+    public static int findans(int arr[], int n){
+        int ans=Integer.MIN_VALUE;
+        int sum=0;
+        for(int i=1;i<=n;i++){  //RUN A LOOP FOR ITERATE                                       /////////////O(N)
+          for(int j=i-1;j>=1;j--){  //check from 1 to  i-1 is there any el with same digitsum   ///////////O(N)
+             if(digitsum(arr[i])==digitsum(arr[j])){
+                 sum=arr[i]+arr[j];    // add the el
+             }
+            ans=Math.max(ans, sum);  //get the maxsum
+          
+            
+        }
+    }
+    return ans;
+}
+
+private static int digitsum(int num){                          //////maxium digit can be  [1, 1000000000](10^9) ~ O(10)
+      int sum = 0;
+        while (num!= 0) {
+            sum = sum + num % 10;
+            num = num / 10;
+        }
+        return sum;
+}
+}
+
+
+
+TC= O(N) for i loop
+    O(N) for j loop
+    O(10)  formaxium digit can be  [1, 1000000000](10^9) ~ O(10)
+----------
+   O(N*N*10)
+
+SC=O(1)
+
+
+
+
+
+
+OPTIMAL::
+
+import java.util.*;
+class A
+{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n=sc.nextInt();
+        System.out.println("Enter the elemnts of the array : ");
+        long arr[]=new long[n+1];
+        for(int i=1;i<=n;i++){
+            arr[i]=sc.nextLong();
+        }
+        
+        long ans=findans(arr, n);
+        System.out.println("Ans="+ans);
+    }
+    
+    public static long findans(long arr[], int n){
+        long ans=Integer.MIN_VALUE;
+        long sum=0;
+        long digitsum=-1;
+        HashMap<Long, Long> mpp=new HashMap<>();
+        for(int i=1;i<=n;i++){  //RUN A LOOP FOR ITERATE
+           digitsum=digitsum(arr[i]);
+          
+             if(mpp.containsKey(digitsum)){
+                 sum=arr[i]+mpp.get(digitsum);    // add the el
+                 ans=Math.max(ans, sum);  //get the maxsum
+                 
+                 mpp.put(digitsum, Math.max(arr[i], mpp.get(digitsum))) ;//update the hasmap with (digitsum, max(arr[i], prvious largest digit))
+             }
+             else{   //if there is not any prev which digitsum is same
+             
+             mpp.put(digitsum, arr[i]);
+             }
+          
+            
+        }
+    return ans;
+}
+
+private static long digitsum(long num){
+      long sum = 0;
+        while (num!= 0) {
+            sum = sum + num % 10;
+            num = num / 10;
+        }
+        return sum;
+}
+}
+
+
+
+Enter the size of the array : 7
+Enter the elemnts of the array : 
+11 95 20 77 68 86 21
+Ans=181
+
+
+
+Tc=O(N) *O(10)
+Space Complexity :- how many keys can there be at maximum in hashmap —> only digitsum can be there as they key so the answer
+is O(maximum digitsum) == O(81)[practical manner] which is constant ; O(1) space complexity = constant space complexity 
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+            if(mpp.containsKey(digitsum)){
+                 sum=arr[i]+mpp.get(digitsum);    // add the el
+                 ans=Math.max(ans, sum);  //get the maxsum
+                 
+              
+             
+             mpp.put(digitsum, arr[i]);
+             }
+------------------------------------------------------------------------------------------
+if we  do this line output will be ------->>>>>>>>>  //we have to update the map values  after get maximum ans
+Enter the size of the array : 7
+Enter the elemnts of the array : 
+11 95 20 77 68 86 21
+Ans=-2147483648
+
+
+
+
+
+
