@@ -22,7 +22,8 @@ class Solution {
     }
 }
 
- time complexity is O(n * m), and the space complexity is O(n).
+ time complexity is O(n * m), where m is the average length of the prefix of array B.
+and the space complexity is O(n).
 
 
 
