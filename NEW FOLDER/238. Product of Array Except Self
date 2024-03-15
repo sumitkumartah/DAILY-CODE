@@ -1,0 +1,87 @@
+238. Product of Array Except Self
+
+
+       arr[]= [4  5  1  8  2]
+
+leftproduct= [1  4  20  20 160]
+rightproduct=[80 16  16  2   1]
+  output=    [80  64  320 40 160]       //output= leftproduct * rightproduct
+
+
+CODE:: 
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int leftproduct[]=new int[nums.length];
+        leftproduct[0]=1;
+        for(int i=1;i<nums.length;i++){
+            leftproduct[i]=leftproduct[i-1]* nums[i-1];  //prefix multiply of left           leftproduct= [1  4  20  20 160]
+        }
+
+        int rightproduct[]=new int[nums.length];
+        rightproduct[nums.length-1]=1;
+        for(int i=nums.length-2;i>=0;i--){
+            rightproduct[i]=rightproduct[i+1]* nums[i+1];  //prefix multiply of left        rightproduct=[80 16  16  2   1]
+        }
+
+
+        int output[]=new int[nums.length];
+
+        for(int i=0;i<nums.length;i++){
+            output[i]=rightproduct[i]* leftproduct[i];                      output=    [80  64  320 40 160]  
+        }
+
+        return output;
+
+    }
+}
+
+
+Time Complexity: The solution requires three passes through the array. Two passes are used to calculate the prefix products from both the left and right sides of each element, and one pass is used to calculate the final product excluding the current element. Each pass takes O(n) time where n is the length of the input array.
+
+Therefore, the overall time complexity is O(3n) which simplifies to O(n).
+
+Space Complexity: The solution uses additional space to store the prefix products of elements from both the left and right sides, as well as the output array. The space complexity is O(3n) which simplifies to O(n).
+
+So, the time complexity of this solution is O(n) and the space complexity is also O(n).
+
+
+
+
+
+
+
+optimal::
+
+
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] product = new int[n];
+        product[0] = 1;
+        
+        // Calculate left products and store them in the same array
+        for (int i = 1; i < n; i++) {
+            product[i] = product[i - 1] * nums[i - 1];
+        }
+        
+        // Calculate right products and multiply with left products, storing in the same array
+        int rightProduct = product[0];
+        for (int i = n - 1; i >= 0; i--) {
+            product[i] *= rightProduct;
+            rightProduct *= nums[i];
+        }
+        
+        return product;
+    }
+}
+
+
+
+
+
+TC=O(N)
+Sc=O(1)
+
+
+
+
