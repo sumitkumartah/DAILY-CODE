@@ -1,0 +1,70 @@
+525. Contiguous Array
+
+
+BRUTE FORCE::
+
+class Solution {
+    public int findMaxLength(int[] nums) {
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int one = 0, zero = 0;
+            for (int j = i; j < nums.length; j++) {
+               
+                if (nums[j] == 0)
+                    zero++;
+                else if(nums[j]==1)
+                    one++;
+              
+               
+                 if (zero == one) {
+                    count = Math.max(count, j - i + 1);
+                }
+            }
+           
+        }
+        return count;
+    }
+}
+
+
+TC=O(N*N)
+SC=O(1)
+
+
+
+
+OPTIMAL::>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+class Solution {
+    public int findMaxLength(int[] nums) {
+        int maxlen = 0;
+        int sum = 0;
+        Map<Integer, Integer> mpp = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+
+            if (nums[i] == 1) {
+                sum += nums[i]; // sum caculate
+            } else {
+                sum += -1;   //if nums[i]==0  then in the sum take -1
+            }
+
+
+            if (sum == 0) {
+                maxlen = Math.max(maxlen, i + 1);
+            }
+
+            if (mpp.containsKey(sum)) {
+                maxlen = Math.max(maxlen, i - mpp.get(sum));
+            }
+            if (!mpp.containsKey(sum)) {
+                mpp.put(sum, i);
+            }
+        }
+        return maxlen;
+
+    }
+}
+
+TC=O(N)
+SC=O(N)
