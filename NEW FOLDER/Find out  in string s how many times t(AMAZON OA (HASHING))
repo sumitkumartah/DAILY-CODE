@@ -1,0 +1,46 @@
+AMAZON OA 
+
+
+CODE::
+
+
+import java.util.*;
+class HelloWorld {
+    public static void main(String[] args) {
+    
+       Scanner sc= new Scanner(System.in);
+       System.out.print("Enter the string : ");
+       String s=sc.nextLine();
+       
+       System.out.print("Enter the string you want to search : ");
+       String t=sc.nextLine();
+       int ans=findoccurance(s, t);
+       System.out.println("ANS IS ==" + ans);
+       
+    }
+    
+    public static int findoccurance(String s, String t){
+        
+        //insert in the map string s with freq
+        Map<Character, Integer> mpp1=new HashMap<>();
+       for(int i=0;i<s.length();i++){
+            mpp1.put(s.charAt(i), mpp1.getOrDefault(s.charAt(i), 0)+1);
+        }
+        
+        //insert in the map string t with freq
+         Map<Character, Integer> mpp2=new HashMap<>();
+        for(int i=0;i<t.length();i++){
+            mpp2.put(t.charAt(i), mpp2.getOrDefault(t.charAt(i), 0)+1);
+        }
+        
+        // ans will be min of the freq 
+        int ans=Integer.MAX_VALUE;
+        for (char letter : t.toCharArray()) {
+            ans = Math.min(mpp1.getOrDefault(letter, 0) / mpp2.getOrDefault(letter, 0), 
+                ans);
+        }
+        return ans;
+    }
+}
+ 
+Overall, the time complexity of the code is O(s + t), and the space complexity is O(s + t).
