@@ -36,11 +36,19 @@ class HelloWorld {
         // ans will be min of the freq 
         int ans=Integer.MAX_VALUE;
         for (char letter : t.toCharArray()) {
-            ans = Math.min(mpp1.getOrDefault(letter, 0) / mpp2.getOrDefault(letter, 0), 
+           ans = Math.min(mpp1.get(letter) / mpp2.get(letter), 
                 ans);
         }
         return ans;
     }
 }
+
+Enter the string : abbaabcddeee
+Enter the string you want to search : abde
+ANS IS ==2
+
+=== Code Execution Successful ===
+
+
  
 Overall, the time complexity of the code is O(s + t), and the space complexity is O(s + t).
