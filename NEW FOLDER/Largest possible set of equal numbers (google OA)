@@ -1,0 +1,44 @@
+Largest possible set of equal numbers (google OA)
+
+
+
+import java.util.*;
+
+class A {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the K: ");
+        int k = sc.nextInt();
+
+        System.out.print("Enter the size of the array : ");
+        int n = sc.nextInt();
+
+        System.out.print("Enter the elements of the array : ");
+        int arr[] = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            arr[i] = sc.nextInt();
+        }
+        
+        //here we take extra prefixsum array because the range from (-k to k )can be greater then the array size
+        int prefixsum[] = new int[20002]; // Changed the size to 20002 as the index goes up to 20001
+        int i = 1;
+        while (i <= n) {
+            int l = Math.max(1, arr[i] - k); // Adjusted to ensure l is within bounds
+            int r = Math.min(20001, arr[i] + k); // Adjusted to ensure r is within bounds
+
+            prefixsum[l] = prefixsum[l] + 1;
+            prefixsum[r + 1] = prefixsum[r + 1] - 1;
+
+            i++;
+        }
+
+        int ans = 0; // Changed initial answer to 0
+        for (i = 1; i <= 20001; i++) {
+            prefixsum[i] = prefixsum[i - 1] + prefixsum[i]; // Changed to calculate prefix sum correctly
+            ans = Math.max(prefixsum[i], ans);
+        }
+
+        System.out.println("Answer is " + ans);
+
+    }
+}
