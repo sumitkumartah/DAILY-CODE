@@ -1,0 +1,80 @@
+
+
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the size of the Array: ");
+        int n = scanner.nextInt();
+        
+        System.out.print("Enter no of query: ");
+        int Q = scanner.nextInt();
+        
+        
+
+        int[] b = new int[100001]; // Assuming l, r <= 100000
+         System.out.println("Enter L and R");
+        for (int i = 1; i <= Q; i++) {
+            int L = scanner.nextInt();
+            int R = scanner.nextInt();
+            b[L] = b[L] + 1;
+
+            if (R + 1 <= n) {
+                b[R + 1] = b[R + 1] - 1;
+            }
+        }
+
+        for (int i = 1; i <= n; i++) {
+            b[i] = b[i] + b[i - 1];
+        }
+        
+        
+        System.out.print("Enter how many poll you want to see : ");
+        int p = scanner.nextInt();
+        System.out.println("Enter the poll : ");
+        for (int i = 1; i <= p; i++) {
+          
+            int y = scanner.nextInt();
+            System.out.println( "poll "+y+ "  Value "  +b[y]);
+        }
+    }
+}
+
+
+
+
+
+
+
+Enter the size of the Array: 15
+Enter no of query: 3
+Enter L and R
+1 7
+5 11
+7 9
+Enter how many poll you want to see : 6
+Enter the poll : 
+7 1 5 10 9 14
+poll 7  Value 3
+poll 1  Value 1
+poll 5  Value 2
+poll 10  Value 1
+poll 9  Value 2
+poll 14  Value 0
+
+=== Code Execution Successful ===
+
+
+
+
+
+
+
+
+
+TC : O(N+Q+P)
+SC : O(1) 
+IF l,r<=100000 
+This algorithm works perfectly fine.
