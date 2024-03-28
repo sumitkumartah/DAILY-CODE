@@ -1,0 +1,40 @@
+2958. Length of Longest Subarray With at Most K Frequency
+
+
+
+
+
+
+class Solution {
+    public int maxSubarrayLength(int[] nums, int k) {
+        Map<Integer, Integer> mpp = new HashMap<>();
+        int n = nums.length;
+        int left = 0;
+        int right = 0;
+        int ans = 0; // Initialize ans to 0, not 1
+        while (right < n) {
+            mpp.put(nums[right], mpp.getOrDefault(nums[right], 0) + 1); // Fix the key here
+            // Check if the frequency of nums[right] is greater than 1
+            while (mpp.get(nums[right]) > k) {
+
+                // Decrement frequency and move left pointer
+                mpp.put(nums[left], mpp.get(nums[left]) - 1);
+                left++;
+            }
+           
+            ans = Math.max(ans, right - left+1);
+
+            right++;
+        }
+        return ans;
+    }
+}
+
+
+
+
+
+
+
+TC=O(N)
+SC=However, if the input array has limited distinct elements, the space complexity would be O(min(n, k)), where k is the number of unique elements in the array.
