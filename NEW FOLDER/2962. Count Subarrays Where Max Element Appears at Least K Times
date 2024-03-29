@@ -1,0 +1,26 @@
+2962. Count Subarrays Where Max Element Appears at Least K Times
+
+
+
+
+public class Solution {
+    public long countSubarrays(int[] nums, int k) {
+        Map<Integer, Integer> m = new HashMap<>();
+        int n = nums.length;
+        int a = 0;
+        for (int i : nums)
+            a = Math.max(a, i);
+        int i = 0, j = 0;
+        long ans = 0;
+        while (j < n) {
+            m.put(nums[j], m.getOrDefault(nums[j], 0) + 1);
+            while (m.getOrDefault(a,0) >= k) {
+                ans += n - j;
+                m.put(nums[i], m.get(nums[i]) - 1);
+                i++;
+            }
+            j++;
+        }
+        return ans;
+    }
+}
