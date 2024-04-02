@@ -1,0 +1,229 @@
+
+
+Find the timing when everyone  is free so they can have party for k minutes non stop 
+
+
+BRUTE FORCE
+
+import java.util.*;
+
+public class HelloWorld {
+
+    // This method converts time string to integer
+    // 00:12 ----> converted to ---> 12.
+    // 01:01-----> converted to ---> 61.
+    public static int ConvertStringToInteger(String timeString) {
+        String[] parts = timeString.split(":");
+        int hours = Integer.parseInt(parts[0]);
+        int minutes = Integer.parseInt(parts[1]);
+        return hours * 60 + minutes;
+    }
+
+    // This method converts time string to integer
+    // 12----> converted to ---> 00:12 .
+    // 61 ----> converted to ---> 01:01-
+    public static void convertIntegerToTime(int time) {
+        int hr = time / 60;
+        int min = time % 60;
+
+        if (hr <= 9) {
+            System.out.print("0" + hr);
+        } else {
+            System.out.print(hr);
+        }
+
+        System.out.print(" : ");
+
+        if (min <= 9) {
+            System.out.print("0" + min);
+        } else {
+            System.out.print(min);
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        int arr[] = new int[1440];
+        Arrays.fill(arr, 0);
+
+        System.out.print("Enter the meeting duration : ");
+        int k = sc.nextInt();
+        System.out.print("Enter No of query: ");
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String a = sc.next();//sam
+            String b = sc.next();  //sleep
+            
+            
+            String start = sc.next();
+            String end = sc.next();
+
+            int t1 = ConvertStringToInteger(start); // 01:01-----> converted to ---> 61.
+            int t2 = ConvertStringToInteger(end);
+
+            for (int j = t1; j <= t2; j++) // fill the array with 1
+            {
+                arr[j] = arr[j] + 1;
+            }
+        }
+
+        // find out at the point when all are free
+        int cnt = 0;
+        int flag = 0;
+        for (int i = 0; i < 1440; i++) {
+            if (arr[i] == 0) {
+                cnt++;
+                if (cnt == k) {
+                    System.out.print("Meeting time=   ");
+                    convertIntegerToTime(i - k + 1);
+                    flag = 1;
+                    break;
+                }
+            } else {
+                cnt = 0;
+            }
+        }
+        if (flag == 0) {
+            System.out.print("-1");
+        }
+    }
+}
+
+
+
+
+
+Enter the meeting duration : 60
+Enter No of query: 2
+sam sleep 12:00 23:59
+al lunch 00:00 08:03
+
+
+Meeting time=   08 : 04
+=== Code Execution Successful ===
+
+
+
+TC :- O(N*1440 + 1440) [Because for each interval you have to go from start to end ; which can be max 1440 per interval there are total n intervals.] 
+S :- O(1440) = O(1) 
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+OPTIMAL(By using range update tehnique):  (same as google girls hackathon)
+
+
+
+
+
+
+
+import java.util.*;
+class HelloWorld {
+    
+    // This method converts time string to integer
+    // 00:12 ----> converted to ---> 12.
+    // 01:01-----> converted to ---> 61.
+    public static int ConvertStringToInteger(String timeString) {
+        String[] parts = timeString.split(":");
+        int hours = Integer.parseInt(parts[0]);
+        int minutes = Integer.parseInt(parts[1]);
+        return hours * 60 + minutes;
+    }
+
+    // This method converts time string to integer
+    // 12----> converted to ---> 00:12 .
+    // 61 ----> converted to ---> 01:01-
+    public static void convertIntegerToTime(int time) {
+        int hr = time / 60;
+        int min = time % 60;
+
+        if (hr <= 9) {
+            System.out.print("0" + hr);
+        } else {
+            System.out.print(hr);
+        }
+
+        System.out.print(" : ");
+
+        if (min <= 9) {
+            System.out.print("0" + min);
+        } else {
+            System.out.print(min);
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int arr[] = new int[1440];
+        Arrays.fill(arr, 0);
+
+        System.out.print("Enter the meeting duration : ");
+        int k = sc.nextInt();
+        System.out.print("Enter No of query: ");
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String a = sc.next();//sam
+            String b = sc.next();  //sleep
+            
+            
+            String start = sc.next();
+            String end = sc.next();
+
+            int t1 = ConvertStringToInteger(start); // 01:01-----> converted to ---> 61.
+            int t2 = ConvertStringToInteger(end);
+
+           arr[t1]=arr[t1]+1;
+           if(t2+1 < 1440) // Ensure we are not exceeding the array bounds
+                arr[t2+1]=arr[t2+1]-1;
+        }
+        
+        
+        for(int i=1;i<1440;i++)
+        {
+            arr[i]=arr[i]+arr[i-1];
+        }
+
+        // find out at the point when all are free
+        int cnt = 0;
+        int flag = 0;
+        for (int i = 0; i < 1440; i++) {
+            if (arr[i] == 0) {
+                cnt++;
+                if (cnt == k) {
+                    System.out.print("Meeting time=   ");
+                    convertIntegerToTime(i - k + 1);
+                    flag = 1;
+                    break;
+                }
+            } else {
+                cnt = 0;
+            }
+        }
+        if (flag == 0) {
+            System.out.print("-1");
+        }
+    }
+}
+
+
+
+
+
+TC :- O(N + 1440 + 1440)
+Space.-> O(1440) = O(1)
+
+
+
+
+
+
+
+
+
+
+
+
