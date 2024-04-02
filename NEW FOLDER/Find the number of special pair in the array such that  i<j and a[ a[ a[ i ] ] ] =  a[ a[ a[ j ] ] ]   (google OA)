@@ -1,0 +1,51 @@
+Find the number of special pair in the array such that  i<j and a[ a[ a[ i ] ] ] =  a[ a[ a[ j ] ] ]   (google OA) 
+
+
+
+
+import java.util.*;
+class A
+{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n=sc.nextInt();
+        System.out.print("Enter the elemnts of the array : ");
+        int a[]=new int[n+1];
+        for(int i=1;i<=n;i++){
+            a[i]=sc.nextInt();
+        }
+        
+        
+        Map<Integer, Integer> mpp=new HashMap<>();
+        int ans=0;
+        for(int i=1;i<=n;i++)
+        {
+            //assume you are at ind j
+            int RHS=a[a[a[i]]];
+            int cnt=mpp.getOrDefault(RHS, 0);
+            ans+=cnt;
+            
+            //LHS for every ind
+            int LHS=a[a[a[i]]];
+            mpp.put(LHS, mpp.getOrDefault(LHS,0)+1);
+        }
+        
+        
+        System.out.println("Answer is =  "+ans);
+        
+     }
+}
+
+
+Enter the size of the array : 4
+Enter the elemnts of the array : 4 2 1 2
+Answer is =  6
+
+=== Code Execution Successful ===
+
+
+
+
+TC= O(N)
+SC=O(N)
