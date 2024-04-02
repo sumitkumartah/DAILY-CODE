@@ -1,0 +1,267 @@
+
+Find the count. of subarray of shortest length whose sum==k
+
+
+
+
+
+
+
+BRUTE FORCE::
+
+import java.util.*;
+
+class A {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the K : ");
+        int k = sc.nextInt();
+
+        System.out.print("Enter the size of the array : ");
+        int n = sc.nextInt();
+        System.out.print("Enter the elements of the array : ");
+        int arr[] = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        int ans = Integer.MAX_VALUE;
+
+        for (int i = 0; i < n; i++) {
+            int min = Integer.MAX_VALUE; // Reset min for each new starting point
+            int sum = 0;
+            for (int j = i; j < n; j++) {
+                sum += arr[j];
+                if (sum == k) {
+                    min = (j - i) + 1;
+                    break; // Since we are looking for minimum length, we can exit early
+                }
+            }
+
+             ans = Math.min(ans, min);
+            
+        }
+        if (ans == Integer.MAX_VALUE) {
+            System.out.println("No subarray found with sum equal to " + k);
+        } else {
+            System.out.println("Minimum length of subarray with sum equal to " + k + " is " + ans);
+        }
+    }
+}
+
+
+
+TC= O(N^2)
+Sc=O(1)
+
+
+
+OPTIMAL:::
+
+
+
+import java.util.*;
+
+class A {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the K : ");
+        int k = sc.nextInt();
+
+        System.out.print("Enter the size of the array : ");
+        int n = sc.nextInt();
+        System.out.print("Enter the elements of the array : ");
+        int arr[] = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+       Map<Integer, Integer> mpp=new HashMap<>();
+       int ans=Integer.MAX_VALUE;
+       int sum=0;
+       for(int i=0;i< n;i++)
+       {
+           sum+=arr[i];
+           if(sum==k)
+           {
+               ans=Math.min(ans, i+1);
+           }
+           
+           int req=sum-k;
+           
+           if(mpp.containsKey(req))
+           {
+               ans=Math.min(ans, i-mpp.get(req));
+           }
+           
+           mpp.put(sum, i);
+       }
+        if (ans == Integer.MAX_VALUE) {
+            System.out.println("No subarray found with sum equal to " + k);
+        } else {
+            System.out.println("Minimum length of subarray with sum equal to " + k + " is " + ans);
+        }
+    }
+}
+
+
+TC=O(N)
+Sc=O(N)
+
+
+____________________________________________________________________________________________________________________________________________________________________
+
+
+
+
+FIND HOW MANY SUBARRAY WITH SUM =K AND MIN LENGTH   
+//A = {10,5,2,7,1,9,8,7}   k = 15
+ HERE IN THIS ARRAY THERE ARE TWO SUBARRAY WITH MIN LENGTH AND SUM==K
+ {10,5}   {8,7}
+
+
+//I USE HERE SLIDING WINDOW CONCEPT
+
+
+import java.util.*;
+class A {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the K : ");
+        int k = sc.nextInt();
+
+        System.out.print("Enter the size of the array : ");
+        int n = sc.nextInt();
+        System.out.print("Enter the elements of the array : ");
+        int arr[] = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+       Map<Integer, Integer> mpp=new HashMap<>();
+       int ans=Integer.MAX_VALUE;
+       int sum=0;
+       for(int i=0;i< n;i++)
+       {
+           sum+=arr[i];
+           if(sum==k)
+           {
+               ans=Math.min(ans, i+1);
+           }
+           
+           int req=sum-k;
+           
+           if(mpp.containsKey(req))
+           {
+               ans=Math.min(ans, i-mpp.get(req));
+           }
+           
+           mpp.put(sum, i);
+       }
+        
+        System.out.println("NO of subarrays with min length and sum is k are =   " + solve(arr, ans, k)   );
+    }
+    
+    
+    
+    public static int solve(int arr[], int minlen,  int k)
+    {
+       int i=0;
+       int j=0;
+       int cnt=0;
+       int sum =0;
+       while(j<arr.length)
+       {
+           sum+=arr[j];
+           
+           if(j-i+1 <minlen)
+           {
+               j++;
+           }
+           else if(j-i+1==minlen)
+           {
+               if(sum==k) cnt++;
+               sum-=arr[i];
+               
+               i++;
+               j++;
+           }
+       }
+       
+       
+       return cnt;
+    }
+}
+
+
+
+
+
+
+Enter the K : 16
+Enter the size of the array : 9
+Enter the elements of the array : 8 8 7 9 3 4 3 13 3
+NO of subarrays with min length and sum is k are =   4
+
+=== Code Execution Successful ===
+
+___________________________________________________________________________________________________________________________________________________________________
+
+
+
+cnt how many subarray with sum k
+
+import java.util.*;
+
+class A {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the K : ");
+        int k = sc.nextInt();
+
+        System.out.print("Enter the size of the array : ");
+        int n = sc.nextInt();
+        System.out.print("Enter the elements of the array : ");
+        int arr[] = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+       Map<Integer, Integer> mpp=new HashMap<>();
+       int cnt=0;
+       int sum=0;
+       for(int i=0;i< n;i++)
+       {
+           sum+=arr[i];
+           if(sum==k)
+           {
+               cnt+=1;
+           }
+           
+           int req=sum-k;
+           
+           if(mpp.containsKey(req))
+           {
+               cnt++;
+           }
+           
+           mpp.put(sum, i);
+       }
+       
+      System.out.println("No of subarray with sum k=    " +cnt);
+        
+    }
+}
+
+
+
+
+Enter the K : 15
+Enter the size of the array : 8
+Enter the elements of the array : 6 7 2 15 5 10 2 3
+No of subarray with sum k=    4
+___________________________________________________________________________________________________________________________________________________________________
+
+
+
+
