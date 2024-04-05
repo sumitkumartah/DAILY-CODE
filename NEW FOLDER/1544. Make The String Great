@@ -1,0 +1,46 @@
+1544. Make The String Great
+
+
+CODE::
+
+class Solution {
+    public String makeGood(String s) {
+        Stack<Character> st=new Stack<>();
+        
+        
+        for(char c: s.toCharArray())
+        {
+            if(!st.isEmpty() && Math.abs(c - st.peek())==32)   //that means uppercaseand lowercase diff is always 32
+                                                              //, the ASCII value of 'A' is 65 and the ASCII value of 'a' is 97. The absolute difference between them is |65 - 97| = 32
+            {
+                st.pop();
+            }
+            else{
+                st.push(c);
+            }
+        }
+        
+        StringBuilder sb=new StringBuilder();
+        while(!st.isEmpty()){
+            sb.insert(0, st.pop());  // it is using for insert all the character recursively in the stack 
+                                    // if we will not insert char into the stringBuilder from the stack in reverse manner then output will come in reverse manner
+        }
+        return sb.toString();
+    }
+}
+
+
+
+
+Time Complexity (TC):
+
+The algorithm iterates through each character in the input string, which takes O(n) time, where n is the length of the input string.
+Inside the loop, each operation such as pushing to the stack, popping from the stack, and checking the condition takes constant time.
+Overall, the time complexity of the algorithm is O(n).
+Space Complexity (SC):
+
+The space complexity is primarily determined by the space used by the stack and the StringBuilder.
+The stack may hold up to n/2 characters in the worst-case scenario where there are alternating upper and lower case characters. Hence, the space complexity of the stack is O(n).
+The StringBuilder sb also holds n characters in the worst case. However, since it is used only for output and does not grow beyond the input size, it does not contribute significantly to the space complexity.
+Therefore, the overall space complexity is O(n).
+In summary, the time complexity of the provided solution is O(n), and the space complexity is O(n), where n is the length of the input string.
