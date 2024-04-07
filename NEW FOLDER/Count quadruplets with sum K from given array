@@ -1,0 +1,153 @@
+Count quadruplets with sum K from given array
+
+
+
+import java.util.*;
+
+class A {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n = sc.nextInt();
+        System.out.print("Enter the elements of the array : ");
+        int arr[] = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+        System.out.print("Enter the target: ");
+        int t = sc.nextInt();
+
+        System.out.println("Number of quadruplets: " + count(arr, n, t));
+    }
+
+    private static int count(int arr[], int n, int target) {
+        int ans = 0;
+        for (int i = 0; i < n - 3; i++) {
+            for (int j = i + 1; j < n - 2; j++) {
+                Map<Integer, Integer> mpp = new HashMap<>();
+                for (int k = j + 1; k < n; k++) {
+                    mpp.put(arr[k], mpp.getOrDefault(arr[k], 0) + 1);
+                }
+
+                int cnt = 0;
+
+                for (int k = j + 1; k < n; k++) {
+                    int req = target - (arr[i] + arr[j] + arr[k]);
+                    if (mpp.containsKey(req)) {
+                        cnt += mpp.get(req);
+                    }
+                    if (req == arr[k]) {
+                        cnt--;
+                    }
+                }
+                ans += cnt / 2;
+            }
+        }
+        return ans;
+    }
+}
+
+
+Enter the size of the array : 6
+Enter the elements of the array : 4 5 3 1 2 4
+Enter the target: 13
+Number of quadruplets: 3
+
+=== Code Execution Successful ===
+
+
+
+
+TC=O(N^3)
+SC=O(N)
+
+__________________________________________________________________________________________________________________________________________________________________________
+
+
+
+OPTIMAL:::
+
+
+
+import java.util.*;
+
+class GFG{
+
+// Function to return the number of
+// quadruplets having the given sum
+static int countSum(int a[], int n, int sum)
+{
+	
+	// Initialize variables
+	int i, j, k;
+
+	// Initialize answer
+	int count = 0;
+
+	// Store the frequency of sum
+	// of first two elements
+	HashMap<Integer, Integer> m = new HashMap<>();
+
+	// Traverse from 0 to N-1, where
+	// arr[i] is the 3rd element
+	for(i = 0; i < n - 1; i++)
+	{
+		
+		// All possible 4th elements
+		for(j = i + 1; j < n; j++) 
+		{
+			
+			// Sum of last two element
+			int temp = a[i] + a[j];
+
+			// Frequency of sum of first
+			// two elements
+			if (temp < sum && m.containsKey(sum - temp))
+				count += m.get(sum - temp);
+		}
+		for(j = 0; j < i; j++) 
+		{
+			
+			// Store frequency of all possible
+			// sums of first two elements
+			int temp = a[i] + a[j];
+
+			if (temp < sum)
+				if (m.containsKey(temp))
+					m.put(temp, m.get(temp) + 1);
+				else
+					m.put(temp, 1);
+		}
+	}
+	
+	// Return the answer
+	return count;
+}
+
+// Driver Code
+public static void main(String[] args)
+{
+	
+ Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n = sc.nextInt();
+        System.out.print("Enter the elements of the array : ");
+        int arr[] = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+        System.out.print("Enter the target: ");
+        int t = sc.nextInt();
+
+        System.out.println("Number of quadruplets: " + countSum(arr, n, t));
+}
+}
+
+
+
+TC=O(N^2)
+SC=O(N)
+
+
+
+
