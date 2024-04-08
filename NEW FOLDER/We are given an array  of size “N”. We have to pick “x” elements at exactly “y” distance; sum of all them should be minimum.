@@ -1,0 +1,122 @@
+We are given an array  of size “N”. We have to pick “x” elements at exactly “y” distance; sum of all them should be minimum. 
+
+
+
+
+import java.util.*;
+class A
+{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n=sc.nextInt();
+        System.out.print("Enter the elemnts of the array : ");
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        
+        System.out.print("Enter the  no of elements you pick up(x) :: ");
+        int x=sc.nextInt();
+        System.out.print("Enter the  dist between every el(y) :: ");
+        int y=sc.nextInt();
+        
+        System.out.println("Min sum=  "+ minSum(arr, n, x, y));
+     }
+     
+     
+     
+     public static int minSum(int a[], int n, int x, int y)
+     {
+         int ans=Integer.MAX_VALUE;
+         
+         for(int i=0;i<n;i++)
+         {
+             int sum=0;
+             int j=i;
+            int cnt=0;
+             while(j>=0 && cnt<x)
+             {
+                 sum+=a[j];
+                 cnt++;
+                 j=j-y;
+             }
+             
+             if(cnt==x)
+             {
+                 ans=Math.min(ans, sum);
+             }
+         }
+         return ans;
+     }
+}
+
+
+Time complexity=O(N^2)
+Space Complexity=O(1)
+
+
+
+
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter the number of elements (n): ");
+        long n = scanner.nextLong();
+        long[] a = new long[(int) (n + 1)];
+        
+        System.out.println("Enter the elements of the array:");
+        for (long i = 1; i <= n; i++) {
+            a[(int) i] = scanner.nextLong();
+        }
+
+        System.out.print("Enter the value of x: ");
+        long x = scanner.nextLong();
+        
+        System.out.print("Enter the value of y: ");
+        long y = scanner.nextLong();
+
+        long[] pref = new long[(int) (n + 1)];
+        for (long i = 1; i <= n; i++) {
+            if (i - y >= 1) {
+                pref[(int) i] = a[(int) i] + pref[(int) (i - y)];
+            } else {
+                pref[(int) i] = a[(int) i];
+            }
+        }
+
+        long k = (long) 1e18;
+        for (long i = 1; i <= n; i++) {
+            long index = i - (x - 1) * y;
+            if (index >= 1) {
+                long g = pref[(int) i];
+                if (index - y >= 1) {
+                    g = g - pref[(int) (index - y)];
+                }
+                k = Math.min(g, k);
+            }
+        }
+
+        System.out.println("Minimum sum: " + k);
+    }
+}
+
+
+
+Enter the number of elements (n): 7
+Enter the elements of the array:
+1 5 8 1 4 5 8
+Enter the value of x: 2
+Enter the value of y: 2
+Minimum sum: 6
+
+=== Code Execution Successful ===
+
+
+
+TC=O(N)
+SC=O(N)
