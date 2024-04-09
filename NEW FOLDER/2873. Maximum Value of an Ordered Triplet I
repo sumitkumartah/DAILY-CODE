@@ -1,0 +1,75 @@
+2873. Maximum Value of an Ordered Triplet I
+
+
+
+BRUTE FORCE::
+
+
+
+class Solution {
+    public long maximumTripletValue(int[] nums) {
+        int n=nums.length;
+        int ans=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=i+1;j<n;j++)
+            {
+                for(int k=j+1;k<n;k++)
+                {
+                   ans= Math.max(ans, (nums[i]-nums[j]) * nums[k] );
+                }
+            }
+        }
+        return ans;
+    }
+}
+
+
+
+TC=O(N^3)
+SC=O(1)
+
+
+
+OPTIMAL:::::::::::::::::::::::::::::::::::::::::::::
+
+class Solution {
+    public long maximumTripletValue(int[] nums) {
+        int n=nums.length;
+
+        long pref[]=new long [n];
+        pref[1]=nums[0]-nums[1];
+        
+        long ans=0;
+        long maxsub=Long.MIN_VALUE;
+        for(int k=2;k<n;k++)
+        {
+            long sub=pref[k-1];
+
+            int j=k-1;
+            while(j>=0)
+            {
+                sub=Math.max((nums[j]-nums[k]) , sub);
+                maxsub=Math.max(sub, maxsub);  // from every possibility find the maximum
+                j--;
+            }
+            pref[k]= maxsub;
+            
+           long value=pref[k-1]* (long)nums[k];
+            ans=Math.max(value, ans);
+        }
+        return ans;
+    }
+}
+
+TC=O(N^2)
+SC=O(N)
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
