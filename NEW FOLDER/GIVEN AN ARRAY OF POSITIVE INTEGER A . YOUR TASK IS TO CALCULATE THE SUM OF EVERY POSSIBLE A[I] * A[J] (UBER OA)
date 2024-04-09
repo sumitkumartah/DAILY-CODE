@@ -1,0 +1,157 @@
+GIVEN AN ARRAY OF POSITIVE INTEGER A . YOUR TASK IS TO CALCULATE THE SUM OF EVERY POSSIBLE A[I] * A[J] (UBER OA)
+EXAMPLE - 10 * 12 = 1012
+
+
+
+
+
+BRUTE FORCE:::
+
+
+import java.util.*;
+class A
+{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n=sc.nextInt();
+        System.out.print("Enter the elemnts of the array : ");
+        int arr[]=new int[n+1];
+        for(int i=1;i<=n;i++){
+            arr[i]=sc.nextInt();
+        }
+        
+        int sum=0;
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=n;j++)
+            {
+                int num= binarysum(arr[i], arr[j]);
+                sum+=num;
+            }
+        }
+        
+        System.out.println("Sum is= "+sum);
+        
+     }
+     
+     
+     public static int binarysum(int num1, int num2)
+     {
+         String s1=Integer.toString(num1);
+         String s2=Integer.toString(num2);
+         String s=s1+s2;
+         return Integer.parseInt(s);
+     }
+}
+
+
+
+Enter the size of the array : 2
+Enter the elemnts of the array : 10 2
+Sum is= 1344
+
+=== Code Execution Successful ===
+
+
+
+
+TC :- O(N^2*2*|S|) (S  is the maximum length of the string - 6 (bcz maximum string can be form 10^5)  )
+     = O(N^2*2*6) = O(N^2*12)
+                  = O(N^2)  (12 is constant so we can neglect)
+
+SC-> O(2*|S|) = O(12) = O(1)  
+
+
+___________________________________________________________________________________________________________________________________________________________
+
+
+import java.util.*;
+class A
+{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n=sc.nextInt();
+        System.out.print("Enter the elemnts of the array : ");
+        int arr[]=new int[n+1];
+        for(int i=1;i<=n;i++){
+            arr[i]=sc.nextInt();
+        }
+        
+        int sum=FindAllSum(arr, n);
+        System.out.println("Total sum=  "+sum);
+     }
+     
+     
+     
+     public static int FindAllSum(int a[], int n)
+     {
+         int digit[]=new int [7]; // in the constrains mention at max digit can be 6 
+         for(int i=1;i<=n;i++)
+         {
+             int no=noOfDigits(a[i]);
+             digit[no]=digit[no] +1; // in the digit array store 
+                                     //1 digit number how many times in the array
+                                     //2  digit number how many times in the array
+                                     //6  digit number how many times in the array
+         }
+         
+         
+         
+         int totsum=0;
+         for(int i=1;i<=n;i++)
+         {
+             int dig=1;
+             int sum=0;
+             while(dig<=6)
+             {
+                 sum+=a[i] * Math.pow(10, dig) * digit[dig];
+                 dig++;
+             }
+             
+             int total=sum + right(a, n);
+             
+             totsum+=total;
+         }
+         return totsum;
+     }
+     
+     
+     
+     private static int noOfDigits(int nums)
+     {
+         int cnt=0;
+         while(nums>0)
+         {
+             nums=nums/10;
+             cnt++;
+         }
+         return cnt;
+     }
+     
+     public static int right(int a[], int n)
+     {
+         int sum=0;
+         for(int i=1;i<=n;i++)
+         {
+             sum+=a[i];
+         }
+         return sum;
+     }
+     
+}
+
+Enter the size of the array : 2
+Enter the elemnts of the array : 10 2
+Total sum=  1344
+=== Code Execution Successful ===
+
+
+
+
+
+
+TC - O(N*6.) = O(N) 
+S.-> O(6.)-> O(1). 
+
