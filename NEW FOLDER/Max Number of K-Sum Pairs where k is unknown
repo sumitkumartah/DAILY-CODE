@@ -1,0 +1,166 @@
+
+
+
+
+
+1679. Max Number of K-Sum Pairs  (follow up question on leetcode)
+
+MY Approach:::
+
+class Solution {
+    public int maxOperations(int[] nums, int k) {
+        Map<Integer, Integer> mpp=new HashMap<>();
+        int cnt=0;
+        for(int i=0;i< nums.length;i++)
+        {
+            int num=nums[i];
+            int req=k-num;
+            if(mpp.containsKey(req) && mpp.get(req)>0)
+            {
+                cnt++;
+               mpp.put(nums[i], mpp.getOrDefault(nums[i], 0)-1);
+            }
+            else{
+                mpp.put(nums[i], mpp.getOrDefault(nums[i], 0)+1);
+            }
+        }
+        return cnt;
+    }
+}
+
+
+
+TC=O(N)
+SC=O(N)
+
+
+
+
+SIR APPROACH::
+
+class Solution {
+    public int maxOperations(int[] nums, int k) {
+        //take two map 
+        Map<Integer, Integer> mpp=new HashMap<>();
+        Map<Integer, Integer> vis=new HashMap<>();
+
+        //insert all the el into the mpp
+        for(int i=0;i<nums.length;i++)
+        {
+            mpp.put(nums[i], mpp.getOrDefault(nums[i], 0)+1);
+        }
+
+        int ans=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            int num=nums[i];
+            int partner=k-nums[i];
+
+            //check the num and parter is not visited yet
+            if(vis.getOrDefault(num,0)==0 && vis.getOrDefault(partner,0)==0)
+            {
+                if(num==partner) // num ans parner is same
+                {
+                    ans+=mpp.get(num)/2;   //add the half of the frq in the ans
+                }
+                else{
+                    ans+=Math.min(mpp.getOrDefault(num,0), mpp.getOrDefault(partner,0)); 
+                    //add the min betw two frq
+                }
+            }
+            vis.put(num, 1);
+            vis.put(partner, 1);
+        }
+        return ans;
+    }
+}
+
+TC=O(2N) ~ O(N)
+SC=(2N) ~ O(N)
+
+
+
+
+
+______________________________________________________________________________________________________________________________________________________________
+
+
+
+ACTIUAL OA PROBLEM
+
+
+
+
+import java.util.*;
+class Solution {
+    public static  int maxOperations(int[] nums, int k) {
+        //take two map 
+        Map<Integer, Integer> mpp=new HashMap<>();
+        Map<Integer, Integer> vis=new HashMap<>();
+
+        //insert all the el into the mpp
+        for(int i=0;i<nums.length;i++)
+        {
+            mpp.put(nums[i], mpp.getOrDefault(nums[i], 0)+1);
+        }
+
+        int ans=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            int num=nums[i];
+            int partner=k-nums[i];
+
+            //check the num and parter is not visited yet
+            if(vis.getOrDefault(num,0)==0 && vis.getOrDefault(partner,0)==0)
+            {
+                if(num==partner) // num ans parner is same
+                {
+                    ans+=mpp.get(num)/2;   //add the half of the frq in the ans
+                }
+                else{
+                    ans+=Math.min(mpp.getOrDefault(num,0), mpp.getOrDefault(partner,0)); 
+                    //add the min betw two frq
+                }
+            }
+            vis.put(num, 1);
+            vis.put(partner, 1);
+        }
+        return ans;
+    }
+    
+    
+    
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n=sc.nextInt();
+        System.out.print("Enter the elemnts of the array : ");
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        
+        
+        int ans=Integer.MIN_VALUE;
+        for(int i=0;i<n;i++)     //o(N)
+        {
+            for(int j=0;j<n;j++)  //O(N)
+            {
+                int k=arr[i]+arr[j];
+                int operation=maxOperations(arr, k);   //O(N)
+                ans=Math.max(operation, ans);
+            }
+        }
+        
+        System.out.println("Answer is=  "+ans);
+     }
+
+}
+
+
+TC= O(N^3)  N at max can be 100 so n^3 =1000000  it will bw efficient
+
+SC=O(N) for hashmap
+
+
+
