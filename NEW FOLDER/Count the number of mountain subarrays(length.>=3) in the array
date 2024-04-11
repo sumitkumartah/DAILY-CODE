@@ -1,0 +1,416 @@
+
+Count the number of mountain subarrays(length.>=3) in the array 
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Calculate the longest increasing subarray in an array 
+
+CODE::
+
+import java.util.*;
+class A
+{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n=sc.nextInt();
+        System.out.print("Enter the elemnts of the array : ");
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        
+        
+        int pref[]=new int[n];
+        pref[0]=1;
+        int ans=Integer.MIN_VALUE;
+        for(int  i=1;i<n;i++)
+        {
+            if(arr[i-1]< arr[i])
+            {
+                pref[i]=pref[i-1]+1;
+            }
+            else{
+                pref[i]=1;
+            }
+            
+            ans=Math.max(ans, pref[i]);
+        }
+        
+        System.out.println("Ans= " +ans);
+     }
+}
+
+
+
+Enter the size of the array : 5
+Enter the elemnts of the array : 1 2 4 3 5
+Ans = 3
+
+=== Code Execution Successful ===
+
+
+TC= O(N)
+SC=O(N)
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Calculate the longest increasing subarray in an array 
+
+
+CODE::
+
+
+import java.util.*;
+class A
+{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n=sc.nextInt();
+        System.out.print("Enter the elemnts of the array : ");
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        
+        
+        int suf[]=new int[n];
+        suf[n-1]=1;
+        int ans=Integer.MIN_VALUE;
+        for(int  i=n-2;i>=0;i--)
+        {
+            if(arr[i+1]< arr[i])
+            {
+                suf[i]=suf[i+1]+1;
+            }
+            else{
+                suf[i]=1;
+            }
+            
+            ans=Math.max(ans, suf[i]);
+        }
+        
+        System.out.println("Ans= " +ans);
+     }
+}
+
+
+Enter the size of the array : 7
+Enter the elemnts of the array :  1 3 5 4 3 2 11 3 5 4 3 2 1
+Ans= 5
+
+=== Code Execution Successful ===
+
+
+TC= O(N)
+SC=O(N)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Calculate the longest mountain subarray
+
+
+BRUTE::
+
+import java.util.*;
+class A
+{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n=sc.nextInt();
+        System.out.print("Enter the elemnts of the array : ");
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        
+        
+        
+         int pref[]=new int[n];
+        pref[0]=1;
+        for(int  i=1;i<n;i++)
+        {
+            if(arr[i-1]< arr[i])
+            {
+                pref[i]=pref[i-1]+1;
+            }
+            else{
+                pref[i]=1;
+            }
+            
+        }
+        
+        
+        int suf[]=new int[n];
+        suf[n-1]=1;
+       
+        for(int  i=n-2;i>=0;i--)
+        {
+            if(arr[i+1]< arr[i])
+            {
+                suf[i]=suf[i+1]+1;
+            }
+            else{
+                suf[i]=1;
+            }
+            
+        }
+        
+     
+     
+      int ans=Integer.MIN_VALUE;
+     for(int i=0;i<n;i++)
+     {
+         ans=Math.max( (pref[i]+suf[i]) -1, ans);
+     }
+     
+    System.out.println("Ans= "+ans);
+}
+}
+
+Enter the size of the array : 7
+Enter the elemnts of the array : 2 3 5 4 3 2 1
+Ans= 7
+
+=== Code Execution Successful ===
+
+
+
+TC=O(3N) ~ O(N)
+SC=O(2N) ~ O(N)
+
+----------------------------------------------------------
+
+OPTIMAL::  (instead of taking pref array when i calculate ans i just do opeartion of pref array by a cnt variable  )
+
+
+
+import java.util.*;
+class A
+{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n=sc.nextInt();
+        System.out.print("Enter the elemnts of the array : ");
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        
+        
+        
+        
+        
+        
+        int suf[]=new int[n];
+        suf[n-1]=1;
+       
+        for(int  i=n-2;i>=0;i--)
+        {
+            if(arr[i+1]< arr[i])
+            {
+                suf[i]=suf[i+1]+1;
+            }
+            else{
+                suf[i]=1;
+            }
+            
+        }
+        
+     
+     
+      int ans=Integer.MIN_VALUE;
+      int c=1;
+     for(int i=1;i<n;i++)
+     {
+         if(arr[i-1]<arr[i])
+         {
+             c++;
+         }
+         else{
+             c=1;
+         }
+         ans=Math.max( (c+suf[i]) -1, ans);
+     }
+     
+    System.out.println("Ans= "+ans);
+}
+}
+
+Enter the size of the array : 7
+Enter the elemnts of the array : 2 3 5 4 3 2 1
+Ans= 7
+
+=== Code Execution Successful ===
+
+
+TC=O(2N) ~ O(N)
+SC=O(N) ~ O(N)
+
+
+
+__________________________________________________________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________________________________________________________
+
+
+ACTUAL QUESTION::
+
+count the number of mountain subarrays(length.>=3) in the array 
+
+
+
+BRUTE::
+
+
+
+import java.util.*;
+class A
+{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n=sc.nextInt();
+        System.out.print("Enter the elemnts of the array : ");
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        
+        
+        
+         int pref[]=new int[n];
+        pref[0]=1;
+        for(int  i=1;i<n;i++)
+        {
+            if(arr[i-1]< arr[i])
+            {
+                pref[i]=pref[i-1]+1;
+            }
+            else{
+                pref[i]=1;
+            }
+            
+        }
+        
+        
+        int suf[]=new int[n];
+        suf[n-1]=1;
+       
+        for(int  i=n-2;i>=0;i--)
+        {
+            if(arr[i+1]< arr[i])
+            {
+                suf[i]=suf[i+1]+1;
+            }
+            else{
+                suf[i]=1;
+            }
+            
+        }
+        
+     
+     
+      int ans=Integer.MIN_VALUE;
+    
+     for(int i=0;i<n;i++)
+     {
+         int cnt=(pref[i]-1) * (suf[i]-1);
+         ans=Math.max( cnt , ans);
+     }
+     
+    System.out.println("Ans= "+ans);
+}
+}
+
+Enter the size of the array : 7
+Enter the elemnts of the array : 2 3 5 4 3 2 1
+Ans= 8
+
+=== Code Execution Successful ===
+
+
+TC=O(3N) ~ O(N)
+SC=O(2N) ~ O(N)
+
+
+
+
+
+OPTIMAL::  (instead of taking pref array when i calculate ans i just do opeartion of pref array by a cnt variable  )
+
+
+
+import java.util.*;
+class A
+{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the size of the array : ");
+        int n=sc.nextInt();
+        System.out.print("Enter the elemnts of the array : ");
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        
+        
+        
+        
+        
+        
+        int suf[]=new int[n];
+        suf[n-1]=1;
+       
+        for(int  i=n-2;i>=0;i--)
+        {
+            if(arr[i+1]< arr[i])
+            {
+                suf[i]=suf[i+1]+1;
+            }
+            else{
+                suf[i]=1;
+            }
+            
+        }
+        
+     
+     
+      int ans=Integer.MIN_VALUE;
+      int c=1;
+     for(int i=1;i<n;i++)
+     {
+         if(arr[i-1]<arr[i])
+         {
+             c++;
+         }
+         else{
+             c=1;
+         }
+         ans=Math.max(  (c-1)* (suf[i]-1 ) , ans);
+     }
+     
+    System.out.println("Ans= "+ans);
+}
+}
+
+
+Enter the size of the array : 7
+Enter the elemnts of the array : 2 3 5 4 3 2 1
+Ans= 8
+
+=== Code Execution Successful ===
+
+
+TC=O(2N) ~ O(N)
+SC=O(N) ~ O(N)
+
+
+
+
+
+
