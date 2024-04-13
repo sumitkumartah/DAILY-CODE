@@ -1,0 +1,87 @@
+
+85. Maximal Rectangle
+
+
+
+
+
+
+
+class Solution {
+    public int maximalRectangle(char[][] matrix) {
+        int curRow[]=new int[matrix[0].length];
+        int maxAns=0;
+         
+         for(int i=0;i<matrix.length;i++)
+         {
+            for(int j=0;j<matrix[0].length;j++)
+            {
+                if(matrix[i][j]=='1')
+                {
+                    curRow[j]+=1;
+                }
+                else{
+                    curRow[j]=0;
+                }
+            }
+
+            int ans=largestRectangleArea(curRow);
+            maxAns=Math.max(maxAns, ans);
+         }
+         return maxAns;
+
+    }
+
+    // 84 maximum rectangle in histrogram
+     public int largestRectangleArea(int[] heights) {
+        int maxans = 0;
+        int ps[] = previousSmaller(heights);
+        int ns[] = nextSmaller(heights);
+
+
+        for(int i=0;i<heights.length;i++)
+        {
+            int ans=((ns[i]-ps[i] -1)* heights[i]);
+            maxans=Math.max(ans, maxans);
+        }
+
+        return maxans;
+    }
+
+    public static int[] previousSmaller(int a[]) {
+        Stack<Integer> st = new Stack<>();
+        int ps[] = new int[a.length];
+        for (int i = 0; i < a.length; i++) {
+            while (!st.isEmpty() && a[i] <=a[st.peek()]) {
+                st.pop();
+            }
+            if (st.isEmpty()) {
+                ps[i] = -1;
+            } else {
+                ps[i] = st.peek();
+            }
+            st.push(i);
+        }
+        return ps;
+
+    }
+
+    
+    public static int[] nextSmaller(int a[]) {
+        Stack<Integer> st = new Stack<>();
+        int ns[] = new int[a.length];
+        for (int i = a.length-1; i >= 0; i--) {
+            while (!st.isEmpty() && a[i] <= a[st.peek()]) {
+                st.pop();
+            }
+            if (st.isEmpty()) {
+                ns[i] = a.length;
+            } else {
+                ns[i] = st.peek();
+            }
+            st.push(i);
+        }
+        return ns;
+
+    }
+}
