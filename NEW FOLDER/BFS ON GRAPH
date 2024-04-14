@@ -63,6 +63,29 @@ public class Main {
     }
 }
 
+Enter no of Nodes: 8
+Enter no of Edges: 8
+Enter the nodes which are connercted :  
+1 5
+1 3
+3 6
+6 9
+6 4
+4 1
+10 2
+2 1
+Node  level
+1      0
+5      1
+3      1
+4      1
+2      1
+6      2
+10      2
+9      3
+
+
+
 
 Time Complexity: O(n + m)
 Space Complexity: O(n + m)
