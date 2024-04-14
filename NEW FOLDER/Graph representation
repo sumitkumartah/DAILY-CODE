@@ -1,33 +1,48 @@
-import java.util.Scanner;
-
-public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter the number of nodes: ");
-        int n = scanner.nextInt();
-
-        System.out.print("Enter the number of edges: ");
-        int m = scanner.nextInt();
-
-        int[][] b = new int[n][n]; // Using int to represent connections
-
-        System.out.println("Enter the edges (each edge as two space-separated integers):");
-        for (int i = 0; i < m; i++) {
-            int x = scanner.nextInt();
-            int y = scanner.nextInt();
-            // Setting connections for undirected graph
-            b[x][y] = 1;
-            b[y][x] = 1;
+import java.util.*;
+class A{
+    public static void main(String args[])
+    {
+        Scanner sc=new Scanner (System.in);
+        System.out.print("Enter the no of Nodes :  ");
+        int n=sc.nextInt();
+        System.out.print("Enter the no of Edges :  ");
+        int m=sc.nextInt();
+        
+        int g[][]=new int[n][n];
+         System.out.println("Enter the edges (each edge as two space-separated integers):");
+         
+        for(int i=0;i<m;i++)
+        {
+            int x=sc.nextInt();
+            int y=sc.nextInt();
+            g[x][y]=1;
+            g[y][x]=1;
         }
-
-        // Printing the undirected graph
-        System.out.println("Adjacency Matrix Representation of the Undirected Graph:");
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                System.out.print(b[i][j] + " ");
+        System.out.println("Matrix represention of graph :  ");
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                System.out.print(g[i][j] + " ");
             }
             System.out.println();
         }
     }
 }
+
+
+Enter the no of Nodes :  6
+Enter the no of Edges :  5
+Enter the edges (each edge as two space-separated integers):
+0 1
+1 5
+2 1
+3 2
+4 2
+Matrix represention of graph :  
+0 1 0 0 0 0 
+1 0 1 0 0 1 
+0 1 0 1 1 0 
+0 0 1 0 0 0 
+0 0 1 0 0 0 
+0 1 0 0 0 0 
