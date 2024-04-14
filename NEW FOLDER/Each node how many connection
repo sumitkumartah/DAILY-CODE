@@ -37,6 +37,8 @@ public class Main {
 
 
 Time Complexity: O(m + n^2)
+Therefore, the overall time complexity of your code is O(n^2 + m), where n is the number of nodes and m is the number of edges. 
+Since both n and m are inputs to the program, we usually represent the time complexity as O(N), where N = max(n, m).
 Space Complexity: O(n^2)
 
 
