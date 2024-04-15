@@ -90,3 +90,85 @@ Node  level
 Time Complexity: O(n + m)
 Space Complexity: O(n + m)
 
+
+
+
+
+HACKEREARTH PROBLEM::::    link- https://www.hackerearth.com/problem/algorithm/shortest-distance-from-source/?purpose=login&source=problem-page&update=google   
+Here [] v  and int[] dist  array take in as class arraylist or array -------and here we have to print the level starting from 0 thats why i use another loop in main method
+import java.util.*;
+
+public class Main {
+    static ArrayList<Integer>[] v;
+    static int[] dist;
+
+    static void bfs(int s, int n) {
+        boolean[] vis = new boolean[n + 5];
+         dist = new int[n + 5];
+        Queue<Integer> q = new LinkedList<>();
+
+        q.add(s);
+        vis[s] = true;
+        dist[s] = 0;
+
+        while (!q.isEmpty()) {
+            int u = q.poll();
+            for (int i = 0; i < v[u].size(); i++) {
+                int neighbor = v[u].get(i);
+                if (!vis[neighbor]) {
+                    q.add(neighbor);
+                    vis[neighbor] = true;
+                    dist[neighbor] = dist[u] + 1;
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt(); // number of nodes
+        int e = scanner.nextInt(); // number of edges
+
+        v = new ArrayList[n + 5];
+        for (int i = 0; i < n+5; i++) {
+            v[i] = new ArrayList<>();
+        }
+
+        for (int i = 0; i < e; i++) {
+            int x = scanner.nextInt();
+            int y = scanner.nextInt();
+            v[x].add(y);
+            v[y].add(x);
+        }
+
+        int s = scanner.nextInt(); // source node
+
+       
+        bfs(s, n);
+
+        for (int i = 1; i <= n; i++) {
+            System.out.print(dist[i] + " ");    // here we have to print the level starting from 0 thats why i use another loop in main method
+        }
+        System.out.println();
+
+    }
+}
+
+
+
+
+Input
+5 4
+1 2
+2 3
+2 4
+3 5
+2
+
+Output   
+1 0 1 1 2 
+
+
+
+
