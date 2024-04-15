@@ -1,0 +1,171 @@
+Given a graph G of N nodes and M edges ; 1st node is the source node ; print n answers . answer for ith line should be yes if you can visit the i node from node 1 else no 
+
+
+CODE ::  (BY CREATING A FUNCTION BFS)
+
+
+import java.util.*;
+class A{
+    static ArrayList<Integer>g[];
+    static int visit[];
+    static void bfs(int n, int source)
+    {
+        int lvl[]=new int[n+5];
+        visit=new int[n+5];
+        
+        Queue<Integer> q=new LinkedList<>();
+        q.add(source);
+        lvl[source]=0;
+        visit[source]=1;
+        while(!q.isEmpty())
+        {
+            int remove=q.poll();
+            for(int i=0;i<g[remove].size();i++)
+            {
+                int u=g[remove].get(i);
+                if(visit[u]==0)
+                {
+                    q.add(u);
+                    visit[u]=1;
+                    lvl[u]=lvl[remove]+1;
+                }
+            }
+        }
+    }
+    
+    public static void main(String args[])
+    {
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the no of nodes: ");
+        int n=sc.nextInt();
+        System.out.print("Enter the no of edges: ");
+        int m=sc.nextInt();
+        g=new ArrayList[n+5];
+        
+        for(int i=0;i<n+5;i++)
+        {
+            g[i]=new ArrayList<>();
+        }
+        for(int i=0;i<m;i++)
+        {
+            int x=sc.nextInt();
+            int y=sc.nextInt();
+            g[x].add(y);
+            g[y].add(x);
+        }
+        System.out.print("Enter sourceNode :");
+        int source=sc.nextInt();
+        bfs(n, source);
+        
+        for (int i = 1; i <= n; i++) {
+            if(visit[i]==1)
+            {
+             System.out.println( " source node = " + source +" visit the node  "+i+" = TRUE");
+            }
+            else{
+                 System.out.println(" source node = " + source +"visit the node  "+i+" = FALSE");
+            }
+        System.out.println();
+        }
+
+    }
+}
+
+
+
+
+Enter the no of nodes: 8
+Enter the no of edges: 7
+1 2
+2 4
+4 5
+5 3
+3 1
+8 7
+7 6
+Enter sourceNode :1
+ source node = 1 visit the node  1 = TRUE
+
+ source node = 1 visit the node  2 = TRUE
+
+ source node = 1 visit the node  3 = TRUE
+
+ source node = 1 visit the node  4 = TRUE
+
+ source node = 1 visit the node  5 = TRUE
+
+ source node = 1visit the node  6 = FALSE
+
+ source node = 1visit the node  7 = FALSE
+
+ source node = 1visit the node  8 = FALSE
+
+
+=== Code Execution Successful ===
+
+
+
+
+
+
+NORMAL CODE::
+
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+
+        List<Integer>[] G = new ArrayList[n + 5];
+        for (int i = 0; i <= n; i++) {
+            G[i] = new ArrayList<>();
+        }
+
+        for (int i = 1; i <= m; i++) {
+            int u = sc.nextInt();
+            int v = sc.nextInt();
+            G[u].add(v);
+            G[v].add(u);
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+        int source = sc.nextInt();
+        q.offer(source);
+
+        int[] used = new int[n + 5];
+        Arrays.fill(used, 0);
+        used[source] = 1;
+
+        int[] lvl = new int[n + 5];
+        Arrays.fill(lvl, 0);
+        lvl[source] = 0;
+
+        while (!q.isEmpty()) {
+            int v = q.poll();
+
+            for (int u : G[v]) {
+                if (used[u] == 0) {
+                    q.offer(u);
+                    used[u] = 1;
+                    lvl[u] = lvl[v] + 1;
+                }
+            }
+        }
+
+        for (int i = 1; i <= n; i++) {
+            if (used[i] == 0) {
+                System.out.println("You cannot visit the node " + i + " from the source node = " + source);
+            } else {
+                System.out.println("You can visit the node " + i + " from the source node = " + source);
+            }
+        }
+    }
+}
+
+
