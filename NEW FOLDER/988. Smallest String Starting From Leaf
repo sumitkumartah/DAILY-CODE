@@ -1,0 +1,29 @@
+
+
+
+
+class Solution {
+    String res="";
+
+    public void bfs(TreeNode root, String cur){
+        if(root==null) return ;
+        cur=(char) ( root.val+ 'a') +cur;
+
+        if(root.left==null && root.right==null )
+        {
+            if(res=="" || res.compareTo(cur)>0)
+            {
+                res=cur;
+            }
+           
+        }
+
+        bfs(root.left, cur);
+        bfs(root.right, cur);
+    }
+
+    public String smallestFromLeaf(TreeNode root) {
+        bfs(root, "");
+        return res;
+     }
+}
